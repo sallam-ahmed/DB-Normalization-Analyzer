@@ -1,0 +1,395 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<modelStoreModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm4="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/SimpleShapesModel" xmlns:dm9="http://schemas.microsoft.com/dsltools/UseCaseModel"
+  dslVersion="1.0.0.0"
+  Id="857bb77c-b5ff-4ec1-8208-ff5bde071018"
+  name="SystemModel" xmlns="http://schemas.microsoft.com/dsltools/ModelStore">
+  <ownedCommentsInternal>
+    <comment
+      Id="07c1a1e4-381e-444c-88d8-7478e805855d">
+      <body>First form is the highest rate of success thus the milestone of project delivery to the faculty.</body>
+    </comment>
+    <comment
+      Id="5a0d3795-3ee5-498f-8c32-9d75b6c431aa">
+      <body>Starting from the second form we need to achieve an AI with non Supervised learning who can analyze the raw data and get valuable DB Information out of it.
+## Function dependency analyzing.</body>
+    </comment>
+  </ownedCommentsInternal>
+  <profileInstances>
+    <packageHasProfileInstances
+      Id="0caec977-1f8c-4ba3-a7db-8cc9ad9cc73b">
+      <profileInstance
+        Id="e34d544e-0fea-4ed6-ac5e-1b74119ac791"
+        name="StandardProfileL2" />
+    </packageHasProfileInstances>
+    <packageHasProfileInstances
+      Id="29349502-908c-4fda-9054-c48619c59ed0">
+      <profileInstance
+        Id="532ea607-fb19-44b8-8502-3351b05452be"
+        name="StandardProfileL3" />
+    </packageHasProfileInstances>
+  </profileInstances>
+  <packagedElements>
+    <packageHasNamedElement>
+      <actor
+        Id="0f93d4e6-0d8d-4acc-bc12-26a221a3ef26"
+        name="User"
+        isAbstract="false"
+        isLeaf="false">
+        <targetEnds>
+          <association
+            Id="76af4892-723c-468e-ae15-fd81daa218e9"
+            isDerived="false"
+            sourceEndRoleName="User"
+            targetEndRoleName="Enter database information"
+            isLeaf="false"
+            isAbstract="false">
+            <useCaseMoniker
+              Id="639dcd01-d452-4920-ab32-a6388f45d001"
+              LastKnownName="Enter database information"
+              LastKnownLocation="SystemModel.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="1c1b496d-f234-4e1f-ac72-f6eea103ff3d"
+                  name="User"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="ceef11f9-3d3d-4695-a99c-e8349c9fbc45"
+                  name="Enter database information"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false" />
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+          <association
+            Id="5e2e9c8b-a541-4ba2-943a-345ead16fa8e"
+            isDerived="false"
+            sourceEndRoleName="User"
+            targetEndRoleName="Analyze DB Standards"
+            isLeaf="false"
+            isAbstract="false">
+            <useCaseMoniker
+              Id="5f7aa37d-220f-450d-8bff-6b581006b08d"
+              LastKnownName="Analyze DB Standards"
+              LastKnownLocation="SystemModel.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="f299b177-3ca9-4c33-b783-3f064f95453c"
+                  name="User"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="54d145c8-d903-4e9f-b2ac-100ecc88167a"
+                  name="Analyze DB Standards"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false" />
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+        </targetEnds>
+      </actor>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase
+        Id="639dcd01-d452-4920-ab32-a6388f45d001"
+        name="Enter database information"
+        isAbstract="false"
+        isLeaf="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase
+        Id="5f7aa37d-220f-450d-8bff-6b581006b08d"
+        name="Analyze DB Standards"
+        isAbstract="false"
+        isLeaf="false">
+        <extendedCases>
+          <extend
+            Id="427e74f2-354f-4fe4-9826-1084649177db">
+            <useCaseMoniker
+              Id="c2a47f52-684c-4f72-a4a1-59f6b66d00aa"
+              LastKnownName="First Form"
+              LastKnownLocation="SystemModel.uml" />
+          </extend>
+          <extend
+            Id="dcead755-18de-4d44-bfe5-95992b14462a">
+            <useCaseMoniker
+              Id="1ffd32e1-2a17-4545-a62d-1fa217785b38"
+              LastKnownName="Fourth Form"
+              LastKnownLocation="SystemModel.uml" />
+          </extend>
+          <extend
+            Id="0754e11c-29ea-4a87-bcbb-b88473cdee9d">
+            <useCaseMoniker
+              Id="fe0d6e52-0728-4bbb-a833-29671e630c82"
+              LastKnownName="Second Form"
+              LastKnownLocation="SystemModel.uml" />
+          </extend>
+          <extend
+            Id="db19553d-dc9c-43a5-b205-09ced329b2bf">
+            <useCaseMoniker
+              Id="73dee880-ee86-452f-a568-9773e5cf03f9"
+              LastKnownName="Third Form"
+              LastKnownLocation="SystemModel.uml" />
+          </extend>
+        </extendedCases>
+      </useCase>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <actor
+        Id="4640190d-5c97-4bf5-9ba8-a4207b4e02b1"
+        name="System"
+        isAbstract="false"
+        isLeaf="false">
+        <targetEnds>
+          <association
+            Id="777666e8-cb0c-4368-9277-488235dbef7d"
+            isDerived="false"
+            sourceEndRoleName="System"
+            targetEndRoleName="First Form"
+            isLeaf="false"
+            isAbstract="false">
+            <useCaseMoniker
+              Id="c2a47f52-684c-4f72-a4a1-59f6b66d00aa"
+              LastKnownName="First Form"
+              LastKnownLocation="SystemModel.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="48f57183-54ed-4419-9b28-ec6d0b36b195"
+                  name="System"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="5758a3a2-736d-46cb-a43e-ed9f884fce86"
+                  name="First Form"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false" />
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+          <association
+            Id="2d6449a8-9f30-4e07-9ad6-ee085d30b260"
+            isDerived="false"
+            sourceEndRoleName="System"
+            targetEndRoleName="Second Form"
+            isLeaf="false"
+            isAbstract="false">
+            <useCaseMoniker
+              Id="fe0d6e52-0728-4bbb-a833-29671e630c82"
+              LastKnownName="Second Form"
+              LastKnownLocation="SystemModel.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="98f73171-a949-42b2-ace5-bfd54654d1d2"
+                  name="System"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="9e3ac5fe-0e1f-4c96-bd0a-b84a97fd61e6"
+                  name="Second Form"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false" />
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+          <association
+            Id="688b0808-e35f-413a-919c-e86ba28706a6"
+            isDerived="false"
+            sourceEndRoleName="System"
+            targetEndRoleName="Third Form"
+            isLeaf="false"
+            isAbstract="false">
+            <useCaseMoniker
+              Id="73dee880-ee86-452f-a568-9773e5cf03f9"
+              LastKnownName="Third Form"
+              LastKnownLocation="SystemModel.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="69135a36-35d1-45a1-9be1-ab9ceafb38eb"
+                  name="System"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="8af7e0c1-ff1e-4460-a301-e08837a2e780"
+                  name="Third Form"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false" />
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+          <association
+            Id="78a09900-f25e-4992-9ffe-60c24b09e8fa"
+            isDerived="false"
+            sourceEndRoleName="System"
+            targetEndRoleName="Fourth Form"
+            isLeaf="false"
+            isAbstract="false">
+            <useCaseMoniker
+              Id="1ffd32e1-2a17-4545-a62d-1fa217785b38"
+              LastKnownName="Fourth Form"
+              LastKnownLocation="SystemModel.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="7d2a3a70-eec8-49a1-ac1b-ebf8aedf1ca0"
+                  name="System"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="da3b124d-3445-491f-b3e0-49c6b66b2d4b"
+                  name="Fourth Form"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false" />
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+        </targetEnds>
+      </actor>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase
+        Id="c2a47f52-684c-4f72-a4a1-59f6b66d00aa"
+        name="First Form"
+        isAbstract="false"
+        isLeaf="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase
+        Id="fe0d6e52-0728-4bbb-a833-29671e630c82"
+        name="Second Form"
+        isAbstract="false"
+        isLeaf="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase
+        Id="73dee880-ee86-452f-a568-9773e5cf03f9"
+        name="Third Form"
+        isAbstract="false"
+        isLeaf="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase
+        Id="1ffd32e1-2a17-4545-a62d-1fa217785b38"
+        name="Fourth Form"
+        isAbstract="false"
+        isLeaf="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase
+        Id="19b11cb2-ab7d-4287-afd2-0ea7bce373e1"
+        name="Third Form1"
+        isAbstract="false"
+        isLeaf="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <subsystem
+        Id="87f1a33e-d79c-425e-a115-1355ddf139df"
+        name="Subsystem1"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false" />
+    </packageHasNamedElement>
+  </packagedElements>
+  <primitiveType
+    Id="220a3521-e091-4221-bae9-3ef9018e845c"
+    name="Integer"
+    isAbstract="false"
+    isLeaf="false" />
+  <primitiveType
+    Id="8943dc84-709e-4f62-b15a-a3273aa6f165"
+    name="Boolean"
+    isAbstract="false"
+    isLeaf="false" />
+  <primitiveType
+    Id="59259974-6d55-42c6-b7bd-763d77ac8ef9"
+    name="String"
+    isAbstract="false"
+    isLeaf="false" />
+  <primitiveType
+    Id="3ab42e7d-4969-445a-b209-471f5cb8209c"
+    name="UnlimitedNatural"
+    isAbstract="false"
+    isLeaf="false" />
+</modelStoreModel>
