@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DBNormalizationAnalyzer_Use
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DBNormalizationAnalyzer_AnalyzerLibrary", "DBNormalizationAnalyzer_AnalyzerLibrary\DBNormalizationAnalyzer_AnalyzerLibrary.csproj", "{87302A5E-9D9F-4C68-8387-E45161AABB81}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DBNormalizationAnalyzer_Formations", "DBNormalizationAnalyzer_Formations\DBNormalizationAnalyzer_Formations.csproj", "{D6024DD8-B485-43DB-8FE6-A0D21C2BA819}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{87302A5E-9D9F-4C68-8387-E45161AABB81}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{87302A5E-9D9F-4C68-8387-E45161AABB81}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{87302A5E-9D9F-4C68-8387-E45161AABB81}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D6024DD8-B485-43DB-8FE6-A0D21C2BA819}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D6024DD8-B485-43DB-8FE6-A0D21C2BA819}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D6024DD8-B485-43DB-8FE6-A0D21C2BA819}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D6024DD8-B485-43DB-8FE6-A0D21C2BA819}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
