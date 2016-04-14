@@ -25,7 +25,7 @@ The program aims to automating the process of *Database normalization* through s
 - Ahmed Yehia.
 - Farouk Mohamed.
 - Merna Khaled.
-- Khaled Adel.
+- Khaled KEE.
 
 #Proejct Manager:
 

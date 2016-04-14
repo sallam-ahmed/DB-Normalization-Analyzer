@@ -1,17 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<modelStoreModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm4="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/SimpleShapesModel" xmlns:dm9="http://schemas.microsoft.com/dsltools/UseCaseModel"
+<modelStoreModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm4="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/SimpleShapesModel" xmlns:dm9="http://schemas.microsoft.com/dsltools/UseCaseModel" xmlns:dm10="http://schemas.microsoft.com/dsltools/LogicalClassDesigner" xmlns:dm11="http://schemas.microsoft.com/VisualStudio/TeamArchitect/ComponentDesigner"
   dslVersion="1.0.0.0"
   Id="857bb77c-b5ff-4ec1-8208-ff5bde071018"
   name="SystemModel" xmlns="http://schemas.microsoft.com/dsltools/ModelStore">
   <ownedCommentsInternal>
     <comment
-      Id="07c1a1e4-381e-444c-88d8-7478e805855d">
-      <body>First form is the highest rate of success thus the milestone of project delivery to the faculty.</body>
-    </comment>
-    <comment
       Id="5a0d3795-3ee5-498f-8c32-9d75b6c431aa">
-      <body>Starting from the second form we need to achieve an AI with non Supervised learning who can analyze the raw data and get valuable DB Information out of it.
-## Function dependency analyzing.</body>
+      <body>We'll need AI anyway to extract functional dependency.</body>
     </comment>
   </ownedCommentsInternal>
   <profileInstances>
@@ -142,7 +137,7 @@
             Id="dcead755-18de-4d44-bfe5-95992b14462a">
             <useCaseMoniker
               Id="1ffd32e1-2a17-4545-a62d-1fa217785b38"
-              LastKnownName="Fourth Form"
+              LastKnownName="BC Form"
               LastKnownLocation="SystemModel.uml" />
           </extend>
           <extend
@@ -295,7 +290,7 @@
             isAbstract="false">
             <useCaseMoniker
               Id="1ffd32e1-2a17-4545-a62d-1fa217785b38"
-              LastKnownName="Fourth Form"
+              LastKnownName="BC Form"
               LastKnownLocation="SystemModel.uml" />
             <relationshipOwnedElementsInternal>
               <associationHasOwnedEnds>
@@ -352,7 +347,7 @@
     <packageHasNamedElement>
       <useCase
         Id="1ffd32e1-2a17-4545-a62d-1fa217785b38"
-        name="Fourth Form"
+        name="BC Form"
         isAbstract="false"
         isLeaf="false" />
     </packageHasNamedElement>
@@ -370,6 +365,1010 @@
         isAbstract="false"
         isLeaf="false"
         isActiveClass="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="971e0fc0-1c77-47ca-bfcd-94706053aa77"
+        name="FunctionalDependency"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <targetEnds>
+          <association
+            Id="4eca38ed-4244-4bb9-a9b5-e2d38bf9217e"
+            isDerived="false"
+            sourceEndRoleName="FunctionalDependency"
+            targetEndRoleName="Graph"
+            isLeaf="false"
+            isAbstract="false">
+            <classMoniker
+              Id="301bb73a-f8ea-432f-93c0-d585438a1c4c"
+              LastKnownName="Graph"
+              LastKnownLocation="SystemModel.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="28395a9b-6b04-410b-825b-c41c51f71ce1"
+                  name="FunctionalDependency"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="Composite"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="2293e907-0bb8-410f-871d-658cde1b7730"
+                  name="Graph"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="true" />
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+        </targetEnds>
+        <ownedAttributesInternal>
+          <property
+            Id="6a6af535-40c5-43a4-a0d1-1f356db6e45d"
+            name="m_Graph"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false">
+            <type_NamedElement>
+              <undefinedTypeMoniker
+                Id="a60d0789-8a30-4687-ba37-1aa274906082"
+                LastKnownName="Graph"
+                LastKnownLocation="SystemModel.uml" />
+            </type_NamedElement>
+          </property>
+          <property
+            Id="c1a4026e-ac72-4984-9609-d4f2d0d15683"
+            name="CurrentPrimaryKey"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false">
+            <type_NamedElement>
+              <undefinedTypeMoniker
+                Id="492d8009-725c-4136-afa8-ffc0e29cada9"
+                LastKnownName="List&lt;int&gt;"
+                LastKnownLocation="SystemModel.uml" />
+            </type_NamedElement>
+          </property>
+          <property
+            Id="9742495c-6414-4a8b-bf00-25a34e161558"
+            name="DependencyList"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false">
+            <type_NamedElement>
+              <undefinedTypeMoniker
+                Id="5d32977c-6c5a-4355-9466-95ec63c54877"
+                LastKnownName="List&lt;Tuple&lt;List&lt;int&gt;,List&lt;int&gt; &gt; &gt;"
+                LastKnownLocation="SystemModel.uml" />
+            </type_NamedElement>
+          </property>
+        </ownedAttributesInternal>
+        <ownedOperationsInternal>
+          <operation
+            Id="f26986f4-c70d-4419-b673-e3891034d641"
+            name="isCandidateKey"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="73f8609f-6ff7-4f46-889b-2a659afe950e"
+                  name="List&lt;int&gt; keys"
+                  direction="In"
+                  isUnique="false" />
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="bcd39832-2db0-4bf8-b631-03f0f199c5d1"
+            name="isSubset"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="ac522e15-37ca-432b-b364-aad9e171cdf2"
+                  name="List&lt;int&gt; a"
+                  direction="In"
+                  isUnique="false" />
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="d003c87c-aaa3-4f38-97c4-bfc58d913a73"
+                  name="List&lt;int&gt; b"
+                  direction="In"
+                  isUnique="false" />
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="a0b18b2d-4ca5-46bc-8a02-a63c67ba820a"
+                  direction="Return"
+                  isUnique="false">
+                  <type_NamedElement>
+                    <undefinedTypeMoniker
+                      Id="589ce5bb-5394-4e85-a2ea-e2ee8d5fcd78"
+                      LastKnownName="bool"
+                      LastKnownLocation="SystemModel.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="d3e5f870-d3db-4bc7-974d-9bf14283e16e"
+            name="addDependency"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="e443fe75-eecc-4c1c-9909-bcd716bfef4a"
+                  name="List&lt;int&gt; from"
+                  direction="In"
+                  isUnique="false">
+                  <type_NamedElement>
+                    <undefinedTypeMoniker
+                      Id="543eed86-8d83-49bd-80df-359740b9d9e6"
+                      LastKnownName="List&lt;int&gt; to"
+                      LastKnownLocation="SystemModel.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="b6fa9486-7512-4670-8aa4-f83068727da4"
+            name="isSuperKey"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="88a7785b-6c7b-4e15-8185-7e99d2e16e14"
+                  name="List&lt;int&gt; Keys"
+                  direction="In"
+                  isUnique="false" />
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="9535cbbf-2fd8-48d1-aa26-6204d3ba0db1"
+            name="isPrimeKey"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="f6d71114-838f-42a7-8f7e-7168d3d440a1"
+                  name="int Key"
+                  direction="In"
+                  isUnique="false" />
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+        </ownedOperationsInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="081250a5-e103-4d68-9c4a-b79a5e6a4aa6"
+        name="FirstNormalForm"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <suppliersInternal>
+          <interfaceRealization
+            Id="a08b2af1-a963-43d5-ac4d-d95ddb84e25a">
+            <interfaceMoniker
+              Id="d37445f5-b96a-4626-8f85-3e18534d09c8"
+              LastKnownName="Normal_form_checker"
+              LastKnownLocation="SystemModel.uml" />
+          </interfaceRealization>
+        </suppliersInternal>
+        <ownedOperationsInternal>
+          <operation
+            Id="a8171639-3e7c-4eae-8f9c-83c97338cd8c"
+            name="check"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="5718878c-22d2-415e-876d-86af4996f417"
+                  name="Functional_dependency"
+                  direction="In"
+                  isUnique="false" />
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="282c5f05-1146-4b62-be1d-198d07e879e0"
+                  direction="Return"
+                  isUnique="false">
+                  <type_NamedElement>
+                    <undefinedTypeMoniker
+                      Id="bf1bffb6-8ecd-42ce-8036-a3c425b5fc5f"
+                      LastKnownName="tuple&lt;List&lt;error&gt;,List&lt;suggestion&gt;&gt;"
+                      LastKnownLocation="SystemModel.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="14188530-598d-42b4-be3a-0ba8bf121d7e"
+            name="closest_candidate_key"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="eaaea3bc-72f1-4317-bb09-c2ac707e2667"
+                  direction="Return"
+                  isUnique="false">
+                  <type_NamedElement>
+                    <undefinedTypeMoniker
+                      Id="ac800dd5-6814-4a43-8a97-6d8fefed8547"
+                      LastKnownName="int"
+                      LastKnownLocation="SystemModel.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+        </ownedOperationsInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <Interface
+        Id="d37445f5-b96a-4626-8f85-3e18534d09c8"
+        name="Normal_form_checker"
+        isAbstract="false"
+        isLeaf="false">
+        <targetEnds>
+          <association
+            Id="f90503ad-f531-4bcb-afce-9048e2dceba6"
+            isDerived="false"
+            sourceEndRoleName="Normal_form_checker"
+            targetEndRoleName="Functional_dependency"
+            isLeaf="false"
+            isAbstract="false">
+            <classMoniker
+              Id="971e0fc0-1c77-47ca-bfcd-94706053aa77"
+              LastKnownName="FunctionalDependency"
+              LastKnownLocation="SystemModel.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="e55ff4fe-6478-44bf-a3b1-253708369a03"
+                  name="Normal_form_checker"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="Composite"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="1db892ea-c46a-4e9b-8323-d680fcea3403"
+                  name="Functional_dependency"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="true" />
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+          <association
+            Id="9c920913-4827-4497-9152-8eb8b669912c"
+            isDerived="false"
+            sourceEndRoleName="Normal_form_checker"
+            targetEndRoleName="Error"
+            isLeaf="false"
+            isAbstract="false">
+            <classMoniker
+              Id="2e2627e5-2f90-46ab-ae55-68d88dfbfd21"
+              LastKnownName="Error"
+              LastKnownLocation="SystemModel.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="a7a8d11a-dbc9-4f57-ba6d-436c4441d6f6"
+                  name="Normal_form_checker"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="bbbdbfae-da6d-4bc6-b02f-e3e222da1463"
+                  name="Error"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false">
+                  <lowerValueInternal>
+                    <literalString
+                      Id="4067b571-31e5-42b7-bc2a-cd0837705b2e"
+                      name="Lower"
+                      value="0" />
+                  </lowerValueInternal>
+                  <upperValueInternal>
+                    <literalString
+                      Id="7b495c4d-b73e-4381-97fe-3ebb00293720"
+                      name="Upper"
+                      value="*" />
+                  </upperValueInternal>
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+          <association
+            Id="b97072af-bc9a-44f2-a22a-6ac4d723436c"
+            isDerived="false"
+            sourceEndRoleName="Normal_form_checker"
+            targetEndRoleName="Suggestion"
+            isLeaf="false"
+            isAbstract="false">
+            <classMoniker
+              Id="de9175d5-ef2d-4c8c-9181-ad57e9ab786d"
+              LastKnownName="Suggestion"
+              LastKnownLocation="SystemModel.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="2e9fdf4f-acb1-4bbc-aa07-3a5cae21de74"
+                  name="Normal_form_checker"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="Shared"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="ec3f113b-57ab-4ce4-92a8-f1daf21ef78d"
+                  name="Suggestion"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false">
+                  <lowerValueInternal>
+                    <literalString
+                      Id="1f4c7d08-b551-4f23-abb5-dfb1e9838f22"
+                      name="Lower"
+                      value="0" />
+                  </lowerValueInternal>
+                  <upperValueInternal>
+                    <literalString
+                      Id="1c4da1ae-d38a-44c0-b726-e2625e6ae006"
+                      name="Upper"
+                      value="*" />
+                  </upperValueInternal>
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+        </targetEnds>
+        <ownedOperations>
+          <operation
+            Id="eccae359-b475-4134-9905-89f21609fc3e"
+            name="check"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="true"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="a5783b5f-802e-4fad-b763-0b91ab0f387d"
+                  direction="Return"
+                  isUnique="false">
+                  <type_NamedElement>
+                    <undefinedTypeMoniker
+                      Id="bf1bffb6-8ecd-42ce-8036-a3c425b5fc5f"
+                      LastKnownName="tuple&lt;List&lt;error&gt;,List&lt;suggestion&gt;&gt;"
+                      LastKnownLocation="SystemModel.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="7851fc6e-adb4-4204-a79d-39e3fb0424fe"
+                  name="FunctionalDependency"
+                  direction="In"
+                  isUnique="false" />
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+        </ownedOperations>
+      </Interface>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <undefinedType
+        Id="f8c482b5-d596-4429-b291-d893328a4522"
+        name="tuple&lt;error,suggestion&gt;" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <undefinedType
+        Id="e65343ac-a370-49d0-a0de-0c1ec50f464d"
+        name="List&lt;tuple&lt;List&lt;int&gt;,List&lt;int&gt;&gt;" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <undefinedType
+        Id="492d8009-725c-4136-afa8-ffc0e29cada9"
+        name="List&lt;int&gt;" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <undefinedType
+        Id="84e412fc-9fa5-4807-ba21-c308f4fb084b"
+        name="List&lt;List&lt;int&gt; &gt;" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <undefinedType
+        Id="589ce5bb-5394-4e85-a2ea-e2ee8d5fcd78"
+        name="bool" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <undefinedType
+        Id="ac800dd5-6814-4a43-8a97-6d8fefed8547"
+        name="int" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="90f34ade-eefd-4197-ae3c-96ff5ad0e4c4"
+        name="SecondNormalForm"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <suppliersInternal>
+          <interfaceRealization
+            Id="e5d51d2b-2eb6-48b7-93b0-d69687026545">
+            <interfaceMoniker
+              Id="d37445f5-b96a-4626-8f85-3e18534d09c8"
+              LastKnownName="Normal_form_checker"
+              LastKnownLocation="SystemModel.uml" />
+          </interfaceRealization>
+        </suppliersInternal>
+        <ownedOperationsInternal>
+          <operation
+            Id="cdea7a6d-8bfd-417c-8db6-6d14740170c3"
+            name="check"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="38625f1a-566a-4eb7-8e67-80a593cd8684"
+                  name="Functional_dependency"
+                  direction="In"
+                  isUnique="false" />
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="a7cfce0d-88e5-4427-8d49-62b9288a3786"
+                  direction="Return"
+                  isUnique="false">
+                  <type_NamedElement>
+                    <undefinedTypeMoniker
+                      Id="bf1bffb6-8ecd-42ce-8036-a3c425b5fc5f"
+                      LastKnownName="tuple&lt;List&lt;error&gt;,List&lt;suggestion&gt;&gt;"
+                      LastKnownLocation="SystemModel.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="bf4f150d-5a2c-40b1-a21b-7cb5620a9abf"
+            name="partial_dependency"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="d05cd731-d22b-4bb3-abf8-9da184874d5e"
+                  direction="Return"
+                  isUnique="false">
+                  <type_NamedElement>
+                    <undefinedTypeMoniker
+                      Id="589ce5bb-5394-4e85-a2ea-e2ee8d5fcd78"
+                      LastKnownName="bool"
+                      LastKnownLocation="SystemModel.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="961fe0cf-6d48-4422-b5f2-fea3abf8e859"
+                  name="int column"
+                  direction="In"
+                  isUnique="false" />
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="a8046c65-c0d7-4e0b-ab30-1406b00441b3"
+                  name="List&lt;int&gt; CandidateKey"
+                  direction="In"
+                  isUnique="false" />
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="b00febed-2bdc-4b81-8bb3-d24c56a1a978"
+            name="check_partial_dependency"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="82462de4-a369-4230-9f8e-3f51d3269a00"
+                  direction="Return"
+                  isUnique="false">
+                  <type_NamedElement>
+                    <undefinedTypeMoniker
+                      Id="ae613701-d2d0-46c9-a0ae-1cc59cac6128"
+                      LastKnownName="List&lt;tuple&lt;int,List&lt;int&gt; &gt; &gt;"
+                      LastKnownLocation="SystemModel.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+        </ownedOperationsInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <undefinedType
+        Id="ae613701-d2d0-46c9-a0ae-1cc59cac6128"
+        name="List&lt;tuple&lt;int,List&lt;int&gt; &gt; &gt;" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="63df64c8-250e-4a95-80e6-38d72e395509"
+        name="ThirdNormalForm"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <suppliersInternal>
+          <interfaceRealization
+            Id="894aa3ae-def1-4298-b872-1fc03e6f5a98">
+            <interfaceMoniker
+              Id="d37445f5-b96a-4626-8f85-3e18534d09c8"
+              LastKnownName="Normal_form_checker"
+              LastKnownLocation="SystemModel.uml" />
+          </interfaceRealization>
+        </suppliersInternal>
+        <ownedOperationsInternal>
+          <operation
+            Id="6bb48171-fe22-4b46-bfd6-047c53a9e7e2"
+            name="check"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="97af317e-bcd1-4755-9df1-c30e70df2439"
+                  name="Functional_dependency"
+                  direction="In"
+                  isUnique="false" />
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="00d068ab-3570-4bb7-b010-ee0e5cb9b41c"
+                  direction="Return"
+                  isUnique="false">
+                  <type_NamedElement>
+                    <undefinedTypeMoniker
+                      Id="bf1bffb6-8ecd-42ce-8036-a3c425b5fc5f"
+                      LastKnownName="tuple&lt;List&lt;error&gt;,List&lt;suggestion&gt;&gt;"
+                      LastKnownLocation="SystemModel.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+        </ownedOperationsInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="12edabf7-7dd9-4f5d-a905-659927ad6e8a"
+        name="BCNF"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <suppliersInternal>
+          <interfaceRealization
+            Id="dd44dcf9-083e-4e63-b96b-b9a5236bed64">
+            <interfaceMoniker
+              Id="d37445f5-b96a-4626-8f85-3e18534d09c8"
+              LastKnownName="Normal_form_checker"
+              LastKnownLocation="SystemModel.uml" />
+          </interfaceRealization>
+        </suppliersInternal>
+        <ownedOperationsInternal>
+          <operation
+            Id="daae8f8d-7105-4fe7-bd0e-717ccd842b77"
+            name="check"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="d6d38df2-c633-41f2-bcb4-d2d80f5ff6ae"
+                  name="Functional_dependency"
+                  direction="In"
+                  isUnique="false" />
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="15cc3abb-ce60-43e1-9daf-9b2e0bc5a7bd"
+                  direction="Return"
+                  isUnique="false">
+                  <type_NamedElement>
+                    <undefinedTypeMoniker
+                      Id="bf1bffb6-8ecd-42ce-8036-a3c425b5fc5f"
+                      LastKnownName="tuple&lt;List&lt;error&gt;,List&lt;suggestion&gt;&gt;"
+                      LastKnownLocation="SystemModel.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+        </ownedOperationsInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="2e2627e5-2f90-46ab-ae55-68d88dfbfd21"
+        name="Error"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <ownedAttributesInternal>
+          <property
+            Id="a6e30b78-a889-4131-b5ae-f7b321e9e799"
+            name="Message"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false">
+            <type_NamedElement>
+              <undefinedTypeMoniker
+                Id="f2d9f75b-38e8-4fae-ad59-889082f53534"
+                LastKnownName="string"
+                LastKnownLocation="SystemModel.uml" />
+            </type_NamedElement>
+          </property>
+        </ownedAttributesInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <undefinedType
+        Id="f2d9f75b-38e8-4fae-ad59-889082f53534"
+        name="string" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <undefinedType
+        Id="bf1bffb6-8ecd-42ce-8036-a3c425b5fc5f"
+        name="tuple&lt;List&lt;error&gt;,List&lt;suggestion&gt;&gt;" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="de9175d5-ef2d-4c8c-9181-ad57e9ab786d"
+        name="Suggestion"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <ownedAttributesInternal>
+          <property
+            Id="99ebda40-6d72-4f43-bc40-dfe391fe73f8"
+            name="Message"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false">
+            <type_NamedElement>
+              <undefinedTypeMoniker
+                Id="f2d9f75b-38e8-4fae-ad59-889082f53534"
+                LastKnownName="string"
+                LastKnownLocation="SystemModel.uml" />
+            </type_NamedElement>
+          </property>
+          <property
+            Id="1274ad29-d7b6-49e2-87af-77aefaba2bcc"
+            name="Primary_key"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false">
+            <type_NamedElement>
+              <undefinedTypeMoniker
+                Id="492d8009-725c-4136-afa8-ffc0e29cada9"
+                LastKnownName="List&lt;int&gt;"
+                LastKnownLocation="SystemModel.uml" />
+            </type_NamedElement>
+          </property>
+          <property
+            Id="e0f046cd-df37-4ac3-a108-32b4e7d35362"
+            name="Split"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false">
+            <type_NamedElement>
+              <undefinedTypeMoniker
+                Id="37787b92-d185-4952-b00e-da3d9a56f7aa"
+                LastKnownName="List&lt;tuple&lt;List&lt;int&gt;,List&lt;int&gt; &gt; &gt;"
+                LastKnownLocation="SystemModel.uml" />
+            </type_NamedElement>
+          </property>
+        </ownedAttributesInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <undefinedType
+        Id="436bebf2-c9c8-46a3-9604-974290c7f544"
+        name="tuple&lt;List&lt;int&gt;,List&lt;int&gt; &gt;" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <undefinedType
+        Id="37787b92-d185-4952-b00e-da3d9a56f7aa"
+        name="List&lt;tuple&lt;List&lt;int&gt;,List&lt;int&gt; &gt; &gt;" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <undefinedType
+        Id="543eed86-8d83-49bd-80df-359740b9d9e6"
+        name="List&lt;int&gt; to" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <undefinedType
+        Id="a60d0789-8a30-4687-ba37-1aa274906082"
+        name="Graph" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="301bb73a-f8ea-432f-93c0-d585438a1c4c"
+        name="Graph"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <ownedOperationsInternal>
+          <operation
+            Id="5e4885a1-15e7-4873-91ab-21b44b1cdf71"
+            name="getSCC"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="49da6548-1332-4606-b8e9-d471f2599cad"
+                  name="List&lt;int&gt; node"
+                  direction="In"
+                  isUnique="false" />
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="6f9dbce1-4472-4bdc-aa7d-35963c740752"
+                  direction="Return"
+                  isUnique="false">
+                  <type_NamedElement>
+                    <undefinedTypeMoniker
+                      Id="ac800dd5-6814-4a43-8a97-6d8fefed8547"
+                      LastKnownName="int"
+                      LastKnownLocation="SystemModel.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="b4388886-363e-48d0-a168-74e73c054a45"
+            name="getIndex"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="05ce938b-09b3-4687-8582-118635893a48"
+                  name="List&lt;int&gt; node"
+                  direction="In"
+                  isUnique="false" />
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="044f578c-9842-4b1a-ac85-cc685cbf3ac9"
+                  direction="Return"
+                  isUnique="false">
+                  <type_NamedElement>
+                    <undefinedTypeMoniker
+                      Id="ac800dd5-6814-4a43-8a97-6d8fefed8547"
+                      LastKnownName="int"
+                      LastKnownLocation="SystemModel.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="f1ffb4e0-4c1d-42a8-b823-661609db8ca2"
+            name="addEdge"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="49397b64-5bc0-4aa9-9348-f345b613e335"
+                  name="List&lt;int&gt; from"
+                  direction="In"
+                  isUnique="false" />
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="18c3269d-0771-4424-996f-6330fa37de53"
+                  name="List&lt;int&gt; to"
+                  direction="In"
+                  isUnique="false" />
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="677b9d65-2bf9-4fee-b8eb-09fb5d318e00"
+            name="GetReachability"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="d6f4f386-7356-4172-9d16-aef0683c6e44"
+                  name="List&lt;int&gt; node"
+                  direction="In"
+                  isUnique="false" />
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="2919c0d8-e115-40ac-8112-4c7c451e3c0f"
+                  direction="Return"
+                  isUnique="false">
+                  <type_NamedElement>
+                    <undefinedTypeMoniker
+                      Id="fcbaadf2-60f4-4896-8932-28da67f256dc"
+                      LastKnownName="BitVector"
+                      LastKnownLocation="SystemModel.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+        </ownedOperationsInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <undefinedType
+        Id="5d32977c-6c5a-4355-9466-95ec63c54877"
+        name="List&lt;Tuple&lt;List&lt;int&gt;,List&lt;int&gt; &gt; &gt;" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <undefinedType
+        Id="a84c8773-5552-4235-a189-e29dc68d95c5"
+        name="List&lt;BitArray&gt;" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <undefinedType
+        Id="fcbaadf2-60f4-4896-8932-28da67f256dc"
+        name="BitVector" />
     </packageHasNamedElement>
   </packagedElements>
   <primitiveType
