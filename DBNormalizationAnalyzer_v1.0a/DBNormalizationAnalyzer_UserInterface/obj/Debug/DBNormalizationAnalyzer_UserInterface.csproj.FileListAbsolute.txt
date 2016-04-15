@@ -7,3 +7,5 @@ E:\GitHub\DB-Normalization-Analyzer\DBNormalizationAnalyzer_v1.0a\DBNormalizatio
 E:\GitHub\DB-Normalization-Analyzer\DBNormalizationAnalyzer_v1.0a\DBNormalizationAnalyzer_UserInterface\obj\Debug\DBNormalizationAnalyzer_UserInterface.csproj.GenerateResource.Cache
 E:\GitHub\DB-Normalization-Analyzer\DBNormalizationAnalyzer_v1.0a\DBNormalizationAnalyzer_UserInterface\obj\Debug\DBNormalizationAnalyzer_UserInterface.exe
 E:\GitHub\DB-Normalization-Analyzer\DBNormalizationAnalyzer_v1.0a\DBNormalizationAnalyzer_UserInterface\obj\Debug\DBNormalizationAnalyzer_UserInterface.pdb
+E:\GitHub\DB-Normalization-Analyzer\DBNormalizationAnalyzer_v1.0a\DBNormalizationAnalyzer_UserInterface\bin\Debug\DBNormalizationAnalyzer_Formations.dll
+E:\GitHub\DB-Normalization-Analyzer\DBNormalizationAnalyzer_v1.0a\DBNormalizationAnalyzer_UserInterface\bin\Debug\DBNormalizationAnalyzer_Formations.pdb
