@@ -1,30 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<useCaseModelRoot xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm4="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/ModelStore" xmlns:dm9="http://schemas.microsoft.com/dsltools/SimpleShapesModel" dslVersion="1.0.0.0" Id="cd87e8c1-7033-4db3-b6a5-380536870125" name="DBNormalization Analyzer" linkedPackageId="a7d8000e-b6a4-4424-b301-c15f4f48e61d" xmlns="http://schemas.microsoft.com/dsltools/UseCaseModel">
+<useCaseModelRoot xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm4="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/ModelStore" xmlns:dm9="http://schemas.microsoft.com/dsltools/SimpleShapesModel" xmlns:dm10="http://schemas.microsoft.com/dsltools/LogicalClassDesigner" dslVersion="1.0.0.0" Id="cd87e8c1-7033-4db3-b6a5-380536870125" name="DBNormalization Analyzer" linkedPackageId="a7d8000e-b6a4-4424-b301-c15f4f48e61d" xmlns="http://schemas.microsoft.com/dsltools/UseCaseModel">
   <ownedCommentsInternal>
-    <comment Id="9ddb5004-de54-4315-a815-d5377449f5df">
-      <elementDefinition Id="07c1a1e4-381e-444c-88d8-7478e805855d" />
-      <body>First form is the highest rate of success thus the milestone of project delivery to the faculty.</body>
-    </comment>
     <comment Id="a3b9a874-0c40-4953-8be3-5c13ed58ad20">
       <elementDefinition Id="5a0d3795-3ee5-498f-8c32-9d75b6c431aa" />
-      <body>Starting from the second form we need to achieve an AI with non Supervised learning who can analyze the raw data and get valuable DB Information out of it.
-## Function dependency analyzing.</body>
+      <body>We'll need AI anyway to extract functional dependency.</body>
     </comment>
   </ownedCommentsInternal>
-  <profileInstances>
-    <packageHasProfileInstances Id="faa73c9d-2f55-4199-aeba-55e01bf35ba9">
-      <profileInstance Id="70041fda-e504-4829-bff8-6970162f8a8d" name="StandardProfileL2">
-        <elementDefinition Id="e34d544e-0fea-4ed6-ac5e-1b74119ac791" />
-      </profileInstance>
-      <elementDefinition Id="0caec977-1f8c-4ba3-a7db-8cc9ad9cc73b" />
-    </packageHasProfileInstances>
-    <packageHasProfileInstances Id="6614b898-48b6-47c5-9e85-5b489ac57aca">
-      <profileInstance Id="ae881da6-45ba-48ac-8b10-b0bb90b306d4" name="StandardProfileL3">
-        <elementDefinition Id="532ea607-fb19-44b8-8502-3351b05452be" />
-      </profileInstance>
-      <elementDefinition Id="29349502-908c-4fda-9054-c48619c59ed0" />
-    </packageHasProfileInstances>
-  </profileInstances>
   <packagedElements>
     <useCaseModelRootHasTypes>
       <actor Id="02e83b13-36fc-4670-8b28-a4a9b9bd9e21" name="User" isAbstract="false" isLeaf="false">
@@ -79,7 +60,7 @@
             <elementDefinition Id="427e74f2-354f-4fe4-9826-1084649177db" />
           </extend>
           <extend Id="055f5100-da34-4eec-bce7-8d865a51ab04">
-            <useCaseMoniker Id="4109044c-f981-4071-b887-3fb7ca230413" LastKnownName="Fourth Form" />
+            <useCaseMoniker Id="4109044c-f981-4071-b887-3fb7ca230413" LastKnownName="BC Form" />
             <elementDefinition Id="dcead755-18de-4d44-bfe5-95992b14462a" />
           </extend>
           <extend Id="75f2adbc-9ba8-4496-9e94-f80de3d0bdeb">
@@ -146,7 +127,7 @@
             <elementDefinition Id="688b0808-e35f-413a-919c-e86ba28706a6" />
           </association>
           <association Id="3de519c2-a507-423a-95bf-869a10536f44" isDerived="false" sourceEndRoleName="System" targetEndRoleName="Fourth Form" isLeaf="false" isAbstract="false">
-            <useCaseMoniker Id="4109044c-f981-4071-b887-3fb7ca230413" LastKnownName="Fourth Form" />
+            <useCaseMoniker Id="4109044c-f981-4071-b887-3fb7ca230413" LastKnownName="BC Form" />
             <relationshipOwnedElementsInternal>
               <associationHasOwnedEnds>
                 <memberEnd Id="8a3bd00c-8704-4ca9-91cb-2212c82c2cff" name="System" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
@@ -180,12 +161,26 @@
       </useCase>
     </useCaseModelRootHasTypes>
     <useCaseModelRootHasTypes>
-      <useCase Id="4109044c-f981-4071-b887-3fb7ca230413" name="Fourth Form" isAbstract="false" isLeaf="false">
+      <useCase Id="4109044c-f981-4071-b887-3fb7ca230413" name="BC Form" isAbstract="false" isLeaf="false">
         <elementDefinition Id="1ffd32e1-2a17-4545-a62d-1fa217785b38" />
       </useCase>
     </useCaseModelRootHasTypes>
   </packagedElements>
   <package Id="a7d8000e-b6a4-4424-b301-c15f4f48e61d" name="SystemModel">
     <elementDefinition Id="857bb77c-b5ff-4ec1-8208-ff5bde071018" />
+    <profileInstances>
+      <packageHasProfileInstances Id="faa73c9d-2f55-4199-aeba-55e01bf35ba9">
+        <profileInstance Id="70041fda-e504-4829-bff8-6970162f8a8d" name="StandardProfileL2">
+          <elementDefinition Id="e34d544e-0fea-4ed6-ac5e-1b74119ac791" />
+        </profileInstance>
+        <elementDefinition Id="0caec977-1f8c-4ba3-a7db-8cc9ad9cc73b" />
+      </packageHasProfileInstances>
+      <packageHasProfileInstances Id="6614b898-48b6-47c5-9e85-5b489ac57aca">
+        <profileInstance Id="ae881da6-45ba-48ac-8b10-b0bb90b306d4" name="StandardProfileL3">
+          <elementDefinition Id="532ea607-fb19-44b8-8502-3351b05452be" />
+        </profileInstance>
+        <elementDefinition Id="29349502-908c-4fda-9054-c48619c59ed0" />
+      </packageHasProfileInstances>
+    </profileInstances>
   </package>
 </useCaseModelRoot>
