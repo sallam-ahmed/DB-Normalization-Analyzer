@@ -7,37 +7,41 @@ namespace DBNormalizationAnalyzer_AnalyzerLibrary
     class NfChecker
     {
         public FunctionalDependency Fd { get; set; }
+        public NfChecker()
+        {
+            Fd = null;
+        }
 
         public NfChecker(FunctionalDependency fd)
         {
             Fd = fd;
         }
 
-        public Tuple<Error, Suggestion> Check()
+        public Error Check()
         {
             var res = FirstNormalForm();
-            if (res.Item1.Level != 0)
+            if (res.Level != 0)
                 return res;
             res = SecondNormalForm();
-            if (res.Item1.Level != 0)
+            if (res.Level != 0)
                 return res;
             res = ThirdNormalForm();
-            if (res.Item1.Level != 0)
+            if (res.Level != 0)
                 return res;
             res = BcNormalForm();
-            if(res.Item1.Level == 0)
-                res = new Tuple<Error, Suggestion>(new Error("Mbrouk",0), res.Item2);
+            if (res.Level == 0)
+                res.Message = "Mbrouk";
             return res;
         }
 
         #region 1NF
-        private Tuple<Error, Suggestion> FirstNormalForm()
+        private Error FirstNormalForm()
         {
-            var res = new Tuple<Error, Suggestion>(new Error("", 0), new Suggestion());
+            var res = new Error("",0);
             if (Fd.IsCandidateKey(Fd.CurrentPrimaryKey))
                 return res;
-            var newError = new Error("Primary Key isn't candidate key", 1);
-            var newSuggestion = new Suggestion();
+            res.Message = "Primary Key isn't candidate key!";
+            res.Level = 1;
             var newTable = new BitArray(Fd.Keys.Count);
             newTable.SetAll(true);
             var newKey = Fd.CurrentPrimaryKey;
@@ -69,16 +73,15 @@ namespace DBNormalizationAnalyzer_AnalyzerLibrary
                 clone[key] = !Fd.IsSuperKey(clone);
             }
             newKey = clone;
-            res = new Tuple<Error, Suggestion>(newError,newSuggestion);
+            res.SuggestedSplit.Add(new Tuple<BitArray, BitArray>(newTable,newKey));
             return res;
         }
         #endregion
         #region 2NF
 
-        private Tuple<Error, Suggestion> SecondNormalForm()
+        private Error SecondNormalForm()
         {
-            var res = new Tuple<Error, Suggestion>(new Error("", 0), new Suggestion());
-            var newSuggestion = new Suggestion();
+            var res = new Error("",0);
             var newTable = new BitArray(Fd.Keys.Count);
             newTable.SetAll(true);
             foreach (var candidateKey in Fd.SufficientCandidateKeys)
@@ -101,31 +104,31 @@ namespace DBNormalizationAnalyzer_AnalyzerLibrary
                             if (!Fd.Reachability(temp)[npKey])
                                 temp[rdKey] = true;
                         }
-                        var index = newSuggestion.SuggestedSplit.FindIndex(split => split.Item1.Equals(temp));
+                        var index = res.SuggestedSplit.FindIndex(split => split.Item1.Equals(temp));
                         var nextTable = new BitArray(Fd.Keys.Count) {[npKey] = true};
                         if (index != -1)
                         {
-                            nextTable.Or(newSuggestion.SuggestedSplit[index].Item2);
-                            newSuggestion.SuggestedSplit[index] = new Tuple<BitArray, BitArray>(temp,
+                            nextTable.Or(res.SuggestedSplit[index].Item2);
+                            res.SuggestedSplit[index] = new Tuple<BitArray, BitArray>(temp,
                                 nextTable);
                         }
-                        newSuggestion.SuggestedSplit.Add(new Tuple<BitArray, BitArray>(temp, nextTable));
+                        res.SuggestedSplit.Add(new Tuple<BitArray, BitArray>(temp, nextTable));
                     }
                 }
             }
-            if (newSuggestion.SuggestedSplit.Count != 0)
+            if (res.SuggestedSplit.Count != 0)
             {
-                newSuggestion.SuggestedSplit.Add(new Tuple<BitArray, BitArray>(newTable,Fd.CurrentPrimaryKey));
-                var newError = new Error("Table contains Partial Dependency!",2);
-                res = new Tuple<Error, Suggestion>(newError,newSuggestion);
+                res.SuggestedSplit.Add(new Tuple<BitArray, BitArray>(newTable,Fd.CurrentPrimaryKey));
+                res.Message = "Table contains Partial Dependency!";
+                res.Level = 2;
             }
             return res;
         }
         #endregion
         #region 3NF
-        private Tuple<Error, Suggestion> ThirdNormalForm()
+        private Error ThirdNormalForm()
         {
-            var res = new Tuple<Error, Suggestion>(new Error("", 0), new Suggestion());
+            var res = new Error("",0);
             if (
                 Fd.DependencyList.All(
                     dependency =>
@@ -136,8 +139,7 @@ namespace DBNormalizationAnalyzer_AnalyzerLibrary
             }
             var table = new BitArray(Fd.Keys.Count);
             table.SetAll(true);
-            var newSuggestion = new Suggestion();
-            newSuggestion.SuggestedSplit.Add(new Tuple<BitArray, BitArray>(table,Fd.CurrentPrimaryKey));
+            res.SuggestedSplit.Add(new Tuple<BitArray, BitArray>(table,Fd.CurrentPrimaryKey));
             foreach (var dependency in Fd.DependencyList.Where(dependency => !Fd.IsSuperKey(dependency.Item1) && !Fd.Keys.All(key => !dependency.Item2[key] || Fd.IsPrimeKey(key))))
             {
                 var current = new BitArray(Fd.Keys.Count);
@@ -147,12 +149,11 @@ namespace DBNormalizationAnalyzer_AnalyzerLibrary
                 }
                 if (!current.ToString().Contains('1'))
                     continue;
-                var index = newSuggestion.SuggestedSplit.FindIndex(newTable => newTable.Item1.Equals(dependency.Item1));
+                var index = res.SuggestedSplit.FindIndex(newTable => newTable.Item1.Equals(dependency.Item1));
                 if(index != -1) { 
-                    newSuggestion.SuggestedSplit[index] = new Tuple<BitArray, BitArray>(dependency.Item1,
-                        newSuggestion.SuggestedSplit[index].Item2.Or(current));
+                    res.SuggestedSplit[index].Item2.Or(current);
                 }else{ 
-                    newSuggestion.SuggestedSplit.Add(new Tuple<BitArray, BitArray>(dependency.Item1,current));
+                    res.SuggestedSplit.Add(new Tuple<BitArray, BitArray>(dependency.Item1,current));
                 }
                 foreach (var key in Fd.Keys)
                 {
@@ -160,19 +161,19 @@ namespace DBNormalizationAnalyzer_AnalyzerLibrary
                 }
                 table = current;
             }
-            var newError = new Error("Table contains transitive dependency", 3);
-            res = new Tuple<Error, Suggestion>(newError,newSuggestion);
+            res.Message = "Table contains transitive dependency!";
+            res.Level = 3;
             return res;
         }
         #endregion
         #region BCNF
-        private Tuple<Error, Suggestion> BcNormalForm()
+        private Error BcNormalForm()
         {
-            var res = new Tuple<Error, Suggestion>(new Error("", 0), new Suggestion());
+            var res = new Error("", 0);
             if (Fd.DependencyList.All(dependency => Fd.IsSuperKey(dependency.Item1)))
                 return res;
-            var newError = new Error("Some attributes doesn't depend on the whole key!", 4);
-            res = new Tuple<Error, Suggestion>(newError, new Suggestion());
+            res.Message = "Some attributes doesn't depend on the whole key!";
+            res.Level = 4;
             /* 
             * If you wonder why there is no suggestion, read the following:
             * In some cases, a non-BCNF table cannot be decomposed into tables that satisfy BCNF and preserve the dependencies that held in the original table.[BCBP79]

@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace DBNormalizationAnalyzer_AnalyzerLibrary
 {
-    class FunctionalDependency
+    public class FunctionalDependency
     {
 
         public List<Tuple<BitArray, BitArray> > DependencyList { get; }
@@ -17,7 +17,7 @@ namespace DBNormalizationAnalyzer_AnalyzerLibrary
 
         public List<BitArray> SufficientCandidateKeys;
 
-        public readonly List<int> Keys;
+        public List<int> Keys;
 
         private bool _prepared;
         private BitArray _prime;
@@ -76,15 +76,90 @@ namespace DBNormalizationAnalyzer_AnalyzerLibrary
                 return;
             if (to.Count != Keys.Count)
                 return;
-            to = to.And(from.Not());
+            to.And(Utils.Not(from));
             var index =
-                DependencyList.FindIndex(tuple => tuple.Item1.Equals(from));
+                DependencyList.FindIndex(tuple => tuple.Item1.EqualsTo(from));
             if (index != -1)
-                DependencyList[index] = new Tuple<BitArray, BitArray>(from,
-                    DependencyList[index].Item2.Or(to));
+                DependencyList[index].Item2.Or(to);
             else
                 DependencyList.Add(new Tuple<BitArray, BitArray>(from, to));
             _prepared = false;
+        }
+
+        public void RemoveDependency(BitArray from, BitArray to)
+        {
+            if (from.Count != Keys.Count)
+                return;
+            if (to.Count != Keys.Count)
+                return;
+            to.And(Utils.Not(from));
+            var index =
+                DependencyList.FindIndex(tuple => tuple.Item1.EqualsTo(from));
+            if (index == -1)
+                throw new ArgumentOutOfRangeException();
+            if (to.EqualsTo(DependencyList[index].Item2))
+                DependencyList.RemoveAt(index);
+            else
+                DependencyList[index].Item2.And(Utils.Not(to));
+            _prepared = false;
+        }
+
+        public void RemoveKey(int index)
+        {
+            if(Keys.Count <= index)
+                return;
+            Keys = Enumerable.Range(0, Keys.Count - 1).ToList();
+            foreach (var key in Keys.Where(key => CurrentPrimaryKey[key + (key >= index ? 1 : 0)]))
+            {
+                CurrentPrimaryKey[key] = true;
+            }
+            CurrentPrimaryKey.Resize(Keys.Count);
+            for (var i = 0; i < DependencyList.Count; i++)
+            {
+                if (DependencyList[i].Item1[index])
+                {
+                    DependencyList.RemoveAt(i);
+                    i--;
+                    continue;
+                }
+                var newDependent = new BitArray(Keys.Count);
+                var newIndependent = new BitArray(Keys.Count);
+                var foundDependent = false;
+                foreach (var key in Keys)
+                {
+                    if (DependencyList[i].Item1[key + (key >= index ? 1 : 0)])
+                        newIndependent[key] = true;
+                    if (DependencyList[i].Item2[key + (key >= index ? 1 : 0)])
+                        newDependent[key] = foundDependent = true;
+
+                }
+                if(!foundDependent)
+                {
+                    DependencyList.RemoveAt(i);
+                    i--;
+                    continue;
+                }
+                DependencyList[i] = new Tuple<BitArray, BitArray>(newIndependent,newDependent);
+            }
+        }
+
+        public void AddKey()
+        {
+            Keys.Add(Keys.Count);
+            CurrentPrimaryKey.Resize(Keys.Count);
+            for (var i = 0; i < DependencyList.Count; i++)
+            {
+                var newDependent = new BitArray(Keys.Count);
+                var newIndependent = new BitArray(Keys.Count);
+                foreach (var key in Keys)
+                {
+                    if (key + 1 == Keys.Count)
+                        continue;
+                    newDependent[key] = DependencyList[i].Item2[key];
+                    newIndependent[key] = DependencyList[i].Item1[key];
+                }
+                DependencyList[i] = new Tuple<BitArray, BitArray>(newIndependent,newDependent);
+            }
         }
 
         private void Minimalize()
@@ -102,11 +177,12 @@ namespace DBNormalizationAnalyzer_AnalyzerLibrary
                             continue;
                         if (!DependencyList[i].Item1.IsSuperSet(DependencyList[j].Item1))
                             continue;
-                        change |= DependencyList[i].Item2.And(DependencyList[j].Item2).ToBitString().Contains('1');
-                        change |= DependencyList[i].Item1.And(DependencyList[j].Item2).ToBitString().Contains('1');
-                        DependencyList[i] =
-                            new Tuple<BitArray, BitArray>(DependencyList[i].Item1.And(DependencyList[j].Item2.Not()),
-                                DependencyList[i].Item2.And(DependencyList[j].Item2.Not()));
+                        foreach (var key in Keys.Where(key => DependencyList[j].Item2[key]))
+                        {
+                            change |= DependencyList[i].Item2[key] || DependencyList[i].Item1[key];
+                            DependencyList[i].Item1.Set(key,false);
+                            DependencyList[i].Item2.Set(key, false);
+                        }
                     }
                 }
                 if (!change)
@@ -116,9 +192,9 @@ namespace DBNormalizationAnalyzer_AnalyzerLibrary
                 {
                     for (var j = i+1; j < DependencyList.Count; j++)
                     {
-                        if (!DependencyList[i].Item1.Equals(DependencyList[j].Item1.Not()))
+                        if (!DependencyList[i].Item1.EqualsTo(Utils.Not(DependencyList[j].Item1)))
                             continue;
-                        DependencyList[i] = new Tuple<BitArray, BitArray>(DependencyList[i].Item1,DependencyList[i].Item2.Or(DependencyList[j].Item2));
+                        DependencyList[i].Item2.Or(DependencyList[j].Item2);
                         DependencyList.RemoveAt(j);
                         j--;
                     }
@@ -128,6 +204,9 @@ namespace DBNormalizationAnalyzer_AnalyzerLibrary
 
         private void Divide()
         {
+            Left = new List<int>();
+            Right = new List<int>();
+            Middle = new List<int>();
             foreach (var dependency in DependencyList)
             {
                 for (var i = 0; i < Keys.Count; i++)
@@ -170,8 +249,8 @@ namespace DBNormalizationAnalyzer_AnalyzerLibrary
                 {
                     if (!keys.IsSuperSet(dependency.Item1))
                         continue;
-                    var temp = keys.Or(dependency.Item2);
-                    change |= !temp.Equals(keys);
+                    var temp = Utils.Or(keys,dependency.Item2);
+                    change |= !temp.EqualsTo(keys);
                     keys = temp;
                 }
             }
@@ -180,6 +259,7 @@ namespace DBNormalizationAnalyzer_AnalyzerLibrary
 
         private void GetPrimes()
         {
+            _prime = new BitArray(Keys.Count);
             var leftBits = new BitArray(Keys.Count);
             foreach (var key in Left)
             {

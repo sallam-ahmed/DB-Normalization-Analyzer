@@ -6,7 +6,7 @@ namespace DBNormalizationAnalyzer_AnalyzerLibrary
     internal class Graph
     {
         public List<int> Scc;
-        private List<List<int>> _adjacencyList;
+        private readonly List<List<int>> _adjacencyList;
         private Stack<int> _s, _p;
         private List<int> _preoder;
         private int _d, _current;
