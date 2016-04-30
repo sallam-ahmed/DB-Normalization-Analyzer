@@ -108,6 +108,7 @@ namespace DBNormalizationAnalyzer_AnalyzerLibrary
         {
             if(Keys.Count <= index)
                 return;
+            _prepared = false;
             Keys = Enumerable.Range(0, Keys.Count - 1).ToList();
             foreach (var key in Keys.Where(key => CurrentPrimaryKey[key + (key >= index ? 1 : 0)]))
             {
@@ -145,16 +146,14 @@ namespace DBNormalizationAnalyzer_AnalyzerLibrary
 
         public void AddKey()
         {
+            _prepared = false;
             Keys.Add(Keys.Count);
             CurrentPrimaryKey.Resize(Keys.Count);
             for (var i = 0; i < DependencyList.Count; i++)
             {
                 var newDependent = new BitArray(Keys.Count);
                 var newIndependent = new BitArray(Keys.Count);
-                foreach (var key in Keys)
-                {
-                    if (key + 1 == Keys.Count)
-                        continue;
+                for(var key = 0;key + 1 < Keys.Count; key++) { 
                     newDependent[key] = DependencyList[i].Item2[key];
                     newIndependent[key] = DependencyList[i].Item1[key];
                 }

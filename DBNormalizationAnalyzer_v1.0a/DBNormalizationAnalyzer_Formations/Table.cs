@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using DBNormalizationAnalyzer_AnalyzerLibrary;
 
 namespace DBNormalizationAnalyzer_Formations
 {
     public class Table
     {
-        public int ColumnsCount { get; private set; }
+        public int ColumnsCount { get; }
         public List<Column> Columns { get; set; }
         public FunctionalDependency TableDependency { get; set; }
         
@@ -17,6 +18,7 @@ namespace DBNormalizationAnalyzer_Formations
         {
             ColumnsCount = columnsCount;
             Columns = new List<Column>(ColumnsCount);
+            Columns.AddRange(Enumerable.Repeat(new Column(""),columnsCount));
             TableDependency = new FunctionalDependency(columnsCount, new BitArray(columnsCount));
         }
         public Table(List<Column> columns)
@@ -51,6 +53,13 @@ namespace DBNormalizationAnalyzer_Formations
             }
             return res;
         }
+
+        public List<Column> BitList(BitArray columns)
+        {
+            if(columns.Count != Columns.Count)
+                throw new ArgumentException();
+            return Columns.Where((t, i) => columns[i]).ToList();
+        } 
 
         public void RemoveColumn(Column column)
         {
