@@ -30,6 +30,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="DBNormalizationAnalyzer_AnalyzerLibrary">
+      <HintPath>..\DBNormalizationAnalyzer_AnalyzerLibrary\bin\Debug\DBNormalizationAnalyzer_AnalyzerLibrary.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -41,7 +44,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Column.cs" />
-    <Compile Include="Constraints.cs" />
     <Compile Include="Database.cs" />
     <Compile Include="Table.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -2,122 +2,394 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Data;
-using System.Diagnostics;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DBNormalizationAnalyzer_AnalyzerLibrary
 {
-    internal class FunctionalDependency
+    public class FunctionalDependency
     {
 
-        public List<Tuple<List<int>, List<int>> > DependencyList { get; private set; }
+        public List<Tuple<BitArray, BitArray> > DependencyList { get; }
 
-        public List<int> CurrentPrimaryKey { get; set; }
+        public BitArray CurrentPrimaryKey { get; set; }
+        
+        public List<int> Left, Middle, Right;
 
-        public Graph mGraph { get; private set; }
+        public List<BitArray> SufficientCandidateKeys;
 
-        private bool _minimalized;
+        public List<int> Keys;
 
-        private readonly int _keysCount;
-
-        public FunctionalDependency(int keysCount)
+        private bool _prepared;
+        private BitArray _prime;
+        public FunctionalDependency(int keysCount, BitArray primaryKey)
         {
-            _keysCount = keysCount;
+            Keys = Enumerable.Range(0, keysCount).ToList();
+            _prepared = false;
+            SufficientCandidateKeys = new List<BitArray>();
+            Left = new List<int>();
+            Middle = new List<int>();
+            Right = new List<int>();
+            _prime = new BitArray(keysCount);
+            CurrentPrimaryKey = primaryKey;
+            DependencyList = new List<Tuple<BitArray, BitArray>>();
         }
 
-        public bool IsSubset(List<int> a, List<int> b)
-        {
-            return b.TrueForAll(a.Contains);
-        }
         public bool IsPrimeKey(int key)
         {
             Prepare();
-            return mGraph.IsPrime(key);
+            return _prime[key];
         }
 
-        public bool IsSuperKey(List<int> keys)
+        public bool IsSuperKey(BitArray keys)
         {
             Prepare();
-            return !mGraph.GetReachability(keys).ToString().Contains('0');
+            return !Reachability(keys).ToBitString().Contains('0');
         }
 
-        public bool IsCandidateKey(List<int> keys)
+        public bool IsCandidateKey(BitArray keys)
         {
-            if (!IsSuperKey(keys)) return false;
+            if (!IsSuperKey(keys))
+                return false;
+
             var clone = keys;
-            foreach (var key in keys)
+            if (Left.Any(key => !keys[key]))
+                return false;
+            if (Keys.Any(key => keys[key] && !IsPrimeKey(key)))
+                return false;
+            for(var i = 0;i < Keys.Count;i++)
             {
-                if (!mGraph.IsPrime(key))
+                if (!keys[i])
+                    continue;
+                if (Left.Contains(i))
+                    continue;
+                clone[i] = false;
+                if (IsSuperKey(clone))
                     return false;
-                clone.Remove(key);
-                if (!mGraph.GetReachability(keys).ToString().Contains('0'))
-                    return false;
-                clone.Add(key);
+                clone[i] = true;
             }
             return true;
         }
 
-        public void AddDependency(List<int> from, List<int> to)
+        public void AddDependency(BitArray from, BitArray to)
         {
-            to.RemoveAll(from.Contains);
-            var toAdd = new Tuple<List<int>, List<int>>(from, to);
-            if (!DependencyList.Contains(toAdd))
+            if(from.Count != Keys.Count)
+                return;
+            if (to.Count != Keys.Count)
+                return;
+            to.And(Utils.Not(from));
+            var index =
+                DependencyList.FindIndex(tuple => tuple.Item1.EqualsTo(from));
+            if (index != -1)
+                DependencyList[index].Item2.Or(to);
+            else
+                DependencyList.Add(new Tuple<BitArray, BitArray>(from, to));
+            _prepared = false;
+        }
+
+        public void RemoveDependency(BitArray from, BitArray to)
+        {
+            if (from.Count != Keys.Count)
+                return;
+            if (to.Count != Keys.Count)
+                return;
+            to.And(Utils.Not(from));
+            var index =
+                DependencyList.FindIndex(tuple => tuple.Item1.EqualsTo(from));
+            if (index == -1)
+                throw new ArgumentOutOfRangeException();
+            if (to.EqualsTo(DependencyList[index].Item2))
+                DependencyList.RemoveAt(index);
+            else
+                DependencyList[index].Item2.And(Utils.Not(to));
+            _prepared = false;
+        }
+
+        public void RemoveKey(int index)
+        {
+            if(Keys.Count <= index)
+                return;
+            _prepared = false;
+            Keys = Enumerable.Range(0, Keys.Count - 1).ToList();
+            foreach (var key in Keys.Where(key => CurrentPrimaryKey[key + (key >= index ? 1 : 0)]))
             {
-                DependencyList.Add(toAdd);
-                _minimalized = false;
+                CurrentPrimaryKey[key] = true;
+            }
+            CurrentPrimaryKey.Resize(Keys.Count);
+            for (var i = 0; i < DependencyList.Count; i++)
+            {
+                if (DependencyList[i].Item1[index])
+                {
+                    DependencyList.RemoveAt(i);
+                    i--;
+                    continue;
+                }
+                var newDependent = new BitArray(Keys.Count);
+                var newIndependent = new BitArray(Keys.Count);
+                var foundDependent = false;
+                foreach (var key in Keys)
+                {
+                    if (DependencyList[i].Item1[key + (key >= index ? 1 : 0)])
+                        newIndependent[key] = true;
+                    if (DependencyList[i].Item2[key + (key >= index ? 1 : 0)])
+                        newDependent[key] = foundDependent = true;
+
+                }
+                if(!foundDependent)
+                {
+                    DependencyList.RemoveAt(i);
+                    i--;
+                    continue;
+                }
+                DependencyList[i] = new Tuple<BitArray, BitArray>(newIndependent,newDependent);
+            }
+        }
+
+        public void AddKey()
+        {
+            _prepared = false;
+            Keys.Add(Keys.Count);
+            CurrentPrimaryKey.Resize(Keys.Count);
+            for (var i = 0; i < DependencyList.Count; i++)
+            {
+                var newDependent = new BitArray(Keys.Count);
+                var newIndependent = new BitArray(Keys.Count);
+                for(var key = 0;key + 1 < Keys.Count; key++) { 
+                    newDependent[key] = DependencyList[i].Item2[key];
+                    newIndependent[key] = DependencyList[i].Item1[key];
+                }
+                DependencyList[i] = new Tuple<BitArray, BitArray>(newIndependent,newDependent);
             }
         }
 
         private void Minimalize()
         {
-            if (_minimalized) return;
+            if (_prepared)
+                return;
+            while (true)
+            {
+                var change = false;
+                for(var i = 0;i < DependencyList.Count;i++)
+                {
+                    for (var j = 0; j < DependencyList.Count; j++)
+                    {
+                        if (i == j)
+                            continue;
+                        if (!DependencyList[i].Item1.IsSuperSet(DependencyList[j].Item1))
+                            continue;
+                        foreach (var key in Keys.Where(key => DependencyList[j].Item2[key]))
+                        {
+                            change |= DependencyList[i].Item2[key] || DependencyList[i].Item1[key];
+                            DependencyList[i].Item1.Set(key,false);
+                            DependencyList[i].Item2.Set(key, false);
+                        }
+                    }
+                }
+                if (!change)
+                    break;
+                DependencyList.RemoveAll(dependency => !dependency.Item2.ToBitString().Contains('1'));
+                for (var i = 0; i < DependencyList.Count; i++)
+                {
+                    for (var j = i+1; j < DependencyList.Count; j++)
+                    {
+                        if (!DependencyList[i].Item1.EqualsTo(Utils.Not(DependencyList[j].Item1)))
+                            continue;
+                        DependencyList[i].Item2.Or(DependencyList[j].Item2);
+                        DependencyList.RemoveAt(j);
+                        j--;
+                    }
+                }
+            }
+        }
+
+        private void Divide()
+        {
+            Left = new List<int>();
+            Right = new List<int>();
+            Middle = new List<int>();
+            foreach (var dependency in DependencyList)
+            {
+                for (var i = 0; i < Keys.Count; i++)
+                {
+                    if (dependency.Item1.Get(i))
+                    {
+                        if (Right.Contains(i))
+                        {
+                            Right.Remove(i);
+                            Middle.Add(i);
+                        }
+                        else if (!Middle.Contains(i))
+                            Left.Add(i);
+                    }
+                    if (dependency.Item2.Get(i))
+                    {
+                        if(Left.Contains(i))
+                        {
+                            Left.Remove(i);
+                            Middle.Add(i);
+                        }
+                        else if (!Middle.Contains(i))
+                            Right.Add(i);
+                    }
+                }
+            }
+            Left.AddRange(
+                Enumerable.Range(0, Keys.Count)
+                    .Where(key => !(Left.Contains(key) || Right.Contains(key) || Middle.Contains(key))));
+        }
+
+        public BitArray Reachability(BitArray keys)
+        {
+            var res = new BitArray(Keys.Count);
             var change = true;
             while (change)
             {
                 change = false;
-                DependencyList.Sort((t1, t2) => (t1.Item1.Count.CompareTo(t2.Item1.Count)));
-                for (var i = 0; i < DependencyList.Count; i++)
+                foreach (var dependency in DependencyList)
                 {
-                    for (var j = i + 1; j < DependencyList.Count && DependencyList[j].Item1 == DependencyList[i].Item1;)
-                    {
-                        var toAdd = DependencyList[j].Item2.Where(key => !DependencyList[i].Item2.Contains(key)).ToList();
-                        change |= toAdd.Count != 0;
-                        DependencyList[i].Item2.AddRange(toAdd);
-                        DependencyList.RemoveAt(j);
-                    }
+                    if (!keys.IsSuperSet(dependency.Item1))
+                        continue;
+                    var temp = Utils.Or(keys,dependency.Item2);
+                    change |= !temp.EqualsTo(keys);
+                    keys = temp;
                 }
-                var n = DependencyList.Count;
-                for (var i = n - 1; DependencyList[i].Item1.Count > DependencyList[0].Item1.Count; i--)
-                {
-                    for (var j = 0; j < i; j++)
-                    {
-                        if (!IsSubset(DependencyList[i].Item1, DependencyList[j].Item1)) continue;
-                        change |= DependencyList[i].Item2.RemoveAll(key => DependencyList[j].Item2.Contains(key)) 
-                                  != 0;
-                        change |= DependencyList[i].Item1.RemoveAll(key => DependencyList[j].Item2.Contains(key))
-                                  != 0;
-                    }
-                }
-                change |= DependencyList.RemoveAll(dependency => dependency.Item2.Count == 0) != 0;
+            }
+            return res;
+        }
 
+        private void GetPrimes()
+        {
+            _prime = new BitArray(Keys.Count);
+            var leftBits = new BitArray(Keys.Count);
+            foreach (var key in Left)
+            {
+                _prime[key] = leftBits[key] = true;
+            }
+            foreach (var key in Right)
+            {
+                _prime[key] = false;
+            }
+            foreach (var key in Middle)
+            {
+                _prime[key] = false;
+            }
+            var currentCover = Reachability(leftBits);
+            var candidates = Middle;
+            candidates.RemoveAll(key => currentCover[key]);
+            if (candidates.Count == 0)
+                return;
+            var graph = new Graph(Keys.Count);
+            foreach (var dependency in DependencyList)
+            {
+                var str = dependency.Item1.ToBitString();
+                if (str.Count(c => c == '1') != 1)
+                    continue;
+                var index = str.IndexOf('1');
+                if (!candidates.Contains(index))
+                    continue;
+                for (var i = 0; i < Keys.Count; i++)
+                {
+                    if(dependency.Item2[i] && candidates.Contains(i))
+                        graph.AddEdge(index,i);
+                }
+            }
+            graph.GetSccs();
+            var sccs = new List<List<int>>();
+            for (var i = 0; i < candidates.Count; i++)
+            {
+                sccs.Add(new List<int>());
+                sccs.Last().Add(candidates[i]);
+                for (var j = i + 1; j < candidates.Count; j++)
+                {
+                    if (graph.Scc[candidates[i]] != graph.Scc[candidates[j]])
+                        continue;
+                    sccs.Last().Add(candidates[j]);
+                    candidates.RemoveAt(j);
+                    j--;
+                }
+            }
+            for (var i = 0; i < candidates.Count; i++)
+            {
+                var currentKey = new BitArray(Keys.Count) {[candidates[i]] = true};
+                var coveredByKey = Reachability(currentKey);
+                if (sccs[i].Any(candidate => DependencyList.Any(dependency => dependency.Item2[candidate] && Keys.Any(key => dependency.Item1[key] && !coveredByKey[key]))))
+                    continue;
+                foreach (var key in sccs[i])
+                {
+                    _prime[key] = true;
+                    leftBits[key] = true;
+                    Left.Add(key);
+                    Middle.Remove(key);
+                }
+                sccs.RemoveAt(i);
+                candidates.RemoveAt(i);
+                i--;
+            }
+            currentCover = Reachability(leftBits);
+            for (var i = 0; i < candidates.Count; i++)
+            {
+                if (!currentCover[candidates[i]])
+                    continue;
+                foreach (var key in sccs[i])
+                {
+                    _prime[key] = false;
+                }
+                sccs.RemoveAt(i);
+                candidates.RemoveAt(i);
+                i--;
+            }
+            if (candidates.Count == 0)
+            {
+                SufficientCandidateKeys.Add(leftBits);
+                return;
+            }
+            // I claim by this line, the number of candidates can't be more than 16; given that the number of attributes isn't more than 4069, but who  knows!
+            if (candidates.Count > 20)
+            {
+                throw new ConstraintException("Too many attributes!");
+            }
+            var foundSets = new List<int>();
+            for (var i = 1; i < (1 << candidates.Count); i++)
+            {
+                var currentSet = leftBits;
+                var newSet = false;
+                for (var j = 0; j < candidates.Count; j++)
+                    if ((i & (1 << j)) != 0)
+                    {
+                        currentSet[candidates[j]] = true;
+                        newSet |= !_prime[candidates[j]];
+                    }
+                if (!newSet)
+                    continue;
+                if (foundSets.Any(set => (i & set) == set))
+                {
+                    i += i & -i;
+                    i--;
+                    continue;
+                }
+                if(!IsSuperKey(currentSet))
+                    continue;
+                foundSets.Add(i);
+                SufficientCandidateKeys.Add(currentSet);
+                for (var j = 0; j < candidates.Count; j++)
+                    if ((i & (1 << j)) != 0 && !_prime[candidates[j]])
+                    {
+                        foreach (var k in sccs[j])
+                        {
+                            _prime[k] = true;
+                        }
+                    }
+                i += i & -i;
+                i--;
             }
         }
 
         private void Prepare()
         {
-            if (_minimalized) return;
+            if (_prepared) return;
             Minimalize();
-            mGraph = new Graph(_keysCount);
-            foreach (var dependency in DependencyList)
-            {
-                foreach (var key in dependency.Item2)
-                {
-                    mGraph.AddEdge(dependency.Item1,new List<int> {key});
-                }   
-            }
-            _minimalized = true;
+            Divide();
+            GetPrimes();
+            _prepared = true;
         }
     }
 }

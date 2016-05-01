@@ -82,6 +82,12 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DBNormalizationAnalyzer_AnalyzerLibrary\DBNormalizationAnalyzer_AnalyzerLibrary.csproj">
+      <Project>{87302a5e-9d9f-4c68-8387-e45161aabb81}</Project>
+      <Name>DBNormalizationAnalyzer_AnalyzerLibrary</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -1,13 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using DBNormalizationAnalyzer_Formations;
+using System.Collections;
 
 namespace DBNormalizationAnalyzer_UserInterface
 {
@@ -15,13 +11,19 @@ namespace DBNormalizationAnalyzer_UserInterface
     public partial class MainForm : Form
     {
         #region Variables
-        public static bool bHasChanges = false;
+        public static bool bHasChanges;
         public string commandBuilder = "";
         private Database m_projectDB;
+        private Table currentTable;
+        List<Table> Tables;
         #endregion
         public MainForm()
         {
             InitializeComponent();
+            Tables = new List<Table>();
+            currentTable = new Table(10);
+            for (var i = 0; i < 10; i++)
+                currentTable.Columns.Add(new Column(Convert.ToChar(Convert.ToInt32('a') + i).ToString()));
         }
         /// <summary>
         /// Controls all the buttons actions in the main form
@@ -30,7 +32,7 @@ namespace DBNormalizationAnalyzer_UserInterface
         /// <param name="e"></param>
         private void PerformButtonActions(object sender,EventArgs e)
         {
-            switch ((sender as Button).Tag as string)
+            switch ((sender as Button)?.Tag as string)
             {
                 case "Save/Update":
                     break;
@@ -48,13 +50,11 @@ namespace DBNormalizationAnalyzer_UserInterface
                     break;
                 case "Del_Table":
                     break;
-                default:
-                    break;
             }
         }
         private void PerformMenuItemsActions(object sender,EventArgs e)
         {
-            switch ((sender as ToolStripMenuItem).Tag as string)
+            switch ((sender as ToolStripMenuItem)?.Tag as string)
             {
                 /*FILE*/
                 case "New":
@@ -66,6 +66,7 @@ namespace DBNormalizationAnalyzer_UserInterface
                 case "Settings":
                     break;
                 case "Exit":
+                    exitToolStripMenuItem_Click();
                     break;
                     /*EDIT*/
                 case "Cut":
@@ -98,7 +99,7 @@ namespace DBNormalizationAnalyzer_UserInterface
                     break;
             }
         }
-        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        private void exitToolStripMenuItem_Click()
         {
             if (MessageBox.Show("Would you like to exit ?","Exit?",MessageBoxButtons.YesNo,MessageBoxIcon.Question) == DialogResult.Yes)
             {
@@ -125,19 +126,58 @@ namespace DBNormalizationAnalyzer_UserInterface
 
         private void richTextBox1_KeyPress(object sender, KeyPressEventArgs e)
         {
-            
+
             if (e.KeyChar == (char)Keys.Enter)
             {
-                //Accept Data;
-                richTextBox1.AppendText("Command Done\n");
-                richTextBox1.AppendText(commandBuilder);
-                
+                try
+                {
+                    var lastLine = richTextBox1.Text.Split(new[] { '\n' }, StringSplitOptions.RemoveEmptyEntries).Last();
+
+                    if (lastLine.StartsWith("add"))
+                    {
+                        lastLine = lastLine.Remove(0, 3);
+                        lastLine = lastLine.Replace(" ", "").Replace("{", "").Replace("}", "");
+                        var tokens = lastLine.Split(new[] { "->" }, StringSplitOptions.RemoveEmptyEntries);
+
+                        var dep0 = tokens[0].Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+                        var dep1 = tokens[1].Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+                        var cols = dep0.Select(s => new Column(s)).ToList();
+
+                        var from = currentTable.ColumnSet(cols);
+                        cols.Clear();
+
+                        cols.AddRange(dep1.Select(s => new Column(s)));
+
+                        var to = currentTable.ColumnSet(cols);
+                        currentTable.TableDependency.AddDependency(from, to);
+                    }
+                    else if (lastLine.StartsWith("rem"))
+                    {
+                        lastLine = lastLine.Remove(0, 3);
+                        lastLine = lastLine.Replace(" ", "").Replace("{", "").Replace("}", "");
+                        var tokens = lastLine.Split(new[] { "->" }, StringSplitOptions.RemoveEmptyEntries);
+
+                        var dep0 = tokens[0].Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+                        var dep1 = tokens[1].Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+                        var cols = dep0.Select(s => new Column(s)).ToList();
+
+                        var from = currentTable.ColumnSet(cols);
+                        cols.Clear();
+
+                        cols.AddRange(dep1.Select(s => new Column(s)));
+
+                        var to = currentTable.ColumnSet(cols);
+                        currentTable.TableDependency.RemoveDependency(from, to);
+                    }
+
+                    richTextBox1.AppendText("Command Done\n");
+                    richTextBox1.AppendText(commandBuilder);
+                }
+                catch (Exception ex)
+                {
+                    richTextBox1.AppendText(ex.Message);
+                }
             }
-        }
-
-        private void toolStripMenuItem1_Click(object sender, EventArgs e)
-        {
-
         }
     }
 }

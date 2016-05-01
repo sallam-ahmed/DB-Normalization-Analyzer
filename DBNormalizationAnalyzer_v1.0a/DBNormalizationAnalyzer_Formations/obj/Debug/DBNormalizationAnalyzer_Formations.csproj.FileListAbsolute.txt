@@ -1,5 +1,0 @@
-E:\GitHub\DB-Normalization-Analyzer\DBNormalizationAnalyzer_v1.0a\DBNormalizationAnalyzer_Formations\bin\Debug\DBNormalizationAnalyzer_Formations.dll
-E:\GitHub\DB-Normalization-Analyzer\DBNormalizationAnalyzer_v1.0a\DBNormalizationAnalyzer_Formations\bin\Debug\DBNormalizationAnalyzer_Formations.pdb
-E:\GitHub\DB-Normalization-Analyzer\DBNormalizationAnalyzer_v1.0a\DBNormalizationAnalyzer_Formations\obj\Debug\DBNormalizationAnalyzer_Formations.csprojResolveAssemblyReference.cache
-E:\GitHub\DB-Normalization-Analyzer\DBNormalizationAnalyzer_v1.0a\DBNormalizationAnalyzer_Formations\obj\Debug\DBNormalizationAnalyzer_Formations.dll
-E:\GitHub\DB-Normalization-Analyzer\DBNormalizationAnalyzer_v1.0a\DBNormalizationAnalyzer_Formations\obj\Debug\DBNormalizationAnalyzer_Formations.pdb
