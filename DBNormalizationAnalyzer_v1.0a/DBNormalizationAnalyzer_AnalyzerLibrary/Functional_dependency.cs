@@ -366,7 +366,7 @@ namespace DBNormalizationAnalyzer_AnalyzerLibrary
                     i--;
                     continue;
                 }
-                if(!IsSuperKey(currentSet))
+                if(Reachability(currentSet).ToBitString().Contains('0'))
                     continue;
                 foundSets.Add(i);
                 SufficientCandidateKeys.Add(currentSet);

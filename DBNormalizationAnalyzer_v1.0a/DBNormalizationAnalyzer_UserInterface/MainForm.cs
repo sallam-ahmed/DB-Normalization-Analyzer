@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 using DBNormalizationAnalyzer_Formations;
-using System.Collections;
+using DBNormalizationAnalyzer_AnalyzerLibrary;
 
 namespace DBNormalizationAnalyzer_UserInterface
 {
@@ -12,18 +12,17 @@ namespace DBNormalizationAnalyzer_UserInterface
     {
         #region Variables
         public static bool bHasChanges;
-        public string commandBuilder = "";
+        private string _commandBuilder = "";
         private Database m_projectDB;
-        private Table currentTable;
-        List<Table> Tables;
+        private Table _currentTable;
+        private List<Table> Tables;
         #endregion
         public MainForm()
         {
+            m_projectDB = new Database();
             InitializeComponent();
             Tables = new List<Table>();
-            currentTable = new Table(10);
-            for (var i = 0; i < 10; i++)
-                currentTable.Columns.Add(new Column(Convert.ToChar(Convert.ToInt32('a') + i).ToString()));
+            _currentTable = new Table(10);
         }
         /// <summary>
         /// Controls all the buttons actions in the main form
@@ -39,6 +38,7 @@ namespace DBNormalizationAnalyzer_UserInterface
                 case "Commit":
                     break;
                 case "Analyze":
+                    Analyze();
                     break;
                 case "ExportPDF":
                     break;
@@ -124,6 +124,14 @@ namespace DBNormalizationAnalyzer_UserInterface
             bHasChanges = false;
         }
 
+        private void Analyze()
+        {
+            if (_currentTable == null)
+                return;
+            var checker = new NfChecker(_currentTable.TableDependency);
+            var error = checker.Check();
+        }
+
         private void richTextBox1_KeyPress(object sender, KeyPressEventArgs e)
         {
 
@@ -143,13 +151,13 @@ namespace DBNormalizationAnalyzer_UserInterface
                         var dep1 = tokens[1].Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
                         var cols = dep0.Select(s => new Column(s)).ToList();
 
-                        var from = currentTable.ColumnSet(cols);
+                        var from = _currentTable.ColumnSet(cols);
                         cols.Clear();
 
                         cols.AddRange(dep1.Select(s => new Column(s)));
 
-                        var to = currentTable.ColumnSet(cols);
-                        currentTable.TableDependency.AddDependency(from, to);
+                        var to = _currentTable.ColumnSet(cols);
+                        _currentTable.TableDependency.AddDependency(from, to);
                     }
                     else if (lastLine.StartsWith("rem"))
                     {
@@ -161,17 +169,17 @@ namespace DBNormalizationAnalyzer_UserInterface
                         var dep1 = tokens[1].Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
                         var cols = dep0.Select(s => new Column(s)).ToList();
 
-                        var from = currentTable.ColumnSet(cols);
+                        var from = _currentTable.ColumnSet(cols);
                         cols.Clear();
 
                         cols.AddRange(dep1.Select(s => new Column(s)));
 
-                        var to = currentTable.ColumnSet(cols);
-                        currentTable.TableDependency.RemoveDependency(from, to);
+                        var to = _currentTable.ColumnSet(cols);
+                        _currentTable.TableDependency.RemoveDependency(from, to);
                     }
 
                     richTextBox1.AppendText("Command Done\n");
-                    richTextBox1.AppendText(commandBuilder);
+                    richTextBox1.AppendText(_commandBuilder);
                 }
                 catch (Exception ex)
                 {

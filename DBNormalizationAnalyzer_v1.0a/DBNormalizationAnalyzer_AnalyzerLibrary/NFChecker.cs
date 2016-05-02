@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace DBNormalizationAnalyzer_AnalyzerLibrary
 {
-    class NfChecker
+    public class NfChecker
     {
         public FunctionalDependency Fd { get; set; }
         public NfChecker()
