@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="DBNormalizationAnalyzer_UserInterface.AboutUs" Collapsed="true">
+    <Position X="0.5" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>kIAAAAgAACAgCAUAAACAAAADAAAAEIAAAAAAAAAAAAA=</HashCode>
+      <FileName>AboutUs.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DBNormalizationAnalyzer_UserInterface.EditorForm" Collapsed="true">
+    <Position X="3.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>FxSQiL0wIDICAJcOIEGBwNoigBoCAg0BgmgQACAgACE=</HashCode>
+      <FileName>EditorForm.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DBNormalizationAnalyzer_UserInterface.EntranceWindow" Collapsed="true">
+    <Position X="4.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgAAAEQACAAABAAAACAAAACAIAAAIAAAAAAAQAACCA=</HashCode>
+      <FileName>EntranceWindow.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DBNormalizationAnalyzer_UserInterface.License" Collapsed="true">
+    <Position X="0.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAAAACAAAAAAAACAAAACAAAAAAAAAAAQAAAAAAA=</HashCode>
+      <FileName>License.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DBNormalizationAnalyzer_UserInterface.NewProject" Collapsed="true">
+    <Position X="3.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgAAAAAACAAgBAAgACEABASAAAAAAgAACAAAAAAAAE=</HashCode>
+      <FileName>NewProject.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DBNormalizationAnalyzer_UserInterface.SplashScreen" Collapsed="true">
+    <Position X="4.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAAAACAAAACAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>SplashScreen.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DBNormalizationAnalyzer_UserInterface.Suggestion" Collapsed="true">
+    <Position X="3.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAEQACAAABAAAACAAAACAAgAAAAAEAAAAQAAACA=</HashCode>
+      <FileName>Suggestion.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DBNormalizationAnalyzer_UserInterface.TutorialDialog" Collapsed="true">
+    <Position X="5.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAAAACAAAACAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>TutorialDialog.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

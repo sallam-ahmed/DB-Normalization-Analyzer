@@ -8,7 +8,7 @@ using DBNormalizationAnalyzer_AnalyzerLibrary;
 namespace DBNormalizationAnalyzer_UserInterface
 {
 
-    public partial class MainForm : Form
+    public partial class EditorForm : Form
     {
         #region Variables
         public static bool bHasChanges;
@@ -17,7 +17,7 @@ namespace DBNormalizationAnalyzer_UserInterface
         private Table _currentTable;
         private List<Table> Tables;
         #endregion
-        public MainForm()
+        public EditorForm()
         {
             m_projectDB = new Database();
             InitializeComponent();
@@ -178,7 +178,7 @@ namespace DBNormalizationAnalyzer_UserInterface
                         _currentTable.TableDependency.RemoveDependency(from, to);
                     }
 
-                    richTextBox1.AppendText("Command Done\n");
+                    richTextBox1.AppendText("DB Normaliztion Analyzer:~\\Command Done\n");
                     richTextBox1.AppendText(_commandBuilder);
                 }
                 catch (Exception ex)
@@ -186,6 +186,16 @@ namespace DBNormalizationAnalyzer_UserInterface
                     richTextBox1.AppendText(ex.Message);
                 }
             }
+        }
+
+        private void groupBox4_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void richTextBox2_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

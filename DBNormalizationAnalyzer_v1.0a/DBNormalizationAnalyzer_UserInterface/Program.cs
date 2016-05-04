@@ -8,6 +8,9 @@ namespace DBNormalizationAnalyzer_UserInterface
 {
     static class Program
     {
+        public const string cDATA_PATH = "/app_data/";
+        public const string cCONFIG_FILE = "systemdata.dat";
+
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
@@ -16,7 +19,7 @@ namespace DBNormalizationAnalyzer_UserInterface
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MainForm());
+            Application.Run(new EntranceWindow());
         }
     }
 }
