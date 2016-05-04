@@ -16,6 +16,18 @@ namespace DBNormalizationAnalyzer_AnalyzerLibrary
             return builder.ToString();
         }
 
+        public static BitArray ToBitArray(this string str)
+        {
+            var res = new BitArray(str.Length);
+            for (var i = 0; i < str.Length; i++)
+            {
+                if(str[i] != '0' && str[i] != '1')
+                    throw new ArgumentException();
+                res[i] = str[i] == '1';
+            }
+            return res;
+        }
+
         public static bool EqualsTo(this BitArray a, BitArray b)
         {
             if (a.Count != b.Count)
