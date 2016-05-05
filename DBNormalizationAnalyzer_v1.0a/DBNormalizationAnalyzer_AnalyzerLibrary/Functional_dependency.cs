@@ -3,10 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Runtime.Serialization;
 
 namespace DBNormalizationAnalyzer_AnalyzerLibrary
 {
-    public class FunctionalDependency
+    [Serializable]
+    public class FunctionalDependency : ISerializable
     {
 
         public List<Tuple<BitArray, BitArray> > DependencyList { get; }
@@ -21,6 +23,20 @@ namespace DBNormalizationAnalyzer_AnalyzerLibrary
 
         private bool _prepared;
         private BitArray _prime;
+
+        public void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            info.AddValue("CurKey",CurrentPrimaryKey,typeof(BitArray));
+            info.AddValue("cnt",Keys.Count);
+            var dependecyStrings = new List<string>();
+            foreach (var dependency in DependencyList)
+            {
+                dependecyStrings.Add(dependency.Item1.ToBitString());
+                dependecyStrings.Add(dependency.Item1.ToBitString());
+            }
+            info.AddValue("deps", dependecyStrings, typeof(List<string>));
+        }
+
         public FunctionalDependency(int keysCount, BitArray primaryKey)
         {
             Keys = Enumerable.Range(0, keysCount).ToList();
@@ -32,6 +48,25 @@ namespace DBNormalizationAnalyzer_AnalyzerLibrary
             _prime = new BitArray(keysCount);
             CurrentPrimaryKey = primaryKey;
             DependencyList = new List<Tuple<BitArray, BitArray>>();
+        }
+
+        public FunctionalDependency(SerializationInfo info, StreamingContext context)
+        {
+            Keys = Enumerable.Range(0, info.GetInt32("cnt")).ToList();
+            _prepared = false;
+            SufficientCandidateKeys = new List<BitArray>();
+            Left = new List<int>();
+            Middle = new List<int>();
+            Right = new List<int>();
+            _prime = new BitArray(Keys.Count);
+            CurrentPrimaryKey = (BitArray)info.GetValue("CurKey",typeof(BitArray));
+            DependencyList = new List<Tuple<BitArray, BitArray>>();
+            var dependecyStrings = (List<string>) info.GetValue("deps", typeof (List<string>));
+            for (var i = 0; i < dependecyStrings.Count; i+=2)
+            {
+                DependencyList.Add(new Tuple<BitArray, BitArray>(dependecyStrings[i].ToBitArray(),
+                    dependecyStrings[i + 1].ToBitArray()));
+            }
         }
 
         public bool IsPrimeKey(int key)
