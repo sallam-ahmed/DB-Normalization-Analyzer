@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace DBNormalizationAnalyzer_AnalyzerLibrary
+namespace DBNormalizationAnalyzer.AnalyzerLibrary
 {
     internal class Graph
     {

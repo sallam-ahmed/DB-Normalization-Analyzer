@@ -5,7 +5,7 @@ using System.Data;
 using System.Linq;
 using System.Runtime.Serialization;
 
-namespace DBNormalizationAnalyzer_AnalyzerLibrary
+namespace DBNormalizationAnalyzer.AnalyzerLibrary
 {
     [Serializable]
     public class FunctionalDependency : ISerializable

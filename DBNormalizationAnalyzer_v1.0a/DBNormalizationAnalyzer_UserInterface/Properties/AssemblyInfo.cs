@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("DBNormalizationAnalyzer_UserInterface")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("Datbase Solutions")]
+[assembly: AssemblyDescription("Database Normalization Analyzer , Team CSmart")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("DBNormalizationAnalyzer_UserInterface")]
+[assembly: AssemblyCompany("Team CSmart")]
+[assembly: AssemblyProduct("DB Normalization Analyzer")]
 [assembly: AssemblyCopyright("Copyright ©  2016")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

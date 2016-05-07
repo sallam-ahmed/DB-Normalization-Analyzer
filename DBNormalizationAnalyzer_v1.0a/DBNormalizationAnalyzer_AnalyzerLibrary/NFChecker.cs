@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Linq;
 
-namespace DBNormalizationAnalyzer_AnalyzerLibrary
+namespace DBNormalizationAnalyzer.AnalyzerLibrary
 {
     public class NfChecker
     {

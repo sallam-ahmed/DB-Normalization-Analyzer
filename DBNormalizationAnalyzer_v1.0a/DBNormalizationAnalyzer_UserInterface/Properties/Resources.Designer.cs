@@ -63,9 +63,59 @@ namespace DBNormalizationAnalyzer_UserInterface.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Normalization_in_Database_With_Example_300x300 {
+        internal static System.Drawing.Bitmap _2000px_AWS_Simple_Icons_Networking_Amazon_Elastic_Load_Balancer_svg {
             get {
-                object obj = ResourceManager.GetObject("Normalization-in-Database-With-Example-300x300", resourceCulture);
+                object obj = ResourceManager.GetObject("2000px-AWS_Simple_Icons_Networking_Amazon_Elastic_Load_Balancer.svg", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Graphicloads_Filetype_Pdf__1_ {
+            get {
+                object obj = ResourceManager.GetObject("Graphicloads-Filetype-Pdf (1)", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap insert_row_icon {
+            get {
+                object obj = ResourceManager.GetObject("insert_row_icon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap load_new_page_icon {
+            get {
+                object obj = ResourceManager.GetObject("load-new-page-icon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap refresh {
+            get {
+                object obj = ResourceManager.GetObject("refresh", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Save_icon {
+            get {
+                object obj = ResourceManager.GetObject("Save-icon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

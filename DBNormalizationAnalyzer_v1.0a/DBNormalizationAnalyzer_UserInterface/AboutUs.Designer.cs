@@ -151,8 +151,9 @@
             this.okButton.Size = new System.Drawing.Size(100, 27);
             this.okButton.TabIndex = 24;
             this.okButton.Text = "&OK";
+            this.okButton.Click += new System.EventHandler(this.okButton_Click);
             // 
-            // Credits
+            // AboutUs
             // 
             this.AcceptButton = this.okButton;
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -163,7 +164,7 @@
             this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "Credits";
+            this.Name = "AboutUs";
             this.Padding = new System.Windows.Forms.Padding(12, 11, 12, 11);
             this.ShowIcon = false;
             this.ShowInTaskbar = false;

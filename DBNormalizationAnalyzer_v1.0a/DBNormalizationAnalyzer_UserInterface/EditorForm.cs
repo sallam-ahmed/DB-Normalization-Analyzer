@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
-using DBNormalizationAnalyzer_Formations;
-using DBNormalizationAnalyzer_AnalyzerLibrary;
+using DBNormalizationAnalyzer.Formations;
+using DBNormalizationAnalyzer.AnalyzerLibrary;
+using DBNormalizationAnalyzer.PresistentDataManager;
+using System.ComponentModel;
 
 namespace DBNormalizationAnalyzer_UserInterface
 {
@@ -11,48 +13,95 @@ namespace DBNormalizationAnalyzer_UserInterface
     public partial class EditorForm : Form
     {
         #region Variables
-        public static bool bHasChanges;
+        public static bool bHasChanges; // for saving
         private string _commandBuilder = "";
-        private Database m_projectDB;
-        private Table _currentTable;
-        private List<Table> Tables;
+        private Table m_currentTable;
+        private Project CurrentProject { get; set; }
+        private Dictionary<Table, FunctionalDependency> tableMap;
+        BindingSource Bs;
+        Project MockProject;
         #endregion
-        public EditorForm()
+
+        #region # Constructors #
+        //TODO: Load project data into controls
+        public EditorForm(Project _project)
         {
-            m_projectDB = new Database();
             InitializeComponent();
-            Tables = new List<Table>();
-            _currentTable = new Table(10);
+            LoadProject(_project);
+            m_currentTable = (_project.Tables.Count != 0) ? _project.Tables[0] : null;
+            ClearCLI();
+            ResetLog();
         }
-        /// <summary>
-        /// Controls all the buttons actions in the main form
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void PerformButtonActions(object sender,EventArgs e)
+        #endregion
+
+
+        #region # Project Manager #
+        //TODO FINALIZE LOADING AS MULTITHREADED TECHNIQUE
+        private void LoadProject(Project _project)
         {
-            switch ((sender as Button)?.Tag as string)
-            {
-                case "Save/Update":
-                    break;
-                case "Commit":
-                    break;
-                case "Analyze":
-                    Analyze();
-                    break;
-                case "ExportPDF":
-                    break;
-                case "RepGenerate":
-                    break;
-                case "LogWindow":
-                    break;
-                case "TB_Insert":
-                    break;
-                case "Del_Table":
-                    break;
-            }
+            CurrentProject = _project;
+            tablesListBox.DataSource = null;
+            tablesListBox.ValueMember = "Self";
+            tablesListBox.DisplayMember = "Name";
+            tablesListBox.DataSource = _project.Tables;
+
+            LogText("Loaded project tables with count of " + _project.Tables.Count.ToString() + " projects.");
+            this.Text = "DB Normalization Analyzer - " + CurrentProject.ProjectName+ " -";
+            ClearCLI();
         }
-        private void PerformMenuItemsActions(object sender,EventArgs e)
+        private void PerformSaveActions(bool prompt)
+        {
+            if (prompt)
+            {
+                //Implement Save Auction
+                DialogResult Res = MessageBox.Show("Save current project changes?", "Save project", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (Res == DialogResult.Yes)
+                {
+                    //Save
+                }
+            }
+            else
+            {
+                //Save
+            }
+            bHasChanges = false;
+        }
+        #endregion
+        #region # CLI - LOG #
+        internal void ClearCLI()
+        {
+            commandPanel.Text = "~" + CurrentProject.ProjectName + @"\\";
+        }
+        internal void ResetLog()
+        {
+            logTextBox.Clear();
+            LogText("Log Started " + DateTime.Now.ToShortTimeString() + ".");
+            LogText("Project: " + CurrentProject.ProjectName);
+            LogText("Path: " + CurrentProject.ProjectPath);
+            LogText("Welcome to DBNormalization Aanalyzer.");
+        }
+        void LogText(string value)
+        {
+            logTextBox.AppendText(CurrentProject.ProjectName + "~ "+DateTime.Now.ToShortTimeString() + " " + value+"\n");
+        }
+        #endregion
+
+        private void Analyze()
+        {
+            if (m_currentTable == null)
+            {
+                LogText("Error selected table is null.");
+                return;
+            }
+
+            var checker = new NfChecker(m_currentTable.TableDependency);
+            var error = checker.Check();
+        }
+        #region # UI ACTIONS #
+        /// <summary>
+        /// Controls all menu item actions
+        /// </summary>
+        private void PerformMenuItemsActions(object sender, EventArgs e)
         {
             switch ((sender as ToolStripMenuItem)?.Tag as string)
             {
@@ -66,9 +115,12 @@ namespace DBNormalizationAnalyzer_UserInterface
                 case "Settings":
                     break;
                 case "Exit":
-                    exitToolStripMenuItem_Click();
+                    //ShowExitMessage();
                     break;
-                    /*EDIT*/
+                case "PropEdit":
+                    ShowForm(new EditProject(CurrentProject), this, (object s, FormClosedEventArgs ce) => { this.Enabled = true; });
+                    break;
+                /*EDIT*/
                 case "Cut":
                     break;
                 case "Copy":
@@ -92,55 +144,56 @@ namespace DBNormalizationAnalyzer_UserInterface
                     break;
                 /*HELP*/
                 case "HowTO":
+                    ShowForm(new TutorialDialog(), this, (object s, FormClosedEventArgs ce) => { this.Enabled = true; });
                     break;
                 case "About":
+                    ShowForm(new AboutUs(), this, (object s,FormClosedEventArgs ce) => { this.Enabled = true; });
                     break;
                 case "License":
                     break;
             }
         }
-        private void exitToolStripMenuItem_Click()
+        private void ShowForm(Form frm, Form owner, FormClosedEventHandler closeHandle)
         {
-            if (MessageBox.Show("Would you like to exit ?","Exit?",MessageBoxButtons.YesNo,MessageBoxIcon.Question) == DialogResult.Yes)
+            frm.Owner = owner;
+            frm.Show();
+            frm.Activate();
+            owner.Enabled = false;
+            frm.FormClosed += new FormClosedEventHandler(closeHandle);
+        }
+
+        private void ShowExitMessage()
+        {
+            if (MessageBox.Show("Would you like to exit?", "Exit?", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
                 if (bHasChanges)
-                {
-                    if (MessageBox.Show("Save Changes ? ", "Save ? ", MessageBoxButtons.YesNo) == DialogResult.Yes)
-                    {
-                        PerformSaveActions();
-                        Application.Exit();
-                    }
-                    else
-                    {
-                        Application.Exit();
-                    }
-                }
+                   PerformSaveActions(false);
+
+                Application.Exit();
             }
         }
-
-        private void PerformSaveActions()
+        private void ShowExitMessage(FormClosingEventArgs e)
         {
-            //Implement Save Auction
-            bHasChanges = false;
+            if (MessageBox.Show("Would you like to exit ?", "Exit?", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+            
+                Application.Exit();
+           
+            }
+            else
+            {
+                e.Cancel = true;
+            }
         }
-
-        private void Analyze()
-        {
-            if (_currentTable == null)
-                return;
-            var checker = new NfChecker(_currentTable.TableDependency);
-            var error = checker.Check();
-        }
-
+        #endregion
         private void richTextBox1_KeyPress(object sender, KeyPressEventArgs e)
         {
-
             if (e.KeyChar == (char)Keys.Enter)
             {
                 try
                 {
-                    var lastLine = richTextBox1.Text.Split(new[] { '\n' }, StringSplitOptions.RemoveEmptyEntries).Last();
-
+                    var lastLine = commandPanel.Text.Split(new[] { ':' }, StringSplitOptions.RemoveEmptyEntries).Last();
+                    
                     if (lastLine.StartsWith("add"))
                     {
                         lastLine = lastLine.Remove(0, 3);
@@ -151,13 +204,13 @@ namespace DBNormalizationAnalyzer_UserInterface
                         var dep1 = tokens[1].Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
                         var cols = dep0.Select(s => new Column(s)).ToList();
 
-                        var from = _currentTable.ColumnSet(cols);
+                        var from = m_currentTable.ColumnSet(cols);
                         cols.Clear();
 
                         cols.AddRange(dep1.Select(s => new Column(s)));
 
-                        var to = _currentTable.ColumnSet(cols);
-                        _currentTable.TableDependency.AddDependency(from, to);
+                        var to = m_currentTable.ColumnSet(cols);
+                        m_currentTable.TableDependency.AddDependency(from, to);
                     }
                     else if (lastLine.StartsWith("rem"))
                     {
@@ -169,33 +222,163 @@ namespace DBNormalizationAnalyzer_UserInterface
                         var dep1 = tokens[1].Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
                         var cols = dep0.Select(s => new Column(s)).ToList();
 
-                        var from = _currentTable.ColumnSet(cols);
+                        var from = m_currentTable.ColumnSet(cols);
                         cols.Clear();
 
                         cols.AddRange(dep1.Select(s => new Column(s)));
 
-                        var to = _currentTable.ColumnSet(cols);
-                        _currentTable.TableDependency.RemoveDependency(from, to);
+                        var to = m_currentTable.ColumnSet(cols);
+                        m_currentTable.TableDependency.RemoveDependency(from, to);
                     }
-
-                    richTextBox1.AppendText("DB Normaliztion Analyzer:~\\Command Done\n");
-                    richTextBox1.AppendText(_commandBuilder);
+                    else if (lastLine.StartsWith("tbchng"))
+                    {
+                        //CHANGE WORKING TABLE
+                        lastLine = lastLine.Remove(0, 5);
+                        MessageBox.Show(lastLine);
+                    }
+                    commandPanel.AppendText("~"+CurrentProject.ProjectName + "\\Command Done\n");
+                    commandPanel.AppendText(_commandBuilder);
                 }
                 catch (Exception ex)
                 {
-                    richTextBox1.AppendText(ex.Message);
+                    commandPanel.AppendText(ex.Message);
                 }
+            }
+           
+        }
+
+        private void toolStripButton2_Click(object sender, EventArgs e)
+        {
+        }
+
+        private void tablesListBox_SelectedValueChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                if (tablesListBox.SelectedValue != null)
+                {
+                    //BindingList<Column> BList;
+
+                    //Bs = new BindingSource();
+                    //Bs.DataSource = 
+                    
+                    columnsDatagridview.DataSource = new BindingList<Column>((tablesListBox.SelectedValue as Table).Columns);
+                }
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show(ex.Message);
+            }
+            
+            
+        }
+
+        private void toolStripButton3_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show((tablesListBox.SelectedValue as Table).ColumnsCount.ToString());
+
+        }
+
+        private void EditorForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            PerformSaveActions(true);
+            Application.Exit();
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            datetimeLBL.Text = DateTime.Now.ToShortDateString() + " | " + DateTime.Now.ToShortTimeString();
+        }
+
+        private void toolStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+            switch ((sender as Control).Tag as string)
+            {
+                case "Analyze":
+                    Analyze();
+                    break;
+                case "Export":
+
+                    break;
+                case "RefTable":
+                    LoadProject(CurrentProject);
+                    break;
+                case "RefFunD":
+                    LoadFunctionalDependencies(CurrentProject);
+                    break;
+            }
+        }
+    
+        private void LoadFunctionalDependencies(Project currentProject)
+        {
+            tableMap = new Dictionary<Table, FunctionalDependency>(currentProject.Tables.Count);
+            foreach (var item in currentProject.Tables) //MAP EACH TABLE TO ITS FUNCTIONAL DEPENDENCY.
+            {
+                tableMap.Add(item, item.TableDependency);
             }
         }
 
-        private void groupBox4_Enter(object sender, EventArgs e)
+        private void columnsDatagridview_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex == -1)
+                return;
+            MessageBox.Show(columnsDatagridview.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString());
+        }
+
+        private void analysisDatagridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
         }
 
-        private void richTextBox2_TextChanged(object sender, EventArgs e)
+        private void columnsDatagridview_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void toolStripStatusLabel1_Click(object sender, EventArgs e)
+        {          
+          
+        }
+
+        private void toolStripButton6_Click(object sender, EventArgs e)
+        {
+            DialogResult Res = loadfileDialog.ShowDialog(this);
+            if (Res != DialogResult.Cancel)
+            {
+                PerformSaveActions(true);
+                Program.LoadedProject = DataManager.ReadProject(loadfileDialog.FileName);
+                CurrentProject = Program.LoadedProject;
+                LoadProject(CurrentProject);
+            }
+            else
+            {
+                MessageBox.Show("Test");
+            }
+        }
+
+        private void tablesListBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void createTableToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Program.LoadedProject.Tables.Add(new Table("NEW TABLE", 1));
+            Program.LoadedProject.Tables[0].Columns[0].Name = "NEW COLUMN";
+            bHasChanges = true;
+            LoadProject(Program.LoadedProject);
+        }
+
+        private void tableLayoutPanel5_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void groupBox2_Enter(object sender, EventArgs e)
         {
 
         }
     }
+    
 }

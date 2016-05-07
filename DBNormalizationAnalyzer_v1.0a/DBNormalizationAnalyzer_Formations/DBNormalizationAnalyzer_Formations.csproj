@@ -30,7 +30,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="DBNormalizationAnalyzer_AnalyzerLibrary">
+    <Reference Include="DBNormalizationAnalyzer_AnalyzerLibrary, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\DBNormalizationAnalyzer_AnalyzerLibrary\bin\Debug\DBNormalizationAnalyzer_AnalyzerLibrary.dll</HintPath>
     </Reference>
     <Reference Include="System" />

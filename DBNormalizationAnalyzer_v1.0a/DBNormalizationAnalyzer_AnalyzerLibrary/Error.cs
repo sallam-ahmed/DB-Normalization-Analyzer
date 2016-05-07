@@ -4,15 +4,15 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 
-namespace DBNormalizationAnalyzer_AnalyzerLibrary
+namespace DBNormalizationAnalyzer.AnalyzerLibrary
 {
     [Serializable]
     public struct Error : ISerializable
     {
-
         public string Message { get; set; }
         public int Level { get; set; }
 
+        
         public List<Tuple<BitArray, BitArray>> SuggestedSplit;
 
         public void GetObjectData(SerializationInfo info, StreamingContext context)

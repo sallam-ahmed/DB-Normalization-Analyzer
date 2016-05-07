@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using DBNormalizationAnalyzer.PresistentDataManager;
 
 namespace DBNormalizationAnalyzer_UserInterface
 {
@@ -46,7 +47,15 @@ namespace DBNormalizationAnalyzer_UserInterface
         }
         internal void LoadRecentProjects()
         {
+            listBox1.DisplayMember = "Name";
+            listBox1.ValueMember = "Path";
 
+            listBox1.DataSource = DataManager.LoadRecentProjects();
+        }
+
+        private void EntranceWindow_Load(object sender, EventArgs e)
+        {
+            LoadRecentProjects();
         }
     }
 }

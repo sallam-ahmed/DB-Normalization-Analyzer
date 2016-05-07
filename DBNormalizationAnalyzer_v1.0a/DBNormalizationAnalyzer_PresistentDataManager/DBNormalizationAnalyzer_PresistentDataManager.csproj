@@ -30,8 +30,17 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="DBNormalizationAnalyzer_AnalyzerLibrary">
+      <HintPath>..\DBNormalizationAnalyzer_AnalyzerLibrary\bin\Debug\DBNormalizationAnalyzer_AnalyzerLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="DBNormalizationAnalyzer_Formations">
+      <HintPath>..\DBNormalizationAnalyzer_Formations\bin\Debug\DBNormalizationAnalyzer_Formations.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -41,6 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataManager.cs" />
+    <Compile Include="Project.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

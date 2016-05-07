@@ -30,19 +30,19 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EntranceWindow));
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.logoPictureBox = new System.Windows.Forms.PictureBox();
+            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.listBox1 = new System.Windows.Forms.ListBox();
             this.panel1 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.glassButton1 = new Glass.GlassButton();
             this.glassButton2 = new Glass.GlassButton();
-            this.glassButton3 = new Glass.GlassButton();
             this.glassButton4 = new Glass.GlassButton();
+            this.glassButton3 = new Glass.GlassButton();
             this.tableLayoutPanel1.SuspendLayout();
-            this.tableLayoutPanel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.logoPictureBox)).BeginInit();
+            this.tableLayoutPanel2.SuspendLayout();
             this.panel1.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
@@ -56,12 +56,24 @@
             this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel2, 0, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.71309F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(723, 729);
             this.tableLayoutPanel1.TabIndex = 0;
+            // 
+            // logoPictureBox
+            // 
+            this.logoPictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.logoPictureBox.Image = ((System.Drawing.Image)(resources.GetObject("logoPictureBox.Image")));
+            this.logoPictureBox.Location = new System.Drawing.Point(458, 6);
+            this.logoPictureBox.Margin = new System.Windows.Forms.Padding(6);
+            this.logoPictureBox.Name = "logoPictureBox";
+            this.logoPictureBox.Size = new System.Drawing.Size(259, 717);
+            this.logoPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.logoPictureBox.TabIndex = 14;
+            this.logoPictureBox.TabStop = false;
             // 
             // tableLayoutPanel2
             // 
@@ -72,7 +84,7 @@
             this.tableLayoutPanel2.Controls.Add(this.flowLayoutPanel1, 0, 2);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel2.Location = new System.Drawing.Point(4, 4);
-            this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 3;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 6.067416F));
@@ -80,18 +92,6 @@
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 192F));
             this.tableLayoutPanel2.Size = new System.Drawing.Size(444, 721);
             this.tableLayoutPanel2.TabIndex = 0;
-            // 
-            // logoPictureBox
-            // 
-            this.logoPictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.logoPictureBox.Image = ((System.Drawing.Image)(resources.GetObject("logoPictureBox.Image")));
-            this.logoPictureBox.Location = new System.Drawing.Point(458, 6);
-            this.logoPictureBox.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
-            this.logoPictureBox.Name = "logoPictureBox";
-            this.logoPictureBox.Size = new System.Drawing.Size(259, 717);
-            this.logoPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.logoPictureBox.TabIndex = 14;
-            this.logoPictureBox.TabStop = false;
             // 
             // listBox1
             // 
@@ -104,7 +104,7 @@
             "Hosbital",
             "Banih Or Kofta ?"});
             this.listBox1.Location = new System.Drawing.Point(4, 36);
-            this.listBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.listBox1.Margin = new System.Windows.Forms.Padding(4);
             this.listBox1.Name = "listBox1";
             this.listBox1.Size = new System.Drawing.Size(436, 488);
             this.listBox1.TabIndex = 0;
@@ -114,7 +114,7 @@
             this.panel1.Controls.Add(this.label1);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(4, 4);
-            this.panel1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panel1.Margin = new System.Windows.Forms.Padding(4);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(436, 24);
             this.panel1.TabIndex = 1;
@@ -162,16 +162,6 @@
             this.glassButton2.Text = "Tutorial";
             this.glassButton2.Click += new System.EventHandler(this.PerformButtonAction);
             // 
-            // glassButton3
-            // 
-            this.glassButton3.Location = new System.Drawing.Point(3, 138);
-            this.glassButton3.Name = "glassButton3";
-            this.glassButton3.Size = new System.Drawing.Size(427, 39);
-            this.glassButton3.TabIndex = 5;
-            this.glassButton3.Tag = "Exit";
-            this.glassButton3.Text = "Exit";
-            this.glassButton3.Click += new System.EventHandler(this.PerformButtonAction);
-            // 
             // glassButton4
             // 
             this.glassButton4.Location = new System.Drawing.Point(3, 93);
@@ -182,6 +172,16 @@
             this.glassButton4.Text = "About Us";
             this.glassButton4.Click += new System.EventHandler(this.PerformButtonAction);
             // 
+            // glassButton3
+            // 
+            this.glassButton3.Location = new System.Drawing.Point(3, 138);
+            this.glassButton3.Name = "glassButton3";
+            this.glassButton3.Size = new System.Drawing.Size(427, 39);
+            this.glassButton3.TabIndex = 5;
+            this.glassButton3.Tag = "Exit";
+            this.glassButton3.Text = "Exit";
+            this.glassButton3.Click += new System.EventHandler(this.PerformButtonAction);
+            // 
             // EntranceWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 23F);
@@ -190,13 +190,14 @@
             this.Controls.Add(this.tableLayoutPanel1);
             this.Font = new System.Drawing.Font("Consolas", 12F);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximizeBox = false;
             this.Name = "EntranceWindow";
             this.Text = "Database Normalization Automater - Entrance Window";
+            this.Load += new System.EventHandler(this.EntranceWindow_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
-            this.tableLayoutPanel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.logoPictureBox)).EndInit();
+            this.tableLayoutPanel2.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.flowLayoutPanel1.ResumeLayout(false);

@@ -5,33 +5,73 @@ using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading.Tasks;
-
-namespace DBNormalizationAnalyzer_PresistentDataManager
+using System.Web.Script.Serialization;
+using System.Runtime.Serialization;
+namespace DBNormalizationAnalyzer.PresistentDataManager
 {
+    
     public class DataManager
     {
 
         #region # Fields #
-        private BinaryFormatter m_Formatter;
-        private FileStream m_FileStream;
-
+        private static BinaryFormatter m_Formatter;
+        private static FileStream m_FileStream;
+        private static JavaScriptSerializer m_JSerializer;
         #endregion
         #region # Properties #
-        public string ConfigurationFile { get; set; }
+        public static string ConfigurationFile { get; set; }
+        public const string RecentProjectsFilePath = "D:\\MOCK.json";
         #endregion
         public DataManager()
         {
             m_Formatter = new BinaryFormatter();
-            m_FileStream = new FileStream(ConfigurationFile, FileMode.Open);
         }
-
-        public void WriteData()
+        public static void CreateProject(Project _project)
         {
+            using (m_FileStream = new FileStream(_project.ProjectPath, FileMode.Create))
+            {
+                m_Formatter = new BinaryFormatter();
+                m_Formatter.Serialize(m_FileStream, _project);
+            }
+            //Create JSON Script
+            string JSonString;
+            using (StreamReader sr = new StreamReader(new FileStream(RecentProjectsFilePath, FileMode.OpenOrCreate)))
+            {
+                JSonString = sr.ReadToEnd();
+            }
+            m_JSerializer = new JavaScriptSerializer();
+            var data = m_JSerializer.Deserialize<List<ProjectJSON>>(JSonString);
+            if (data == null)
+                data = new List<ProjectJSON>();
 
+            data.Add(_project.ProjectJson);
+            m_FileStream = new FileStream(RecentProjectsFilePath, FileMode.OpenOrCreate);
+            JSonString = m_JSerializer.Serialize(data);
+            using (StreamWriter sw = new StreamWriter(m_FileStream))
+            {
+                sw.WriteLine(JSonString);
+                sw.Close();
+            }
+            
         }
-        public void ReadData()
+        public static List<ProjectJSON> LoadRecentProjects()
         {
-
+            if(File.Exists(RecentProjectsFilePath))
+                return (new JavaScriptSerializer().Deserialize<List<ProjectJSON>>(File.ReadAllText(RecentProjectsFilePath)));
+            else
+            {
+                return new List<ProjectJSON>(0);
+            }
         }
+        public static Project ReadProject(string path)
+        {
+            using (m_FileStream = new FileStream(path, FileMode.Open))
+            {
+                m_Formatter = new BinaryFormatter();
+
+                return ((m_Formatter.Deserialize(m_FileStream) as Project));
+            }
+        }
+      
     }
 }

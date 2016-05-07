@@ -12,6 +12,24 @@
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ProductName>DB Normalization Analyzer</ProductName>
+    <PublisherName>Team CSamrt</PublisherName>
+    <SuiteName>Database Mangement Solutions</SuiteName>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -36,6 +54,9 @@
     <Reference Include="DBNormalizationAnalyzer_Formations">
       <HintPath>..\DBNormalizationAnalyzer_Formations\bin\Debug\DBNormalizationAnalyzer_Formations.dll</HintPath>
     </Reference>
+    <Reference Include="DBNormalizationAnalyzer_PresistentDataManager">
+      <HintPath>..\DBNormalizationAnalyzer_PresistentDataManager\bin\Debug\DBNormalizationAnalyzer_PresistentDataManager.dll</HintPath>
+    </Reference>
     <Reference Include="GlassButton">
       <HintPath>..\..\..\Polynomial Calculator\Polynomial-Calculator\CalculatorUI\bin\Debug\GlassButton.dll</HintPath>
     </Reference>
@@ -57,6 +78,12 @@
     </Compile>
     <Compile Include="AboutUs.Designer.cs">
       <DependentUpon>AboutUs.cs</DependentUpon>
+    </Compile>
+    <Compile Include="EditProject.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EditProject.Designer.cs">
+      <DependentUpon>EditProject.cs</DependentUpon>
     </Compile>
     <Compile Include="EntranceWindow.cs">
       <SubType>Form</SubType>
@@ -84,6 +111,12 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Settings.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Settings.Designer.cs">
+      <DependentUpon>Settings.cs</DependentUpon>
+    </Compile>
     <Compile Include="SplashScreen.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -104,6 +137,9 @@
     </Compile>
     <EmbeddedResource Include="AboutUs.resx">
       <DependentUpon>AboutUs.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EditProject.resx">
+      <DependentUpon>EditProject.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="EntranceWindow.resx">
       <DependentUpon>EntranceWindow.cs</DependentUpon>
@@ -127,6 +163,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="Settings.resx">
+      <DependentUpon>Settings.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="SplashScreen.resx">
       <DependentUpon>SplashScreen.cs</DependentUpon>
     </EmbeddedResource>
@@ -158,6 +197,36 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Normalization-in-Database-With-Example-300x300.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.5.2">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.5.2 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\2000px-AWS_Simple_Icons_Networking_Amazon_Elastic_Load_Balancer.svg.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\load-new-page-icon.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Save-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Graphicloads-Filetype-Pdf %281%29.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\refresh.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\insert_row_icon.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

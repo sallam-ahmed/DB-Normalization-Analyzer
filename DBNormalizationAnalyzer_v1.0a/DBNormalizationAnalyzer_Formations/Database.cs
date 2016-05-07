@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DBNormalizationAnalyzer_Formations
+namespace DBNormalizationAnalyzer.Formations
 {
     public class Database
     {
