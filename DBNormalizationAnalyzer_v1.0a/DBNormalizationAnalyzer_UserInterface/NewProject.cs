@@ -59,6 +59,9 @@ namespace DBNormalizationAnalyzer_UserInterface
         {
             Program.LoadedProject = new Project(projectNameTextBox.Text, authorNameTextBox.Text, saveDialog.FileName,descriptionTextBox.Text,DateTime.Now);
             DataManager.CreateProject(Program.LoadedProject);
+            Program.LoadedProject.Tables = new List<DBNormalizationAnalyzer.Formations.Table>();
+            Program.LoadedProject.Tables.Add(new DBNormalizationAnalyzer.Formations.Table("NEW_TABLE", 1));
+            Program.LoadedProject.Tables[0].AddColumn(new DBNormalizationAnalyzer.Formations.Column("NEW_COL"));
             EditorForm _formInstance = new EditorForm(Program.LoadedProject);
             _formInstance.Show();
             this.Hide();

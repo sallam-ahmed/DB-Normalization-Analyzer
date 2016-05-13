@@ -71,6 +71,9 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="TerminalControl">
+      <HintPath>..\..\TerminalControl\TerminalControl\bin\Debug\TerminalControl.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AboutUs.cs">

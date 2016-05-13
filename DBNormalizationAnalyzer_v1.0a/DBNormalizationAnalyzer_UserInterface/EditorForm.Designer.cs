@@ -29,8 +29,6 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EditorForm));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
@@ -53,6 +51,24 @@
             this.datetimeLBL = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
+            this.tableLayoutPanel7 = new System.Windows.Forms.TableLayoutPanel();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.tablesListBox = new System.Windows.Forms.ListBox();
+            this.tableContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.createTableToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tableDelete = new System.Windows.Forms.ToolStripMenuItem();
+            this.refreshToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.renameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.tableLayoutPanel8 = new System.Windows.Forms.TableLayoutPanel();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.glassButton1 = new Glass.GlassButton();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel6 = new System.Windows.Forms.TableLayoutPanel();
@@ -64,64 +80,48 @@
             this.NFBoyceCol = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.FinalResultCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.logTextBox = new System.Windows.Forms.RichTextBox();
-            this.tableContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.createTableToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.dependencyDeleteTStripMI = new System.Windows.Forms.ToolStripMenuItem();
-            this.refreshToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.renameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.contextMenuStrip2 = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.selectTableToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.refreshToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.loadfileDialog = new System.Windows.Forms.OpenFileDialog();
-            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.toolStripButton6 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton5 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButton4 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton3 = new System.Windows.Forms.ToolStripButton();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.commandPanel = new System.Windows.Forms.RichTextBox();
-            this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
-            this.tableLayoutPanel8 = new System.Windows.Forms.TableLayoutPanel();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.glassButton1 = new Glass.GlassButton();
-            this.tableLayoutPanel7 = new System.Windows.Forms.TableLayoutPanel();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.tablesListBox = new System.Windows.Forms.ListBox();
-            this.groupBox5 = new System.Windows.Forms.GroupBox();
-            this.columnsDatagridview = new System.Windows.Forms.DataGridView();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.loadfileDialog = new System.Windows.Forms.OpenFileDialog();
+            this.terminalControl1 = new TerminalControl.TerminalControl();
+            this.columnsListBox = new System.Windows.Forms.ListBox();
+            this.toolStripButton7 = new System.Windows.Forms.ToolStripButton();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem5 = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
+            this.tableLayoutPanel2.SuspendLayout();
+            this.groupBox4.SuspendLayout();
+            this.groupBox2.SuspendLayout();
+            this.tableLayoutPanel5.SuspendLayout();
+            this.tableLayoutPanel7.SuspendLayout();
+            this.panel2.SuspendLayout();
+            this.groupBox3.SuspendLayout();
+            this.tableContextMenu.SuspendLayout();
+            this.groupBox5.SuspendLayout();
+            this.tableLayoutPanel8.SuspendLayout();
+            this.panel1.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.tableLayoutPanel6.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.analysisDatagridView)).BeginInit();
-            this.tableContextMenu.SuspendLayout();
             this.toolStrip1.SuspendLayout();
-            this.contextMenuStrip2.SuspendLayout();
-            this.tableLayoutPanel2.SuspendLayout();
-            this.groupBox2.SuspendLayout();
-            this.groupBox4.SuspendLayout();
-            this.tableLayoutPanel5.SuspendLayout();
-            this.tableLayoutPanel8.SuspendLayout();
-            this.panel1.SuspendLayout();
-            this.tableLayoutPanel7.SuspendLayout();
-            this.panel2.SuspendLayout();
-            this.groupBox3.SuspendLayout();
-            this.groupBox5.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.columnsDatagridview)).BeginInit();
+            this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -331,6 +331,215 @@
             this.tableLayoutPanel1.Size = new System.Drawing.Size(1902, 953);
             this.tableLayoutPanel1.TabIndex = 2;
             // 
+            // tableLayoutPanel2
+            // 
+            this.tableLayoutPanel2.BackColor = System.Drawing.SystemColors.Control;
+            this.tableLayoutPanel2.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Inset;
+            this.tableLayoutPanel2.ColumnCount = 1;
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel2.Controls.Add(this.groupBox4, 0, 1);
+            this.tableLayoutPanel2.Controls.Add(this.groupBox2, 0, 0);
+            this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(5, 4);
+            this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
+            this.tableLayoutPanel2.RowCount = 2;
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 35.84306F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 64.15694F));
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(1017, 945);
+            this.tableLayoutPanel2.TabIndex = 3;
+            // 
+            // groupBox4
+            // 
+            this.groupBox4.Controls.Add(this.terminalControl1);
+            this.groupBox4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupBox4.Location = new System.Drawing.Point(5, 342);
+            this.groupBox4.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.groupBox4.Size = new System.Drawing.Size(1007, 599);
+            this.groupBox4.TabIndex = 9;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Text = "Function Dependency Editor Window";
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.tableLayoutPanel5);
+            this.groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupBox2.Location = new System.Drawing.Point(5, 4);
+            this.groupBox2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.groupBox2.Size = new System.Drawing.Size(1007, 332);
+            this.groupBox2.TabIndex = 2;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Function Dependency Editor";
+            this.groupBox2.Enter += new System.EventHandler(this.groupBox2_Enter);
+            // 
+            // tableLayoutPanel5
+            // 
+            this.tableLayoutPanel5.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Inset;
+            this.tableLayoutPanel5.ColumnCount = 1;
+            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel5.Controls.Add(this.tableLayoutPanel7, 0, 1);
+            this.tableLayoutPanel5.Controls.Add(this.tableLayoutPanel8, 0, 0);
+            this.tableLayoutPanel5.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel5.Location = new System.Drawing.Point(3, 17);
+            this.tableLayoutPanel5.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.tableLayoutPanel5.Name = "tableLayoutPanel5";
+            this.tableLayoutPanel5.RowCount = 2;
+            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel5.Size = new System.Drawing.Size(1001, 313);
+            this.tableLayoutPanel5.TabIndex = 7;
+            // 
+            // tableLayoutPanel7
+            // 
+            this.tableLayoutPanel7.ColumnCount = 2;
+            this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 19.68254F));
+            this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 80.31746F));
+            this.tableLayoutPanel7.Controls.Add(this.groupBox5, 1, 0);
+            this.tableLayoutPanel7.Controls.Add(this.panel2, 0, 0);
+            this.tableLayoutPanel7.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel7.Location = new System.Drawing.Point(5, 47);
+            this.tableLayoutPanel7.Name = "tableLayoutPanel7";
+            this.tableLayoutPanel7.RowCount = 1;
+            this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 245F));
+            this.tableLayoutPanel7.Size = new System.Drawing.Size(991, 261);
+            this.tableLayoutPanel7.TabIndex = 3;
+            // 
+            // panel2
+            // 
+            this.panel2.Controls.Add(this.groupBox3);
+            this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel2.Location = new System.Drawing.Point(3, 3);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(189, 255);
+            this.panel2.TabIndex = 10;
+            // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.tablesListBox);
+            this.groupBox3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupBox3.Location = new System.Drawing.Point(0, 0);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(189, 255);
+            this.groupBox3.TabIndex = 0;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Tables";
+            // 
+            // tablesListBox
+            // 
+            this.tablesListBox.ContextMenuStrip = this.tableContextMenu;
+            this.tablesListBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tablesListBox.FormattingEnabled = true;
+            this.tablesListBox.ItemHeight = 16;
+            this.tablesListBox.Items.AddRange(new object[] {
+            "Table 1",
+            "Table 2",
+            "Table 3"});
+            this.tablesListBox.Location = new System.Drawing.Point(3, 18);
+            this.tablesListBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.tablesListBox.Name = "tablesListBox";
+            this.tablesListBox.Size = new System.Drawing.Size(183, 234);
+            this.tablesListBox.TabIndex = 10;
+            this.toolTip1.SetToolTip(this.tablesListBox, "Right Click to show menu, left click to show columns in editor");
+            this.tablesListBox.SelectedValueChanged += new System.EventHandler(this.tablesListBox_SelectedValueChanged);
+            // 
+            // tableContextMenu
+            // 
+            this.tableContextMenu.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.tableContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.createTableToolStripMenuItem,
+            this.tableDelete,
+            this.refreshToolStripMenuItem1,
+            this.renameToolStripMenuItem});
+            this.tableContextMenu.Name = "contextMenuStrip1";
+            this.tableContextMenu.Size = new System.Drawing.Size(163, 108);
+            this.tableContextMenu.Text = "Tasks";
+            // 
+            // createTableToolStripMenuItem
+            // 
+            this.createTableToolStripMenuItem.Name = "createTableToolStripMenuItem";
+            this.createTableToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
+            this.createTableToolStripMenuItem.Text = "&Create";
+            this.createTableToolStripMenuItem.Click += new System.EventHandler(this.createTableToolStripMenuItem_Click);
+            // 
+            // tableDelete
+            // 
+            this.tableDelete.Name = "tableDelete";
+            this.tableDelete.ShortcutKeys = System.Windows.Forms.Keys.Delete;
+            this.tableDelete.Size = new System.Drawing.Size(181, 26);
+            this.tableDelete.Text = "&Delete";
+            // 
+            // refreshToolStripMenuItem1
+            // 
+            this.refreshToolStripMenuItem1.Name = "refreshToolStripMenuItem1";
+            this.refreshToolStripMenuItem1.ShortcutKeys = System.Windows.Forms.Keys.F5;
+            this.refreshToolStripMenuItem1.Size = new System.Drawing.Size(201, 26);
+            this.refreshToolStripMenuItem1.Text = "&Refresh";
+            // 
+            // renameToolStripMenuItem
+            // 
+            this.renameToolStripMenuItem.Name = "renameToolStripMenuItem";
+            this.renameToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F2;
+            this.renameToolStripMenuItem.Size = new System.Drawing.Size(201, 26);
+            this.renameToolStripMenuItem.Text = "&Rename";
+            // 
+            // groupBox5
+            // 
+            this.groupBox5.Controls.Add(this.columnsListBox);
+            this.groupBox5.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupBox5.Location = new System.Drawing.Point(198, 3);
+            this.groupBox5.Name = "groupBox5";
+            this.groupBox5.Size = new System.Drawing.Size(790, 255);
+            this.groupBox5.TabIndex = 11;
+            this.groupBox5.TabStop = false;
+            this.groupBox5.Text = "Columns";
+            // 
+            // tableLayoutPanel8
+            // 
+            this.tableLayoutPanel8.ColumnCount = 2;
+            this.tableLayoutPanel8.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 76.50793F));
+            this.tableLayoutPanel8.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 23.49206F));
+            this.tableLayoutPanel8.Controls.Add(this.panel1, 0, 0);
+            this.tableLayoutPanel8.Controls.Add(this.glassButton1, 1, 0);
+            this.tableLayoutPanel8.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel8.Location = new System.Drawing.Point(5, 5);
+            this.tableLayoutPanel8.Name = "tableLayoutPanel8";
+            this.tableLayoutPanel8.RowCount = 1;
+            this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel8.Size = new System.Drawing.Size(991, 34);
+            this.tableLayoutPanel8.TabIndex = 1;
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.textBox1);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel1.Location = new System.Drawing.Point(3, 3);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(752, 28);
+            this.panel1.TabIndex = 0;
+            // 
+            // textBox1
+            // 
+            this.textBox1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.textBox1.Location = new System.Drawing.Point(0, 0);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(752, 22);
+            this.textBox1.TabIndex = 0;
+            // 
+            // glassButton1
+            // 
+            this.glassButton1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.glassButton1.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.glassButton1.Location = new System.Drawing.Point(761, 3);
+            this.glassButton1.Name = "glassButton1";
+            this.glassButton1.Size = new System.Drawing.Size(227, 28);
+            this.glassButton1.TabIndex = 1;
+            this.glassButton1.Text = "Insert";
+            // 
             // tableLayoutPanel3
             // 
             this.tableLayoutPanel3.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Inset;
@@ -447,51 +656,12 @@
             this.logTextBox.TabIndex = 2;
             this.logTextBox.Text = "Log Started : Wed, May 04, 2016 - 12:35 PM.\nProject Name ~:// ____________";
             // 
-            // tableContextMenu
-            // 
-            this.tableContextMenu.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.tableContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.createTableToolStripMenuItem,
-            this.dependencyDeleteTStripMI,
-            this.refreshToolStripMenuItem1,
-            this.renameToolStripMenuItem});
-            this.tableContextMenu.Name = "contextMenuStrip1";
-            this.tableContextMenu.Size = new System.Drawing.Size(202, 108);
-            this.tableContextMenu.Text = "Tasks";
-            // 
-            // createTableToolStripMenuItem
-            // 
-            this.createTableToolStripMenuItem.Name = "createTableToolStripMenuItem";
-            this.createTableToolStripMenuItem.Size = new System.Drawing.Size(201, 26);
-            this.createTableToolStripMenuItem.Text = "&Create Table";
-            this.createTableToolStripMenuItem.Click += new System.EventHandler(this.createTableToolStripMenuItem_Click);
-            // 
-            // dependencyDeleteTStripMI
-            // 
-            this.dependencyDeleteTStripMI.Name = "dependencyDeleteTStripMI";
-            this.dependencyDeleteTStripMI.ShortcutKeys = System.Windows.Forms.Keys.Delete;
-            this.dependencyDeleteTStripMI.Size = new System.Drawing.Size(201, 26);
-            this.dependencyDeleteTStripMI.Text = "&Delete Table";
-            // 
-            // refreshToolStripMenuItem1
-            // 
-            this.refreshToolStripMenuItem1.Name = "refreshToolStripMenuItem1";
-            this.refreshToolStripMenuItem1.ShortcutKeys = System.Windows.Forms.Keys.F5;
-            this.refreshToolStripMenuItem1.Size = new System.Drawing.Size(201, 26);
-            this.refreshToolStripMenuItem1.Text = "&Refresh";
-            // 
-            // renameToolStripMenuItem
-            // 
-            this.renameToolStripMenuItem.Name = "renameToolStripMenuItem";
-            this.renameToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F2;
-            this.renameToolStripMenuItem.Size = new System.Drawing.Size(201, 26);
-            this.renameToolStripMenuItem.Text = "&Rename";
-            // 
             // toolStrip1
             // 
             this.toolStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripButton6,
+            this.toolStripButton7,
             this.toolStripButton5,
             this.toolStripSeparator3,
             this.toolStripButton1,
@@ -506,86 +676,6 @@
             this.toolStrip1.TabIndex = 3;
             this.toolStrip1.Text = "toolStrip1";
             this.toolStrip1.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.toolStrip1_ItemClicked);
-            // 
-            // toolStripSeparator3
-            // 
-            this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(6, 27);
-            // 
-            // toolStripSeparator5
-            // 
-            this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(6, 27);
-            // 
-            // toolStripSeparator6
-            // 
-            this.toolStripSeparator6.Name = "toolStripSeparator6";
-            this.toolStripSeparator6.Size = new System.Drawing.Size(6, 27);
-            // 
-            // toolTip1
-            // 
-            this.toolTip1.IsBalloon = true;
-            this.toolTip1.ToolTipTitle = "Tip!";
-            // 
-            // contextMenuStrip2
-            // 
-            this.contextMenuStrip2.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.contextMenuStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.selectTableToolStripMenuItem,
-            this.deleteToolStripMenuItem,
-            this.refreshToolStripMenuItem});
-            this.contextMenuStrip2.Name = "contextMenuStrip2";
-            this.contextMenuStrip2.Size = new System.Drawing.Size(134, 82);
-            // 
-            // selectTableToolStripMenuItem
-            // 
-            this.selectTableToolStripMenuItem.Name = "selectTableToolStripMenuItem";
-            this.selectTableToolStripMenuItem.Size = new System.Drawing.Size(133, 26);
-            this.selectTableToolStripMenuItem.Text = "&Select";
-            // 
-            // deleteToolStripMenuItem
-            // 
-            this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
-            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(133, 26);
-            this.deleteToolStripMenuItem.Text = "&Delete";
-            // 
-            // refreshToolStripMenuItem
-            // 
-            this.refreshToolStripMenuItem.Name = "refreshToolStripMenuItem";
-            this.refreshToolStripMenuItem.Size = new System.Drawing.Size(133, 26);
-            this.refreshToolStripMenuItem.Text = "&Refresh";
-            // 
-            // timer1
-            // 
-            this.timer1.Enabled = true;
-            this.timer1.Interval = 1000;
-            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
-            // 
-            // loadfileDialog
-            // 
-            this.loadfileDialog.DefaultExt = "dpn";
-            this.loadfileDialog.FileName = "Project.dpn";
-            this.loadfileDialog.Filter = "DPN Files|*.dpn";
-            this.loadfileDialog.InitialDirectory = "C:\\";
-            this.loadfileDialog.Title = "Load new project";
-            // 
-            // tableLayoutPanel2
-            // 
-            this.tableLayoutPanel2.BackColor = System.Drawing.SystemColors.Control;
-            this.tableLayoutPanel2.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Inset;
-            this.tableLayoutPanel2.ColumnCount = 1;
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.Controls.Add(this.groupBox4, 0, 1);
-            this.tableLayoutPanel2.Controls.Add(this.groupBox2, 0, 0);
-            this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(5, 4);
-            this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
-            this.tableLayoutPanel2.RowCount = 2;
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 31.38918F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 68.61082F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(1017, 945);
-            this.tableLayoutPanel2.TabIndex = 3;
             // 
             // toolStripButton6
             // 
@@ -603,6 +693,12 @@
             this.toolStripButton5.Name = "toolStripButton5";
             this.toolStripButton5.Size = new System.Drawing.Size(64, 24);
             this.toolStripButton5.Text = "Save";
+            this.toolStripButton5.Click += new System.EventHandler(this.toolStripButton5_Click);
+            // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(6, 27);
             // 
             // toolStripButton1
             // 
@@ -612,6 +708,11 @@
             this.toolStripButton1.Size = new System.Drawing.Size(152, 24);
             this.toolStripButton1.Text = "Analyze Database";
             // 
+            // toolStripSeparator5
+            // 
+            this.toolStripSeparator5.Name = "toolStripSeparator5";
+            this.toolStripSeparator5.Size = new System.Drawing.Size(6, 27);
+            // 
             // toolStripButton2
             // 
             this.toolStripButton2.Image = global::DBNormalizationAnalyzer_UserInterface.Properties.Resources.Graphicloads_Filetype_Pdf__1_;
@@ -619,6 +720,11 @@
             this.toolStripButton2.Name = "toolStripButton2";
             this.toolStripButton2.Size = new System.Drawing.Size(124, 24);
             this.toolStripButton2.Text = "Export to PDF";
+            // 
+            // toolStripSeparator6
+            // 
+            this.toolStripSeparator6.Name = "toolStripSeparator6";
+            this.toolStripSeparator6.Size = new System.Drawing.Size(6, 27);
             // 
             // toolStripButton4
             // 
@@ -637,189 +743,108 @@
             this.toolStripButton3.Text = "Refresh function depen.";
             this.toolStripButton3.Click += new System.EventHandler(this.toolStripButton3_Click);
             // 
-            // groupBox2
+            // toolTip1
             // 
-            this.groupBox2.Controls.Add(this.tableLayoutPanel5);
-            this.groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox2.Location = new System.Drawing.Point(5, 4);
-            this.groupBox2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.groupBox2.Size = new System.Drawing.Size(1007, 290);
-            this.groupBox2.TabIndex = 2;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Function Dependency Editor";
-            this.groupBox2.Enter += new System.EventHandler(this.groupBox2_Enter);
+            this.toolTip1.IsBalloon = true;
+            this.toolTip1.ToolTipTitle = "Tip!";
             // 
-            // commandPanel
+            // timer1
             // 
-            this.commandPanel.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.commandPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.commandPanel.Font = new System.Drawing.Font("Consolas", 10.1F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.commandPanel.ForeColor = System.Drawing.Color.White;
-            this.commandPanel.Location = new System.Drawing.Point(3, 17);
-            this.commandPanel.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.commandPanel.Name = "commandPanel";
-            this.commandPanel.Size = new System.Drawing.Size(1001, 622);
-            this.commandPanel.TabIndex = 0;
-            this.commandPanel.Text = resources.GetString("commandPanel.Text");
+            this.timer1.Enabled = true;
+            this.timer1.Interval = 1000;
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
-            // groupBox4
+            // loadfileDialog
             // 
-            this.groupBox4.Controls.Add(this.commandPanel);
-            this.groupBox4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox4.Location = new System.Drawing.Point(5, 300);
-            this.groupBox4.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.groupBox4.Size = new System.Drawing.Size(1007, 641);
-            this.groupBox4.TabIndex = 9;
-            this.groupBox4.TabStop = false;
-            this.groupBox4.Text = "Function Dependency Editor Window";
+            this.loadfileDialog.DefaultExt = "dpn";
+            this.loadfileDialog.FileName = "Project.dpn";
+            this.loadfileDialog.Filter = "DPN Files|*.dpn";
+            this.loadfileDialog.InitialDirectory = "C:\\";
+            this.loadfileDialog.Title = "Load new project";
             // 
-            // tableLayoutPanel5
+            // terminalControl1
             // 
-            this.tableLayoutPanel5.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Inset;
-            this.tableLayoutPanel5.ColumnCount = 1;
-            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel5.Controls.Add(this.tableLayoutPanel7, 0, 1);
-            this.tableLayoutPanel5.Controls.Add(this.tableLayoutPanel8, 0, 0);
-            this.tableLayoutPanel5.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel5.Location = new System.Drawing.Point(3, 17);
-            this.tableLayoutPanel5.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.tableLayoutPanel5.Name = "tableLayoutPanel5";
-            this.tableLayoutPanel5.RowCount = 2;
-            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel5.Size = new System.Drawing.Size(1001, 271);
-            this.tableLayoutPanel5.TabIndex = 7;
+            this.terminalControl1.AutoScroll = true;
+            this.terminalControl1.BackColor = System.Drawing.Color.Black;
+            this.terminalControl1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.terminalControl1.Delimiters = new string[] {
+        "  "};
+            this.terminalControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.terminalControl1.Font = new System.Drawing.Font("Consolas", 10.1F, System.Drawing.FontStyle.Bold);
+            this.terminalControl1.ForeColor = System.Drawing.Color.White;
+            this.terminalControl1.Location = new System.Drawing.Point(3, 17);
+            this.terminalControl1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.terminalControl1.MessageColor = System.Drawing.SystemColors.ControlText;
+            this.terminalControl1.Name = "terminalControl1";
+            this.terminalControl1.PromptColor = System.Drawing.Color.White;
+            this.terminalControl1.Size = new System.Drawing.Size(1001, 580);
+            this.terminalControl1.TabIndex = 1;
+            this.terminalControl1.Command += new TerminalControl.TerminalControl.CommandEventHandler(this.terminalControl1_Command);
+            this.terminalControl1.Load += new System.EventHandler(this.terminalControl1_Load);
             // 
-            // tableLayoutPanel8
+            // columnsListBox
             // 
-            this.tableLayoutPanel8.ColumnCount = 2;
-            this.tableLayoutPanel8.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 76.50793F));
-            this.tableLayoutPanel8.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 23.49206F));
-            this.tableLayoutPanel8.Controls.Add(this.panel1, 0, 0);
-            this.tableLayoutPanel8.Controls.Add(this.glassButton1, 1, 0);
-            this.tableLayoutPanel8.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel8.Location = new System.Drawing.Point(5, 5);
-            this.tableLayoutPanel8.Name = "tableLayoutPanel8";
-            this.tableLayoutPanel8.RowCount = 1;
-            this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel8.Size = new System.Drawing.Size(991, 34);
-            this.tableLayoutPanel8.TabIndex = 1;
+            this.columnsListBox.ContextMenuStrip = this.contextMenuStrip1;
+            this.columnsListBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.columnsListBox.FormattingEnabled = true;
+            this.columnsListBox.ItemHeight = 16;
+            this.columnsListBox.Location = new System.Drawing.Point(3, 18);
+            this.columnsListBox.Name = "columnsListBox";
+            this.columnsListBox.Size = new System.Drawing.Size(784, 234);
+            this.columnsListBox.TabIndex = 0;
+            this.columnsListBox.SelectedIndexChanged += new System.EventHandler(this.columnsListBox_SelectedIndexChanged);
             // 
-            // panel1
+            // toolStripButton7
             // 
-            this.panel1.Controls.Add(this.textBox1);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Location = new System.Drawing.Point(3, 3);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(752, 28);
-            this.panel1.TabIndex = 0;
+            this.toolStripButton7.Image = global::DBNormalizationAnalyzer_UserInterface.Properties.Resources.Save_icon;
+            this.toolStripButton7.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton7.Name = "toolStripButton7";
+            this.toolStripButton7.Size = new System.Drawing.Size(113, 24);
+            this.toolStripButton7.Text = "Save as new";
+            this.toolStripButton7.Click += new System.EventHandler(this.toolStripButton7_Click);
             // 
-            // textBox1
+            // contextMenuStrip1
             // 
-            this.textBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBox1.Location = new System.Drawing.Point(0, 0);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(752, 22);
-            this.textBox1.TabIndex = 0;
+            this.contextMenuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItem2,
+            this.toolStripMenuItem3,
+            this.toolStripMenuItem4,
+            this.toolStripMenuItem5});
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(163, 108);
+            this.contextMenuStrip1.Text = "Tasks";
             // 
-            // glassButton1
+            // toolStripMenuItem2
             // 
-            this.glassButton1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.glassButton1.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.glassButton1.Location = new System.Drawing.Point(761, 3);
-            this.glassButton1.Name = "glassButton1";
-            this.glassButton1.Size = new System.Drawing.Size(227, 28);
-            this.glassButton1.TabIndex = 1;
-            this.glassButton1.Text = "Insert";
+            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(162, 26);
+            this.toolStripMenuItem2.Text = "&Create";
             // 
-            // tableLayoutPanel7
+            // toolStripMenuItem3
             // 
-            this.tableLayoutPanel7.ColumnCount = 2;
-            this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 19.68254F));
-            this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 80.31746F));
-            this.tableLayoutPanel7.Controls.Add(this.panel2, 0, 0);
-            this.tableLayoutPanel7.Controls.Add(this.groupBox5, 1, 0);
-            this.tableLayoutPanel7.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel7.Location = new System.Drawing.Point(5, 47);
-            this.tableLayoutPanel7.Name = "tableLayoutPanel7";
-            this.tableLayoutPanel7.RowCount = 1;
-            this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel7.Size = new System.Drawing.Size(991, 245);
-            this.tableLayoutPanel7.TabIndex = 3;
+            this.toolStripMenuItem3.Name = "toolStripMenuItem3";
+            this.toolStripMenuItem3.ShortcutKeys = System.Windows.Forms.Keys.Delete;
+            this.toolStripMenuItem3.Size = new System.Drawing.Size(162, 26);
+            this.toolStripMenuItem3.Text = "&Delete";
             // 
-            // panel2
+            // toolStripMenuItem4
             // 
-            this.panel2.Controls.Add(this.groupBox3);
-            this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel2.Location = new System.Drawing.Point(3, 3);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(189, 239);
-            this.panel2.TabIndex = 10;
+            this.toolStripMenuItem4.Name = "toolStripMenuItem4";
+            this.toolStripMenuItem4.ShortcutKeys = System.Windows.Forms.Keys.F5;
+            this.toolStripMenuItem4.Size = new System.Drawing.Size(162, 26);
+            this.toolStripMenuItem4.Text = "&Refresh";
             // 
-            // groupBox3
+            // toolStripMenuItem5
             // 
-            this.groupBox3.Controls.Add(this.tablesListBox);
-            this.groupBox3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox3.Location = new System.Drawing.Point(0, 0);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(189, 239);
-            this.groupBox3.TabIndex = 0;
-            this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "Tables";
+            this.toolStripMenuItem5.Name = "toolStripMenuItem5";
+            this.toolStripMenuItem5.ShortcutKeys = System.Windows.Forms.Keys.F2;
+            this.toolStripMenuItem5.Size = new System.Drawing.Size(162, 26);
+            this.toolStripMenuItem5.Text = "&Rename";
             // 
-            // tablesListBox
+            // saveFileDialog1
             // 
-            this.tablesListBox.ContextMenuStrip = this.tableContextMenu;
-            this.tablesListBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tablesListBox.FormattingEnabled = true;
-            this.tablesListBox.ItemHeight = 16;
-            this.tablesListBox.Items.AddRange(new object[] {
-            "Table 1",
-            "Table 2",
-            "Table 3"});
-            this.tablesListBox.Location = new System.Drawing.Point(3, 18);
-            this.tablesListBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.tablesListBox.Name = "tablesListBox";
-            this.tablesListBox.Size = new System.Drawing.Size(183, 218);
-            this.tablesListBox.TabIndex = 10;
-            this.toolTip1.SetToolTip(this.tablesListBox, "Right Click to show menu, left click to show columns in editor");
-            // 
-            // groupBox5
-            // 
-            this.groupBox5.Controls.Add(this.columnsDatagridview);
-            this.groupBox5.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox5.Location = new System.Drawing.Point(198, 3);
-            this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(790, 239);
-            this.groupBox5.TabIndex = 11;
-            this.groupBox5.TabStop = false;
-            this.groupBox5.Text = "Columns";
-            // 
-            // columnsDatagridview
-            // 
-            this.columnsDatagridview.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.columnsDatagridview.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
-            this.columnsDatagridview.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.columnsDatagridview.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.columnsDatagridview.Location = new System.Drawing.Point(3, 18);
-            this.columnsDatagridview.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.columnsDatagridview.Name = "columnsDatagridview";
-            this.columnsDatagridview.RowHeadersVisible = false;
-            this.columnsDatagridview.RowTemplate.Height = 24;
-            this.columnsDatagridview.Size = new System.Drawing.Size(784, 218);
-            this.columnsDatagridview.TabIndex = 10;
+            this.saveFileDialog1.Filter = "ProjectDBN|*.dpn";
             // 
             // EditorForm
             // 
@@ -838,31 +863,31 @@
             this.Text = "DB Normalization Analysisc - -PROJECTNAME*- -";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.EditorForm_FormClosing);
+            this.Load += new System.EventHandler(this.EditorForm_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
             this.tableLayoutPanel1.ResumeLayout(false);
+            this.tableLayoutPanel2.ResumeLayout(false);
+            this.groupBox4.ResumeLayout(false);
+            this.groupBox2.ResumeLayout(false);
+            this.tableLayoutPanel5.ResumeLayout(false);
+            this.tableLayoutPanel7.ResumeLayout(false);
+            this.panel2.ResumeLayout(false);
+            this.groupBox3.ResumeLayout(false);
+            this.tableContextMenu.ResumeLayout(false);
+            this.groupBox5.ResumeLayout(false);
+            this.tableLayoutPanel8.ResumeLayout(false);
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.tableLayoutPanel3.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             this.tableLayoutPanel6.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.analysisDatagridView)).EndInit();
-            this.tableContextMenu.ResumeLayout(false);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
-            this.contextMenuStrip2.ResumeLayout(false);
-            this.tableLayoutPanel2.ResumeLayout(false);
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox4.ResumeLayout(false);
-            this.tableLayoutPanel5.ResumeLayout(false);
-            this.tableLayoutPanel8.ResumeLayout(false);
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
-            this.tableLayoutPanel7.ResumeLayout(false);
-            this.panel2.ResumeLayout(false);
-            this.groupBox3.ResumeLayout(false);
-            this.groupBox5.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.columnsDatagridview)).EndInit();
+            this.contextMenuStrip1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -890,7 +915,7 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
         private System.Windows.Forms.ContextMenuStrip tableContextMenu;
-        private System.Windows.Forms.ToolStripMenuItem dependencyDeleteTStripMI;
+        private System.Windows.Forms.ToolStripMenuItem tableDelete;
         private System.Windows.Forms.ToolStripMenuItem logWindowToolStripMenuItem;
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripButton toolStripButton1;
@@ -902,10 +927,6 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel6;
         private System.Windows.Forms.RichTextBox logTextBox;
         private System.Windows.Forms.ToolTip toolTip1;
-        private System.Windows.Forms.ContextMenuStrip contextMenuStrip2;
-        private System.Windows.Forms.ToolStripMenuItem selectTableToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem refreshToolStripMenuItem;
         private System.Windows.Forms.ToolStripButton toolStripButton4;
         private System.Windows.Forms.ToolStripMenuItem editPropertiesToolStripMenuItem;
         private System.Windows.Forms.ToolStripStatusLabel datetimeLBL;
@@ -927,7 +948,6 @@
         private System.Windows.Forms.ToolStripMenuItem renameToolStripMenuItem;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private System.Windows.Forms.GroupBox groupBox4;
-        private System.Windows.Forms.RichTextBox commandPanel;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel5;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel8;
@@ -939,7 +959,15 @@
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.ListBox tablesListBox;
         private System.Windows.Forms.GroupBox groupBox5;
-        private System.Windows.Forms.DataGridView columnsDatagridview;
+        private TerminalControl.TerminalControl terminalControl1;
+        private System.Windows.Forms.ListBox columnsListBox;
+        private System.Windows.Forms.ToolStripButton toolStripButton7;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem2;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem3;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem4;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem5;
+        private System.Windows.Forms.SaveFileDialog saveFileDialog1;
     }
 }
 

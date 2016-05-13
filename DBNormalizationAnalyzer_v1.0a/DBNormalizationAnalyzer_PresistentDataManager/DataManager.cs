@@ -28,6 +28,8 @@ namespace DBNormalizationAnalyzer.PresistentDataManager
         }
         public static void CreateProject(Project _project)
         {
+            if (File.Exists(_project.ProjectPath))
+                File.Delete(_project.ProjectPath);
             using (m_FileStream = new FileStream(_project.ProjectPath, FileMode.Create))
             {
                 m_Formatter = new BinaryFormatter();
@@ -63,13 +65,25 @@ namespace DBNormalizationAnalyzer.PresistentDataManager
                 return new List<ProjectJSON>(0);
             }
         }
+        public static void UpdateRecentProjects(List<ProjectJSON> _data)
+        {
+
+        }
         public static Project ReadProject(string path)
         {
-            using (m_FileStream = new FileStream(path, FileMode.Open))
+            try
             {
-                m_Formatter = new BinaryFormatter();
 
-                return ((m_Formatter.Deserialize(m_FileStream) as Project));
+                using (m_FileStream = new FileStream(path, FileMode.Open))
+                {
+                    m_Formatter = new BinaryFormatter();
+
+                    return ((m_Formatter.Deserialize(m_FileStream) as Project));
+                }
+            }
+            catch (System.IO.FileNotFoundException e)
+            {
+                throw e;
             }
         }
       

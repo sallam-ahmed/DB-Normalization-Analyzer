@@ -21,6 +21,17 @@ namespace DBNormalizationAnalyzer_UserInterface
         {
             switch (((sender as Glass.GlassButton).Tag as string))
             {
+                case "Open":
+                    try {
+                        EditorForm _editForm = new EditorForm(DataManager.ReadProject(listBox1.SelectedValue as string));
+                        _editForm.Show();
+                        this.Hide();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("An error occured, couldn't load project");
+                    }
+                    break;
                 case "Create New":
                     NewProject _new = new NewProject();
                     _new.Show();
@@ -56,6 +67,15 @@ namespace DBNormalizationAnalyzer_UserInterface
         private void EntranceWindow_Load(object sender, EventArgs e)
         {
             LoadRecentProjects();
+        }
+
+        private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("Do you want to delete this project from the refrences menu ?","Confirm delete",MessageBoxButtons.YesNo,MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                listBox1.Items.RemoveAt(listBox1.SelectedIndex);
+                
+            }
         }
     }
 }

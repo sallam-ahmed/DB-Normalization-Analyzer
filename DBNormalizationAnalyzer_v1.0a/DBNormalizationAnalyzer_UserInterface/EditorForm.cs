@@ -6,6 +6,7 @@ using DBNormalizationAnalyzer.Formations;
 using DBNormalizationAnalyzer.AnalyzerLibrary;
 using DBNormalizationAnalyzer.PresistentDataManager;
 using System.ComponentModel;
+using System.Drawing;
 
 namespace DBNormalizationAnalyzer_UserInterface
 {
@@ -14,7 +15,6 @@ namespace DBNormalizationAnalyzer_UserInterface
     {
         #region Variables
         public static bool bHasChanges; // for saving
-        private string _commandBuilder = "";
         private Table m_currentTable;
         private Project CurrentProject { get; set; }
         private Dictionary<Table, FunctionalDependency> tableMap;
@@ -45,6 +45,9 @@ namespace DBNormalizationAnalyzer_UserInterface
             tablesListBox.DisplayMember = "Name";
             tablesListBox.DataSource = _project.Tables;
 
+            try
+            { columnsListBox.DataSource = m_currentTable.Columns; }
+            catch { }
             LogText("Loaded project tables with count of " + _project.Tables.Count.ToString() + " projects.");
             this.Text = "DB Normalization Analyzer - " + CurrentProject.ProjectName+ " -";
             ClearCLI();
@@ -57,12 +60,12 @@ namespace DBNormalizationAnalyzer_UserInterface
                 DialogResult Res = MessageBox.Show("Save current project changes?", "Save project", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (Res == DialogResult.Yes)
                 {
-                    //Save
+                    DataManager.CreateProject(CurrentProject);
                 }
             }
             else
             {
-                //Save
+                DataManager.CreateProject(CurrentProject);
             }
             bHasChanges = false;
         }
@@ -70,7 +73,7 @@ namespace DBNormalizationAnalyzer_UserInterface
         #region # CLI - LOG #
         internal void ClearCLI()
         {
-            commandPanel.Text = "~" + CurrentProject.ProjectName + @"\\";
+            //commandPanel.Text = "~" + CurrentProject.ProjectName + @"\\";
         }
         internal void ResetLog()
         {
@@ -96,6 +99,7 @@ namespace DBNormalizationAnalyzer_UserInterface
 
             var checker = new NfChecker(m_currentTable.TableDependency);
             var error = checker.Check();
+            //COMPLETE
         }
         #region # UI ACTIONS #
         /// <summary>
@@ -186,70 +190,6 @@ namespace DBNormalizationAnalyzer_UserInterface
             }
         }
         #endregion
-        private void richTextBox1_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (e.KeyChar == (char)Keys.Enter)
-            {
-                try
-                {
-                    var lastLine = commandPanel.Text.Split(new[] { ':' }, StringSplitOptions.RemoveEmptyEntries).Last();
-                    
-                    if (lastLine.StartsWith("add"))
-                    {
-                        lastLine = lastLine.Remove(0, 3);
-                        lastLine = lastLine.Replace(" ", "").Replace("{", "").Replace("}", "");
-                        var tokens = lastLine.Split(new[] { "->" }, StringSplitOptions.RemoveEmptyEntries);
-
-                        var dep0 = tokens[0].Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
-                        var dep1 = tokens[1].Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
-                        var cols = dep0.Select(s => new Column(s)).ToList();
-
-                        var from = m_currentTable.ColumnSet(cols);
-                        cols.Clear();
-
-                        cols.AddRange(dep1.Select(s => new Column(s)));
-
-                        var to = m_currentTable.ColumnSet(cols);
-                        m_currentTable.TableDependency.AddDependency(from, to);
-                    }
-                    else if (lastLine.StartsWith("rem"))
-                    {
-                        lastLine = lastLine.Remove(0, 3);
-                        lastLine = lastLine.Replace(" ", "").Replace("{", "").Replace("}", "");
-                        var tokens = lastLine.Split(new[] { "->" }, StringSplitOptions.RemoveEmptyEntries);
-
-                        var dep0 = tokens[0].Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
-                        var dep1 = tokens[1].Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
-                        var cols = dep0.Select(s => new Column(s)).ToList();
-
-                        var from = m_currentTable.ColumnSet(cols);
-                        cols.Clear();
-
-                        cols.AddRange(dep1.Select(s => new Column(s)));
-
-                        var to = m_currentTable.ColumnSet(cols);
-                        m_currentTable.TableDependency.RemoveDependency(from, to);
-                    }
-                    else if (lastLine.StartsWith("tbchng"))
-                    {
-                        //CHANGE WORKING TABLE
-                        lastLine = lastLine.Remove(0, 5);
-                        MessageBox.Show(lastLine);
-                    }
-                    commandPanel.AppendText("~"+CurrentProject.ProjectName + "\\Command Done\n");
-                    commandPanel.AppendText(_commandBuilder);
-                }
-                catch (Exception ex)
-                {
-                    commandPanel.AppendText(ex.Message);
-                }
-            }
-           
-        }
-
-        private void toolStripButton2_Click(object sender, EventArgs e)
-        {
-        }
 
         private void tablesListBox_SelectedValueChanged(object sender, EventArgs e)
         {
@@ -257,12 +197,7 @@ namespace DBNormalizationAnalyzer_UserInterface
             {
                 if (tablesListBox.SelectedValue != null)
                 {
-                    //BindingList<Column> BList;
-
-                    //Bs = new BindingSource();
-                    //Bs.DataSource = 
-                    
-                    columnsDatagridview.DataSource = new BindingList<Column>((tablesListBox.SelectedValue as Table).Columns);
+                    columnsListBox.DataSource = new BindingList<Column>((tablesListBox.SelectedValue as Table).Columns);
                 }
             }
             catch (Exception ex)
@@ -306,6 +241,7 @@ namespace DBNormalizationAnalyzer_UserInterface
                     break;
                 case "RefFunD":
                     LoadFunctionalDependencies(CurrentProject);
+                    
                     break;
             }
         }
@@ -319,23 +255,7 @@ namespace DBNormalizationAnalyzer_UserInterface
             }
         }
 
-        private void columnsDatagridview_CellValueChanged(object sender, DataGridViewCellEventArgs e)
-        {
-            if (e.RowIndex == -1)
-                return;
-            MessageBox.Show(columnsDatagridview.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString());
-        }
-
-        private void analysisDatagridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-        }
-
-        private void columnsDatagridview_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-        }
-
+        
         private void toolStripStatusLabel1_Click(object sender, EventArgs e)
         {          
           
@@ -357,11 +277,6 @@ namespace DBNormalizationAnalyzer_UserInterface
             }
         }
 
-        private void tablesListBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
         private void createTableToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Program.LoadedProject.Tables.Add(new Table("NEW TABLE", 1));
@@ -370,14 +285,88 @@ namespace DBNormalizationAnalyzer_UserInterface
             LoadProject(Program.LoadedProject);
         }
 
-        private void tableLayoutPanel5_Paint(object sender, PaintEventArgs e)
+        private void groupBox2_Enter(object sender, EventArgs e)
         {
 
         }
 
-        private void groupBox2_Enter(object sender, EventArgs e)
+        private void EditorForm_Load(object sender, EventArgs e)
+        {
+            InitializeTerminalControl();
+        }
+        private void InitializeTerminalControl()
+        {
+            terminalControl1.Delimiters = new string[] { " ", "->" };
+            terminalControl1.AutoCompleteAdd("analyze"); // Aalysis Process
+            terminalControl1.AutoCompleteAdd("show_depen");//Show current dependencies
+            terminalControl1.AutoCompleteAdd("export");//Export to PDF
+            terminalControl1.AutoCompleteAdd("help"); // Show help
+            terminalControl1.AutoCompleteAdd("add");// Add dependency
+            terminalControl1.AutoCompleteAdd("rem"); // Remove dependency
+            terminalControl1.AutoCompleteAdd("exit"); // Exit Application
+            terminalControl1.AutoCompleteAdd("tbchng"); // Change active table
+            terminalControl1.PromptString = CurrentProject.ProjectName + ((m_currentTable != null)? m_currentTable.Name : "") + "~\\";
+            terminalControl1.AutoComplete = AutoCompleteMode.Append;
+            terminalControl1.PromptColor = Color.Blue;
+            terminalControl1.ForeColor = Color.Green;
+            terminalControl1.MessageColor = Color.Red;
+            terminalControl1.BackColor = Color.Black;
+        }
+
+        private void terminalControl1_Load(object sender, EventArgs e)
         {
 
+        }
+
+        private void terminalControl1_Command(object sender, TerminalControl.CommandEventArgs e)
+        {
+            switch (e.Command)
+            {
+                case "help":
+                    e.Message = "Showing help";
+                    break;
+                case "analyze":
+                    Analyze();
+                    break;
+                case "show_depen":
+                    e.Message = "FUNCTION DPENDECIES\n1-\n2-";
+                    break;
+                case "add":
+                    foreach (var item in e.Parameters)
+                    {
+                        LogText("PARAM " + item);
+                    }
+                    break;
+                case "rem":
+                    break;
+                case "exit":
+                    break;
+                case "tbchng":
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private void toolStripButton5_Click(object sender, EventArgs e)
+        {
+            DataManager.CreateProject(CurrentProject);
+        }
+
+        private void columnsListBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void toolStripButton7_Click(object sender, EventArgs e)
+        {
+            DialogResult r = saveFileDialog1.ShowDialog();
+            if (r == DialogResult.OK)
+            {
+                Project _new = CurrentProject;
+                _new.ProjectPath = saveFileDialog1.FileName;
+                DataManager.CreateProject(_new);
+            }
         }
     }
     
