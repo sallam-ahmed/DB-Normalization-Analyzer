@@ -20,16 +20,16 @@ namespace DBNormalizationAnalyzer.AnalyzerLibrary
         public Error Check()
         {
             var res = FirstNormalForm();
-            if (res.Level != 0)
+            if (res.Level == 1)
                 return res;
             res = SecondNormalForm();
-            if (res.Level != 0)
+            if (res.Level == 2)
                 return res;
             res = ThirdNormalForm();
-            if (res.Level != 0)
+            if (res.Level == 3)
                 return res;
             res = BcNormalForm();
-            if (res.Level == 0)
+            if (res.Level == 4)
                 res.Message = "Mbrouk";
             return res;
         }
@@ -37,7 +37,7 @@ namespace DBNormalizationAnalyzer.AnalyzerLibrary
         #region 1NF
         private Error FirstNormalForm()
         {
-            var res = new Error("",0);
+            var res = new Error("",2);
             if (Fd.IsCandidateKey(Fd.CurrentPrimaryKey))
                 return res;
             res.Message = "Primary Key isn't candidate key!";
@@ -81,7 +81,7 @@ namespace DBNormalizationAnalyzer.AnalyzerLibrary
 
         private Error SecondNormalForm()
         {
-            var res = new Error("",0);
+            var res = new Error("",3);
             var newTable = new BitArray(Fd.Keys.Count);
             newTable.SetAll(true);
             foreach (var candidateKey in Fd.SufficientCandidateKeys)
@@ -128,7 +128,7 @@ namespace DBNormalizationAnalyzer.AnalyzerLibrary
         #region 3NF
         private Error ThirdNormalForm()
         {
-            var res = new Error("",0);
+            var res = new Error("",4);
             if (
                 Fd.DependencyList.All(
                     dependency =>
@@ -169,7 +169,7 @@ namespace DBNormalizationAnalyzer.AnalyzerLibrary
         #region BCNF
         private Error BcNormalForm()
         {
-            var res = new Error("", 0);
+            var res = new Error("", 5);
             if (Fd.DependencyList.All(dependency => Fd.IsSuperKey(dependency.Item1)))
                 return res;
             res.Message = "Some attributes doesn't depend on the whole key!";

@@ -10,17 +10,15 @@ namespace DBNormalizationAnalyzer.Formations
     public class Table
     {
         public string Name { get; set; }
-        public int ColumnsCount { get; }
         public List<Column> Columns { get; set; }
         public FunctionalDependency TableDependency { get; set; }
-        public Table Self { get { return this; } }
+        public Table Self => this;
         public List<Column> PrimaryKey { get; set; } 
         
         public Table(string name ,int columnsCount)
         {
             Name = name;
-            ColumnsCount = columnsCount;
-            Columns = new List<Column>(ColumnsCount);
+            Columns = new List<Column>(columnsCount);
             Columns.AddRange(Enumerable.Repeat(new Column(""),columnsCount));
             TableDependency = new FunctionalDependency(columnsCount, new BitArray(columnsCount));
         }
@@ -28,7 +26,6 @@ namespace DBNormalizationAnalyzer.Formations
         {
             Name = name;
             Columns = columns;
-            ColumnsCount = Columns.Count;
             TableDependency = new FunctionalDependency(columns.Count, new BitArray(columns.Count));
         }
 
@@ -37,13 +34,12 @@ namespace DBNormalizationAnalyzer.Formations
             Name = name;
             PrimaryKey = primaryKey;
             Columns = columns;
-            ColumnsCount = Columns.Count;
             TableDependency = new FunctionalDependency(columns.Count, ColumnSet(primaryKey));
         }
 
         public BitArray ColumnSet(List<Column> columns)
         {
-            var res = new BitArray(ColumnsCount);
+            var res = new BitArray(Columns.Count);
             foreach (var column in columns)
             {
                 var index = -1;
@@ -66,20 +62,17 @@ namespace DBNormalizationAnalyzer.Formations
             return Columns.Where((t, i) => columns[i]).ToList();
         } 
 
-        public void RemoveColumn(Column column)
+        public void RemoveColumn(int index)
         {
-            var index = -1;
-            for(var i = 0;i < Columns.Count;i++)
-                if (Columns[i].Equals(column))
-                    index = i;
+            if (index >= Columns.Count)
+                return;
+            var column = Columns[index];
             for(var i = 0;i < PrimaryKey.Count;i++)
                 if (PrimaryKey[i].Equals(column))
                 {
                     PrimaryKey.RemoveAt(i);
                     i--;
                 }
-            if (index == -1)
-                throw new ArgumentOutOfRangeException();
             TableDependency.RemoveKey(index);
             Columns.RemoveAt(index);
         }

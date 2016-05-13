@@ -33,7 +33,7 @@ namespace DBNormalizationAnalyzer_UserInterface
             }
             else
             {
-                DialogResult res = saveDialog.ShowDialog(this);
+                var res = saveDialog.ShowDialog(this);
                 if(res == DialogResult.OK)
                 {
                     filePathTextBox.Text = saveDialog.FileName;
@@ -71,9 +71,9 @@ namespace DBNormalizationAnalyzer_UserInterface
         {
             ShowExitMessage(e);
         }
-        private void ShowExitMessage(FormClosingEventArgs e)
+        private static void ShowExitMessage(FormClosingEventArgs e)
         {
-            if (!(e.CloseReason == CloseReason.ApplicationExitCall))
+            if (e.CloseReason != CloseReason.ApplicationExitCall)
             {
 
                 if (MessageBox.Show("Would you like to exit?", "Exit?", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)

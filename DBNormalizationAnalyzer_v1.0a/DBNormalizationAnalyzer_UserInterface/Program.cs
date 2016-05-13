@@ -21,7 +21,7 @@ namespace DBNormalizationAnalyzer_UserInterface
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
-        static void Main()
+        private static void Main()
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);

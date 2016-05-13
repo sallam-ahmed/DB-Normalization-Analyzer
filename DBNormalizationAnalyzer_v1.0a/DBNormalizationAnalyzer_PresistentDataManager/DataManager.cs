@@ -26,66 +26,56 @@ namespace DBNormalizationAnalyzer.PresistentDataManager
         {
             m_Formatter = new BinaryFormatter();
         }
-        public static void CreateProject(Project _project)
+        public static void CreateProject(Project project)
         {
-            if (File.Exists(_project.ProjectPath))
-                File.Delete(_project.ProjectPath);
-            using (m_FileStream = new FileStream(_project.ProjectPath, FileMode.Create))
+            if (File.Exists(project.ProjectPath))
+                File.Delete(project.ProjectPath);
+            using (m_FileStream = new FileStream(project.ProjectPath, FileMode.Create))
             {
                 m_Formatter = new BinaryFormatter();
-                m_Formatter.Serialize(m_FileStream, _project);
+                m_Formatter.Serialize(m_FileStream, project);
             }
             //Create JSON Script
-            string JSonString;
+            string jSonString;
             using (StreamReader sr = new StreamReader(new FileStream(RecentProjectsFilePath, FileMode.OpenOrCreate)))
             {
-                JSonString = sr.ReadToEnd();
+                jSonString = sr.ReadToEnd();
             }
             m_JSerializer = new JavaScriptSerializer();
-            var data = m_JSerializer.Deserialize<List<ProjectJSON>>(JSonString);
+            var data = m_JSerializer.Deserialize<List<ProjectJson>>(jSonString);
             if (data == null)
-                data = new List<ProjectJSON>();
+                data = new List<ProjectJson>();
 
-            data.Add(_project.ProjectJson);
+            data.Add(project.ProjectJson);
             m_FileStream = new FileStream(RecentProjectsFilePath, FileMode.OpenOrCreate);
-            JSonString = m_JSerializer.Serialize(data);
+            jSonString = m_JSerializer.Serialize(data);
             using (StreamWriter sw = new StreamWriter(m_FileStream))
             {
-                sw.WriteLine(JSonString);
+                sw.WriteLine(jSonString);
                 sw.Close();
             }
             
         }
-        public static List<ProjectJSON> LoadRecentProjects()
+        public static List<ProjectJson> LoadRecentProjects()
         {
             if(File.Exists(RecentProjectsFilePath))
-                return (new JavaScriptSerializer().Deserialize<List<ProjectJSON>>(File.ReadAllText(RecentProjectsFilePath)));
+                return (new JavaScriptSerializer().Deserialize<List<ProjectJson>>(File.ReadAllText(RecentProjectsFilePath)));
             else
             {
-                return new List<ProjectJSON>(0);
+                return new List<ProjectJson>(0);
             }
         }
-        public static void UpdateRecentProjects(List<ProjectJSON> _data)
+        public static void UpdateRecentProjects(List<ProjectJson> _data)
         {
 
         }
         public static Project ReadProject(string path)
         {
-            try
+            using (m_FileStream = new FileStream(path, FileMode.Open))
             {
-
-                using (m_FileStream = new FileStream(path, FileMode.Open))
-                {
-                    m_Formatter = new BinaryFormatter();
-
-                    return ((m_Formatter.Deserialize(m_FileStream) as Project));
-                }
-            }
-            catch (System.IO.FileNotFoundException e)
-            {
-                throw e;
+                m_Formatter = new BinaryFormatter();
+                return m_Formatter.Deserialize(m_FileStream) as Project;
             }
         }
-      
     }
 }

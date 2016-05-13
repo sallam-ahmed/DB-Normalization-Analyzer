@@ -37,10 +37,10 @@
             this.label1 = new System.Windows.Forms.Label();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.glassButton1 = new Glass.GlassButton();
+            this.glassButton5 = new Glass.GlassButton();
             this.glassButton2 = new Glass.GlassButton();
             this.glassButton4 = new Glass.GlassButton();
             this.glassButton3 = new Glass.GlassButton();
-            this.glassButton5 = new Glass.GlassButton();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.logoPictureBox)).BeginInit();
             this.tableLayoutPanel2.SuspendLayout();
@@ -98,7 +98,7 @@
             // 
             this.listBox1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.listBox1.FormattingEnabled = true;
-            this.listBox1.ItemHeight = 23;
+            this.listBox1.ItemHeight = 19;
             this.listBox1.Items.AddRange(new object[] {
             "School",
             "Library",
@@ -127,7 +127,7 @@
             this.label1.Location = new System.Drawing.Point(0, 0);
             this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(175, 23);
+            this.label1.Size = new System.Drawing.Size(144, 19);
             this.label1.TabIndex = 0;
             this.label1.Text = "Recent Projects";
             // 
@@ -153,6 +153,16 @@
             this.glassButton1.Tag = "Open";
             this.glassButton1.Text = "Open";
             this.glassButton1.Click += new System.EventHandler(this.PerformButtonAction);
+            // 
+            // glassButton5
+            // 
+            this.glassButton5.Location = new System.Drawing.Point(3, 48);
+            this.glassButton5.Name = "glassButton5";
+            this.glassButton5.Size = new System.Drawing.Size(427, 39);
+            this.glassButton5.TabIndex = 7;
+            this.glassButton5.Tag = "Create New";
+            this.glassButton5.Text = "Create New Project";
+            this.glassButton5.Click += new System.EventHandler(this.PerformButtonAction);
             // 
             // glassButton2
             // 
@@ -184,19 +194,9 @@
             this.glassButton3.Text = "Exit";
             this.glassButton3.Click += new System.EventHandler(this.PerformButtonAction);
             // 
-            // glassButton5
-            // 
-            this.glassButton5.Location = new System.Drawing.Point(3, 48);
-            this.glassButton5.Name = "glassButton5";
-            this.glassButton5.Size = new System.Drawing.Size(427, 39);
-            this.glassButton5.TabIndex = 7;
-            this.glassButton5.Tag = "Create New";
-            this.glassButton5.Text = "Create New Project";
-            this.glassButton5.Click += new System.EventHandler(this.PerformButtonAction);
-            // 
             // EntranceWindow
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 23F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 19F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(723, 729);
             this.Controls.Add(this.tableLayoutPanel1);

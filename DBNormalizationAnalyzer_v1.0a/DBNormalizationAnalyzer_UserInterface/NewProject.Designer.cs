@@ -43,8 +43,8 @@
             this.label1 = new System.Windows.Forms.Label();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.timeLabel = new System.Windows.Forms.ToolStripStatusLabel();
-            this.saveDialog = new System.Windows.Forms.SaveFileDialog();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.saveDialog = new System.Windows.Forms.SaveFileDialog();
             this.groupBox1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -89,7 +89,7 @@
             this.label4.Location = new System.Drawing.Point(8, 276);
             this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(142, 23);
+            this.label4.Size = new System.Drawing.Size(117, 19);
             this.label4.TabIndex = 15;
             this.label4.Text = "Description:";
             // 
@@ -127,7 +127,7 @@
             this.filePathTextBox.Location = new System.Drawing.Point(20, 223);
             this.filePathTextBox.Name = "filePathTextBox";
             this.filePathTextBox.ReadOnly = true;
-            this.filePathTextBox.Size = new System.Drawing.Size(367, 31);
+            this.filePathTextBox.Size = new System.Drawing.Size(367, 26);
             this.filePathTextBox.TabIndex = 6;
             // 
             // label3
@@ -136,7 +136,7 @@
             this.label3.Location = new System.Drawing.Point(8, 197);
             this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(186, 23);
+            this.label3.Size = new System.Drawing.Size(153, 19);
             this.label3.TabIndex = 5;
             this.label3.Text = "Save Location: *";
             // 
@@ -146,7 +146,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.authorNameTextBox.Location = new System.Drawing.Point(20, 131);
             this.authorNameTextBox.Name = "authorNameTextBox";
-            this.authorNameTextBox.Size = new System.Drawing.Size(532, 31);
+            this.authorNameTextBox.Size = new System.Drawing.Size(532, 26);
             this.authorNameTextBox.TabIndex = 4;
             // 
             // label2
@@ -155,7 +155,7 @@
             this.label2.Location = new System.Drawing.Point(8, 105);
             this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(109, 23);
+            this.label2.Size = new System.Drawing.Size(90, 19);
             this.label2.TabIndex = 3;
             this.label2.Text = "Author: *";
             // 
@@ -165,7 +165,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.projectNameTextBox.Location = new System.Drawing.Point(20, 54);
             this.projectNameTextBox.Name = "projectNameTextBox";
-            this.projectNameTextBox.Size = new System.Drawing.Size(532, 31);
+            this.projectNameTextBox.Size = new System.Drawing.Size(532, 26);
             this.projectNameTextBox.TabIndex = 2;
             this.projectNameTextBox.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
@@ -175,7 +175,7 @@
             this.label1.Location = new System.Drawing.Point(8, 28);
             this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(175, 23);
+            this.label1.Size = new System.Drawing.Size(144, 19);
             this.label1.TabIndex = 0;
             this.label1.Text = "Project Name: *";
             // 
@@ -184,22 +184,17 @@
             this.statusStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.timeLabel});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 466);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 469);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(564, 25);
+            this.statusStrip1.Size = new System.Drawing.Size(564, 22);
             this.statusStrip1.TabIndex = 1;
             this.statusStrip1.Text = "statusStrip1";
             // 
             // timeLabel
             // 
             this.timeLabel.Name = "timeLabel";
-            this.timeLabel.Size = new System.Drawing.Size(99, 20);
+            this.timeLabel.Size = new System.Drawing.Size(79, 17);
             this.timeLabel.Text = "DATA /  TIME";
-            // 
-            // saveDialog
-            // 
-            this.saveDialog.DefaultExt = "dpn";
-            this.saveDialog.FileName = "NewProject";
             // 
             // timer1
             // 
@@ -209,7 +204,7 @@
             // 
             // NewProject
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 23F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 19F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(564, 491);
             this.Controls.Add(this.statusStrip1);
@@ -245,9 +240,9 @@
         private Glass.GlassButton cancelProject;
         private Glass.GlassButton createProject;
         private Glass.GlassButton choosePath;
-        private System.Windows.Forms.SaveFileDialog saveDialog;
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.TextBox descriptionTextBox;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.SaveFileDialog saveDialog;
     }
 }

@@ -32,7 +32,7 @@ namespace DBNormalizationAnalyzer.AnalyzerLibrary
             foreach (var dependency in DependencyList)
             {
                 dependecyStrings.Add(dependency.Item1.ToBitString());
-                dependecyStrings.Add(dependency.Item1.ToBitString());
+                dependecyStrings.Add(dependency.Item2.ToBitString());
             }
             info.AddValue("deps", dependecyStrings, typeof(List<string>));
         }
