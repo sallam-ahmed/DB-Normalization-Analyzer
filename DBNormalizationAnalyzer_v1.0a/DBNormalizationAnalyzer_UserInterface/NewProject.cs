@@ -33,7 +33,7 @@ namespace DBNormalizationAnalyzer_UserInterface
             }
             else
             {
-                DialogResult res = saveDialog.ShowDialog(this);
+                var res = saveDialog.ShowDialog(this);
                 if(res == DialogResult.OK)
                 {
                     filePathTextBox.Text = saveDialog.FileName;
@@ -59,18 +59,18 @@ namespace DBNormalizationAnalyzer_UserInterface
         {
             Program.LoadedProject = new Project(projectNameTextBox.Text, authorNameTextBox.Text, saveDialog.FileName,descriptionTextBox.Text,DateTime.Now);
             DataManager.CreateProject(Program.LoadedProject);
-            EditorForm _formInstance = new EditorForm(Program.LoadedProject);
-            _formInstance.Show();
-            this.Hide();
+            var formInstance = new EditorForm(Program.LoadedProject);
+            formInstance.Show();
+            Hide();
         }
 
         private void NewProject_FormClosing(object sender, FormClosingEventArgs e)
         {
             ShowExitMessage(e);
         }
-        private void ShowExitMessage(FormClosingEventArgs e)
+        private static void ShowExitMessage(FormClosingEventArgs e)
         {
-            if (!(e.CloseReason == CloseReason.ApplicationExitCall))
+            if (e.CloseReason != CloseReason.ApplicationExitCall)
             {
 
                 if (MessageBox.Show("Would you like to exit?", "Exit?", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)

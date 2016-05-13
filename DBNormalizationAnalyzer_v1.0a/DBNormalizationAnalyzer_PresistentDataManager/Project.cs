@@ -26,39 +26,41 @@ namespace DBNormalizationAnalyzer.PresistentDataManager
         public string ProjectDescription { get; set; }
         [DataMember]
         public DateTime ProjectLastOpenDate { get; set; }
-        public ProjectJSON ProjectJson {
+        public ProjectJson ProjectJson {
             get
             {
-                ProjectJSON PJ = new ProjectJSON();
-                PJ.Name = ProjectName;
-                PJ.LastOpenDate = ProjectLastOpenDate;
-                PJ.Author = ProjectAuthor;
-                PJ.Description = ProjectDescription;
-                PJ.Path = ProjectPath;
-                return PJ;
+                var pj = new ProjectJson
+                {
+                    Name = ProjectName,
+                    LastOpenDate = ProjectLastOpenDate,
+                    Author = ProjectAuthor,
+                    Description = ProjectDescription,
+                    Path = ProjectPath
+                };
+                return pj;
             }
             }
 
         public Project()
         {
-            ProjectName = "01";
+            ProjectName = "New Project";
         }
 
-        public Project(string _name,string _author,string _path,string _description,DateTime date)
+        public Project(string name,string author,string path,string description,DateTime date)
         {
             Tables = new List<Table>();
 
-            ProjectPath = _path;
-            ProjectName = _name;
-            ProjectAuthor = _author;
-            ProjectDescription = _description;
+            ProjectPath = path;
+            ProjectName = name;
+            ProjectAuthor = author;
+            ProjectDescription = description;
             ProjectLastOpenDate = date;
 
            // DataManager.CreateProject(this);
         }
-        public Project(string _path)
+        public Project(string path)
         {
-            var loadedProj = DataManager.ReadProject(_path);
+            var loadedProj = DataManager.ReadProject(path);
 
             ProjectName = loadedProj.ProjectName;
             ProjectPath = loadedProj.ProjectPath;
@@ -75,7 +77,7 @@ namespace DBNormalizationAnalyzer.PresistentDataManager
         }
     }
     [DataContract]
-    public struct ProjectJSON
+    public struct ProjectJson
     {
         public string Name { get; set; }
         public string Author { get; set; }

@@ -40,9 +40,9 @@ namespace DBNormalizationAnalyzer.PresistentDataManager
                 JSonString = sr.ReadToEnd();
             }
             m_JSerializer = new JavaScriptSerializer();
-            var data = m_JSerializer.Deserialize<List<ProjectJSON>>(JSonString);
+            var data = m_JSerializer.Deserialize<List<ProjectJson>>(JSonString);
             if (data == null)
-                data = new List<ProjectJSON>();
+                data = new List<ProjectJson>();
 
             data.Add(_project.ProjectJson);
             m_FileStream = new FileStream(RecentProjectsFilePath, FileMode.OpenOrCreate);
@@ -54,13 +54,13 @@ namespace DBNormalizationAnalyzer.PresistentDataManager
             }
             
         }
-        public static List<ProjectJSON> LoadRecentProjects()
+        public static List<ProjectJson> LoadRecentProjects()
         {
             if(File.Exists(RecentProjectsFilePath))
-                return (new JavaScriptSerializer().Deserialize<List<ProjectJSON>>(File.ReadAllText(RecentProjectsFilePath)));
+                return (new JavaScriptSerializer().Deserialize<List<ProjectJson>>(File.ReadAllText(RecentProjectsFilePath)));
             else
             {
-                return new List<ProjectJSON>(0);
+                return new List<ProjectJson>(0);
             }
         }
         public static Project ReadProject(string path)

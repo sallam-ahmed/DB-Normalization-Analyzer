@@ -19,25 +19,27 @@ namespace DBNormalizationAnalyzer_UserInterface
         }
         public void PerformButtonAction(object sender, EventArgs e)
         {
-            switch (((sender as Glass.GlassButton).Tag as string))
+            switch ((sender as Glass.GlassButton)?.Tag as string)
             {
                 case "Create New":
-                    NewProject _new = new NewProject();
+                    var _new = new NewProject();
                     _new.Show();
-                    this.Hide();
+                    Hide();
                     break;
                 case "Tutorial":
-                    TutorialDialog _tut = new TutorialDialog();
-                    _tut.Show();
-                    this.Hide();
+                    var tut = new TutorialDialog();
+                    tut.Closed += (s, args) => Show();
+                    tut.Show();
+                    Hide();
                     break;
                 case "About":
-                    AboutUs _credits = new AboutUs();
-                    _credits.Show();
-                    this.Hide();
+                    AboutUs credits = new AboutUs();
+                    credits.Closed += (s, args) => Show();
+                    credits.Show();
+                    Hide();
                     break;
                 case "Exit":
-                    DialogResult _res = MessageBox.Show("Are your sure you want to exit?", "Exit Application", MessageBoxButtons.YesNo);
+                    var _res = MessageBox.Show("Are your sure you want to exit?", "Exit Application", MessageBoxButtons.YesNo);
                     if (_res == DialogResult.Yes)
                     {
                         Application.Exit();

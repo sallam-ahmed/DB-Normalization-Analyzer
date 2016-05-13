@@ -23,7 +23,7 @@ namespace DBNormalizationAnalyzer.AnalyzerLibrary
             foreach (var suggestion in SuggestedSplit)
             {
                 suggestionsList.Add(suggestion.Item1.ToBitString());
-                suggestionsList.Add(suggestion.Item1.ToBitString());
+                suggestionsList.Add(suggestion.Item2.ToBitString());
             }
             info.AddValue("split", suggestionsList, typeof(List<string>));
         }
