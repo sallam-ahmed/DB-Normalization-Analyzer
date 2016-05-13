@@ -48,7 +48,11 @@ namespace DBNormalizationAnalyzer_UserInterface
 
             try
             {
-                columnsListBox.DataSource = _currentTable.Columns;
+                if (project.Tables.Count > 0)
+                {
+                    tablesListBox.SetSelected(0,true);
+                    ApplyTable(0);
+                }
             }
             catch
             {
@@ -211,7 +215,6 @@ namespace DBNormalizationAnalyzer_UserInterface
             colListBox.ValueMember = "Self";
             colListBox.DisplayMember = "Name";
             colListBox.DataSource = Program.LoadedProject.Tables[index].Columns;
-
         }
 
         private void toolStripButton3_Click(object sender, EventArgs e)
@@ -315,7 +318,6 @@ namespace DBNormalizationAnalyzer_UserInterface
             renameDialog.SetTitle("Table " + Program.LoadedProject.Tables[tablesListBox.SelectedIndex].Name);
             if (renameDialog.ShowDialog(this) != DialogResult.OK)
                 return;
-            MessageBox.Show(renameDialog.GetName());
             Program.LoadedProject.Tables[tablesListBox.SelectedIndex].Name = renameDialog.GetName();
             BHasChanges = true;
             Refresh(null,null);
@@ -453,7 +455,6 @@ namespace DBNormalizationAnalyzer_UserInterface
             renameDialog.SetTitle("Column " + Program.LoadedProject.Tables[tablesListBox.SelectedIndex].Columns[colListBox.SelectedIndex].Name);
             if (renameDialog.ShowDialog(this) != DialogResult.OK)
                 return;
-            MessageBox.Show(renameDialog.GetName());
             Program.LoadedProject.Tables[tablesListBox.SelectedIndex].Columns[colListBox.SelectedIndex].Name = renameDialog.GetName();
             BHasChanges = true;
             Refresh(null, null);

@@ -30,7 +30,8 @@ namespace DBNormalizationAnalyzer.AnalyzerLibrary
                 return res;
             res = BcNormalForm();
             if (res.Level == 4)
-                res.Message = "Mbrouk";
+                return res;
+            res.Message = "Mbrouk";
             return res;
         }
 

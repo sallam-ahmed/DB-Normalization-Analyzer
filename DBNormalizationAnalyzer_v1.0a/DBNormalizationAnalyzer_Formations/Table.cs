@@ -19,13 +19,15 @@ namespace DBNormalizationAnalyzer.Formations
         {
             Name = name;
             Columns = new List<Column>(columnsCount);
-            Columns.AddRange(Enumerable.Repeat(new Column(""),columnsCount));
+            Columns.AddRange(Enumerable.Repeat(new Column("NEW_COLUMN"),columnsCount));
+            PrimaryKey = new List<Column>();
             TableDependency = new FunctionalDependency(columnsCount, new BitArray(columnsCount));
         }
         public Table(string name,List<Column> columns)
         {
             Name = name;
             Columns = columns;
+            PrimaryKey = new List<Column>();
             TableDependency = new FunctionalDependency(columns.Count, new BitArray(columns.Count));
         }
 

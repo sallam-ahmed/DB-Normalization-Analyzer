@@ -22,8 +22,10 @@ namespace DBNormalizationAnalyzer_UserInterface
             switch ((sender as Glass.GlassButton)?.Tag as string)
             {
                 case "Open":
-                    try {
-                        var editForm = new EditorForm(DataManager.ReadProject(listBox1.SelectedValue as string));
+                    try
+                    {
+                        Program.LoadedProject = DataManager.ReadProject(listBox1.SelectedValue as string);
+                        var editForm = new EditorForm(Program.LoadedProject);
                         editForm.Show();
                         this.Hide();
                     }

@@ -66,7 +66,6 @@
             this.refreshToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.renameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
-            this.columnsListBox = new System.Windows.Forms.ListBox();
             this.colContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
@@ -523,7 +522,6 @@
             // 
             // groupBox5
             // 
-            this.groupBox5.Controls.Add(this.columnsListBox);
             this.groupBox5.Controls.Add(this.colListBox);
             this.groupBox5.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox5.Location = new System.Drawing.Point(105, 2);
@@ -535,17 +533,6 @@
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Columns";
             // 
-            // columnsListBox
-            // 
-            this.columnsListBox.ContextMenuStrip = this.colContextMenu;
-            this.columnsListBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.columnsListBox.FormattingEnabled = true;
-            this.columnsListBox.Location = new System.Drawing.Point(2, 15);
-            this.columnsListBox.Name = "columnsListBox";
-            this.columnsListBox.Size = new System.Drawing.Size(416, 178);
-            this.columnsListBox.TabIndex = 0;
-            this.columnsListBox.SelectedIndexChanged += new System.EventHandler(this.columnsListBox_SelectedIndexChanged);
-            // 
             // colContextMenu
             // 
             this.colContextMenu.ImageScalingSize = new System.Drawing.Size(20, 20);
@@ -555,13 +542,13 @@
             this.toolStripMenuItem4,
             this.toolStripMenuItem5});
             this.colContextMenu.Name = "contextMenuStrip1";
-            this.colContextMenu.Size = new System.Drawing.Size(153, 114);
+            this.colContextMenu.Size = new System.Drawing.Size(137, 92);
             this.colContextMenu.Text = "Tasks";
             // 
             // toolStripMenuItem2
             // 
             this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(152, 22);
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(136, 22);
             this.toolStripMenuItem2.Text = "&Create";
             this.toolStripMenuItem2.Click += new System.EventHandler(this.CreateColumn);
             // 
@@ -569,7 +556,7 @@
             // 
             this.toolStripMenuItem3.Name = "toolStripMenuItem3";
             this.toolStripMenuItem3.ShortcutKeys = System.Windows.Forms.Keys.Delete;
-            this.toolStripMenuItem3.Size = new System.Drawing.Size(152, 22);
+            this.toolStripMenuItem3.Size = new System.Drawing.Size(136, 22);
             this.toolStripMenuItem3.Text = "&Delete";
             this.toolStripMenuItem3.Click += new System.EventHandler(this.DelColumn);
             // 
@@ -577,7 +564,7 @@
             // 
             this.toolStripMenuItem4.Name = "toolStripMenuItem4";
             this.toolStripMenuItem4.ShortcutKeys = System.Windows.Forms.Keys.F5;
-            this.toolStripMenuItem4.Size = new System.Drawing.Size(152, 22);
+            this.toolStripMenuItem4.Size = new System.Drawing.Size(136, 22);
             this.toolStripMenuItem4.Text = "&Refresh";
             this.toolStripMenuItem4.Click += new System.EventHandler(this.Refresh);
             // 
@@ -585,7 +572,7 @@
             // 
             this.toolStripMenuItem5.Name = "toolStripMenuItem5";
             this.toolStripMenuItem5.ShortcutKeys = System.Windows.Forms.Keys.F2;
-            this.toolStripMenuItem5.Size = new System.Drawing.Size(152, 22);
+            this.toolStripMenuItem5.Size = new System.Drawing.Size(136, 22);
             this.toolStripMenuItem5.Text = "&Rename";
             this.toolStripMenuItem5.Click += new System.EventHandler(this.RenameColumn);
             // 
@@ -1010,7 +997,6 @@
         private System.Windows.Forms.ListBox tablesListBox;
         private System.Windows.Forms.GroupBox groupBox5;
         private TerminalControl.TerminalControl terminalControl1;
-        private System.Windows.Forms.ListBox columnsListBox;
         private System.Windows.Forms.ToolStripButton toolStripButton7;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem2;
