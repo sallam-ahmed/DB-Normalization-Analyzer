@@ -19,10 +19,10 @@ namespace DBNormalizationAnalyzer_UserInterface
 
         private void License_Load(object sender, EventArgs e)
         {
-            System.IO.FileStream _stream = new System.IO.FileStream(Application.StartupPath + Program.cDATA_PATH + "License.md",System.IO.FileMode.Open);
-            System.IO.StreamReader _reader = new System.IO.StreamReader(_stream);
-            richTextBox1.Text = _reader.ReadToEnd();
-            _reader.Close();
+            System.IO.FileStream stream = new System.IO.FileStream(Application.StartupPath + Program.cDATA_PATH + "License.md",System.IO.FileMode.Open);
+            System.IO.StreamReader reader = new System.IO.StreamReader(stream);
+            richTextBox1.Text = reader.ReadToEnd();
+            reader.Close();
         }
     }
 }

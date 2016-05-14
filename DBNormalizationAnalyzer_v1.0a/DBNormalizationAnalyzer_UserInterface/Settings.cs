@@ -16,5 +16,10 @@ namespace DBNormalizationAnalyzer_UserInterface
         {
             InitializeComponent();
         }
+
+        private void Settings_Load(object sender, EventArgs e)
+        {
+            //istBox1.Font = 
+        }
     }
 }

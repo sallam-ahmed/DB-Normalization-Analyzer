@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Windows.Forms;
 using DBNormalizationAnalyzer.Formations;
 using DBNormalizationAnalyzer.AnalyzerLibrary;
 using DBNormalizationAnalyzer.PresistentDataManager;
-using System.ComponentModel;
 using System.Drawing;
 
 namespace DBNormalizationAnalyzer_UserInterface
@@ -15,12 +13,9 @@ namespace DBNormalizationAnalyzer_UserInterface
     {
         #region Variables
         public static bool BHasChanges; // for saving
-        private string _commandBuilder = "";
         private Table _currentTable;
         private Project CurrentProject { get; set; }
         private Dictionary<Table, FunctionalDependency> _tableMap;
-        BindingSource Bs;
-        Project MockProject;
         #endregion
 
         #region # Constructors #
@@ -37,7 +32,7 @@ namespace DBNormalizationAnalyzer_UserInterface
 
 
         #region # Project Manager #
-        //TODO FINALIZE LOADING AS MULTITHREADED TECHNIQUE
+        //todo FINALIZE LOADING AS MULTITHREADED TECHNIQUE
         private void LoadProject(Project project)
         {
             CurrentProject = project;
@@ -70,20 +65,39 @@ namespace DBNormalizationAnalyzer_UserInterface
                 var res = MessageBox.Show("Save current project changes?", "Save project", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (res == DialogResult.Yes)
                 {
-                    DataManager.CreateProject(CurrentProject);
+                    DataManager.SaveProject(CurrentProject);
                 }
             }
             else
             {
-                DataManager.CreateProject(CurrentProject);
+                DataManager.SaveProject(CurrentProject);
             }
-            BHasChanges = false;
         }
+        private void PerformSaveActions(bool prompt,bool exit)
+        {
+            if (prompt)
+            {
+                //Implement Save Auction
+                var res = MessageBox.Show("Save current project changes?", "Save project", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (res == DialogResult.Yes)
+                {
+                    DataManager.SaveProject(CurrentProject);
+                }
+            }
+            else
+            {
+                DataManager.SaveProject(CurrentProject);
+            }
+            if(exit)
+                Application.ExitThread();
+        }
+
         #endregion
+
         #region # CLI - LOG #
         internal void ClearCli()
         {
-            //commandPanel.Text = "~" + CurrentProject.ProjectName + @"\\";
+            terminalControl1.ClearMessages();
         }
         internal void ResetLog()
         {
@@ -101,15 +115,38 @@ namespace DBNormalizationAnalyzer_UserInterface
 
         private void AnalyzeTable()
         {
-            if (_currentTable == null)
+            var result = MessageBox.Show("Would you like to perform test on all the project tables?\nIf no, only the current table will be analyzed.");
+            if (result == DialogResult.No)
             {
-                LogText("Error selected table is null.");
-                return;
-            }
+                 // Checking current table.
+                if (_currentTable == null)
+                {
+                    //TODO should we check table dependency null ?? 
+                    LogText("Error selected table is null.");
+                    return;
+                }
+                var checker = new NfChecker(_currentTable.TableDependency);
+                var error = checker.Check();
 
-            var checker = new NfChecker(_currentTable.TableDependency);
-            var error = checker.Check();
-            MessageBox.Show("The table is in the " + (error.Level - 1) + " Normal Form\n" + error.Message);
+                //TODO Insert tables into the result grid view
+
+                MessageBox.Show("The table is in the " + (error.Level - 1) + " Normal Form\n" + error.Message);
+            }
+            else
+            {
+                // Check all of em;
+                foreach (Table table in CurrentProject.Tables)
+                {
+                    var tbCheceker = new NfChecker(table.TableDependency);
+                    LogText("==========================================");
+                    LogText("Checking table : " + table.Name + " with the column number of : " + table.Columns.Count);
+                    var error = tbCheceker.Check();
+                    //TODO Consider multithreaded table checking
+                    LogText("Analysis result of table " + table.Name + ":\nThe table is in the "+(error.Level -1) + "Normal form\nResult Message:"+error.Message);
+                    //TODO Insert tables in the result grid view
+                }
+            }
+            
         }
         #region # UI ACTIONS #
         /// <summary>
@@ -121,40 +158,31 @@ namespace DBNormalizationAnalyzer_UserInterface
             {
                 /*FILE*/
                 case "New":
+                    PerformSaveActions(true);
+                    NewProject _new = new NewProject();
+                    _new.Show( );
+                    this.Close();
                     break;
                 case "Save":
+                    PerformSaveActions(false);
                     break;
                 case "ExportPR":
                     break;
                 case "Settings":
+                    ShowForm(new Settings(), this, (s, ce) => { Enabled = true; });
                     break;
                 case "Exit":
-                    //ShowExitMessage();
+                    ShowExitMessage();
                     break;
                 case "PropEdit":
                     ShowForm(new EditProject(CurrentProject), this, (s, ce) => { Enabled = true; });
                     break;
-                /*EDIT*/
-                case "Cut":
-                    break;
-                case "Copy":
-                    break;
-                case "Paste":
-                    break;
-                case "TB_Insert":
-                    break;
-                case "COL_Insert":
-                    break;
-                case "FUN.DB_Insert":
-                    break;
-                case "RepGenerate":
-                    break;
                 /*VIEW*/
                 case "Toolbar":
+                    Toolbar.Visible = toolbarToolStripMenuItem.Checked;
                     break;
                 case "StatBar":
-                    break;
-                case "LogWindow":
+                    Statusbar.Visible = statusBarToolStripMenuItem.Checked;
                     break;
                 /*HELP*/
                 case "HowTO":
@@ -164,9 +192,11 @@ namespace DBNormalizationAnalyzer_UserInterface
                     ShowForm(new AboutUs(), this, (s, ce) => { Enabled = true; });
                     break;
                 case "License":
+                    ShowForm(new License(), this,(s,ce)=> { Enabled = true; });
                     break;
             }
         }
+
         private static void ShowForm(Form frm, Form owner, FormClosedEventHandler closeHandle)
         {
             frm.Owner = owner;
@@ -184,19 +214,6 @@ namespace DBNormalizationAnalyzer_UserInterface
                    PerformSaveActions(false);
 
                 Application.Exit();
-            }
-        }
-        private void ShowExitMessage(FormClosingEventArgs e)
-        {
-            if (MessageBox.Show("Would you like to exit ?", "Exit?", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-            {
-            
-                Application.Exit();
-           
-            }
-            else
-            {
-                e.Cancel = true;
             }
         }
         #endregion
@@ -225,8 +242,7 @@ namespace DBNormalizationAnalyzer_UserInterface
 
         private void EditorForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            PerformSaveActions(true);
-            Application.Exit();
+            PerformSaveActions(true,true);
         }
 
         private void timer1_Tick(object sender, EventArgs e)
@@ -249,7 +265,6 @@ namespace DBNormalizationAnalyzer_UserInterface
                     break;
                 case "RefFunD":
                     LoadFunctionalDependencies(CurrentProject);
-                    
                     break;
             }
         }
@@ -261,11 +276,6 @@ namespace DBNormalizationAnalyzer_UserInterface
             {
                 _tableMap.Add(item, item.TableDependency);
             }
-        }
-
-        private void toolStripStatusLabel1_Click(object sender, EventArgs e)
-        {          
-          
         }
 
         private void toolStripButton6_Click(object sender, EventArgs e)
@@ -350,6 +360,7 @@ namespace DBNormalizationAnalyzer_UserInterface
             terminalControl1.AutoCompleteAdd("rem"); // Remove dependency
             terminalControl1.AutoCompleteAdd("exit"); // Exit Application
             terminalControl1.AutoCompleteAdd("tbchng"); // Change active table
+            terminalControl1.AutoCompleteAdd("cls");// Clear messages window.
             terminalControl1.PromptString = CurrentProject.ProjectName + ((_currentTable != null)? _currentTable.Name : "") + "~\\";
             terminalControl1.AutoComplete = AutoCompleteMode.Append;
             terminalControl1.PromptColor = Color.Blue;
@@ -357,23 +368,38 @@ namespace DBNormalizationAnalyzer_UserInterface
             terminalControl1.MessageColor = Color.Red;
             terminalControl1.BackColor = Color.Black;
         }
-
-        private void terminalControl1_Load(object sender, EventArgs e)
-        {
-
-        }
-
         private void terminalControl1_Command(object sender, TerminalControl.CommandEventArgs e)
         {
             switch (e.Command)
             {
                 case "help":
-                    e.Message = "Showing help";
+                    e.Message = @"
+You can use the following commands:
+1- analyze : to start the functional analysis process.
+2- show_depen : to show the current stored functional dependencies.
+3- add : adds a new functional dependency.
+    Command Syntax:
+            add {a,b}->{c,d} | or | add a->{c,d} | or | add a->b.
+4- rem : remove a current stored function depen.
+    Command Syntax:
+            rem [N] where N is the index of the stored dependecy.
+5- tbchng : changes the current active table of function dependency editing.
+        Command Syntaax:
+                tbchng [NAME OF TABLE].
+6- exit : terminates the application with saving option eneabled.
+7- help : show this help menu.
+8- cls : Clear the messages window.
+";
                     break;
                 case "analyze":
                     AnalyzeDatabase(null,null);
                     break;
                 case "show_depen":
+                    List<string> dependecyStrings = new List<string>();
+                    foreach (var table in CurrentProject.Tables)
+                    {
+                        //TODO show dependecy
+                    }
                     e.Message = "FUNCTION DPENDECIES\n1-\n2-";
                     break;
                 case "add":
@@ -383,8 +409,10 @@ namespace DBNormalizationAnalyzer_UserInterface
                     }
                     break;
                 case "rem":
+
                     break;
                 case "exit":
+                    ShowExitMessage();
                     break;
                 case "tbchng":
                     for (var i = 0; i < Program.LoadedProject.Tables.Count; i++)
@@ -395,19 +423,12 @@ namespace DBNormalizationAnalyzer_UserInterface
                         }
                     }
                     break;
-                default:
-                    break;
             }
         }
 
         private void toolStripButton5_Click(object sender, EventArgs e)
         {
-            DataManager.CreateProject(CurrentProject);
-        }
-
-        private void columnsListBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
+            DataManager.SaveProject(CurrentProject);
         }
 
         private void toolStripButton7_Click(object sender, EventArgs e)

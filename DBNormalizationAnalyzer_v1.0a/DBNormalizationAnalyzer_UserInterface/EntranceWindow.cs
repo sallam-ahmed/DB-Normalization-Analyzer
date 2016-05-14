@@ -1,11 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using DBNormalizationAnalyzer.PresistentDataManager;
 
@@ -31,7 +25,9 @@ namespace DBNormalizationAnalyzer_UserInterface
                     }
                     catch
                     {
-                        MessageBox.Show("An error occured, couldn't load project");
+
+                        MessageBox.Show(@"An error occured, couldn't load project
+Please consider removing this project from the recent projects list.");
                     }
                     break;
                 case "Create New":
@@ -72,14 +68,27 @@ namespace DBNormalizationAnalyzer_UserInterface
         {
             LoadRecentProjects();
         }
-
-        private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
+        private void deleteToolStripMenuItem_Click_1(object sender, EventArgs e)
         {
-            if (MessageBox.Show("Do you want to delete this project from the refrences menu ?","Confirm delete",MessageBoxButtons.YesNo,MessageBoxIcon.Question) == DialogResult.Yes)
+            if (
+                MessageBox.Show(@"Do you want to delete this project from the refrences menu ?", @"Confirm delete",
+                    MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) return;
+
+            var indexHolder = ((ProjectJson)(listBox1.Items[listBox1.SelectedIndex])).Path;
+
+            if (MessageBox.Show(@"Would you like to delete the original source file?",@"Confirm source file removal.",MessageBoxButtons.YesNo) == DialogResult.Yes)
+                if(System.IO.File.Exists(indexHolder))
+                    System.IO.File.Delete(indexHolder);
+
+            var recentProjectsList = new List<ProjectJson>();
+            foreach (var item in listBox1.Items)
             {
-                listBox1.Items.RemoveAt(listBox1.SelectedIndex);
-                
+                if(((ProjectJson)item).Path == indexHolder) // Pass the current val
+                    continue;
+                recentProjectsList.Add((ProjectJson)item);
             }
+            DataManager.UpdateRecentProjects(recentProjectsList);
+            LoadRecentProjects();
         }
     }
 }

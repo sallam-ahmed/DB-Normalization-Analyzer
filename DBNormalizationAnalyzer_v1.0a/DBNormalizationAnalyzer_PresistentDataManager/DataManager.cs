@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web.Script.Serialization;
 using System.Runtime.Serialization;
+
 namespace DBNormalizationAnalyzer.PresistentDataManager
 {
     
@@ -28,6 +29,29 @@ namespace DBNormalizationAnalyzer.PresistentDataManager
         }
         public static void CreateProject(Project project)
         {
+           SaveProject(project);
+            //Create JSON Script
+            string jSonString;
+            using (var sr = new StreamReader(new FileStream(RecentProjectsFilePath, FileMode.OpenOrCreate)))
+            {
+                jSonString = sr.ReadToEnd();
+            }
+            m_JSerializer = new JavaScriptSerializer();
+            var data = m_JSerializer.Deserialize<List<ProjectJson>>(jSonString) ?? new List<ProjectJson>();
+
+            data.Add(project.ProjectJson);
+            m_FileStream = new FileStream(RecentProjectsFilePath, FileMode.OpenOrCreate);
+            jSonString = m_JSerializer.Serialize(data);
+            using (var sw = new StreamWriter(m_FileStream))
+            {
+                sw.WriteLine(jSonString);
+                sw.Close();
+            }
+            
+        }
+
+        public static void SaveProject(Project project)
+        {
             if (File.Exists(project.ProjectPath))
                 File.Delete(project.ProjectPath);
             using (m_FileStream = new FileStream(project.ProjectPath, FileMode.Create))
@@ -35,39 +59,26 @@ namespace DBNormalizationAnalyzer.PresistentDataManager
                 m_Formatter = new BinaryFormatter();
                 m_Formatter.Serialize(m_FileStream, project);
             }
-            //Create JSON Script
-            string jSonString;
-            using (StreamReader sr = new StreamReader(new FileStream(RecentProjectsFilePath, FileMode.OpenOrCreate)))
-            {
-                jSonString = sr.ReadToEnd();
-            }
-            m_JSerializer = new JavaScriptSerializer();
-            var data = m_JSerializer.Deserialize<List<ProjectJson>>(jSonString);
-            if (data == null)
-                data = new List<ProjectJson>();
+        }
+        public static List<ProjectJson> LoadRecentProjects()
+        {
+            return File.Exists(RecentProjectsFilePath) ? (new JavaScriptSerializer().Deserialize<List<ProjectJson>>(File.ReadAllText(RecentProjectsFilePath))) : new List<ProjectJson>(0);
+        }
 
-            data.Add(project.ProjectJson);
+        public static void UpdateRecentProjects(List<ProjectJson> data)
+        {
+            if(File.Exists(RecentProjectsFilePath))
+                File.Delete(RecentProjectsFilePath);
+            /*NOW WE UPDATE*/
+            m_JSerializer = new JavaScriptSerializer();
+
             m_FileStream = new FileStream(RecentProjectsFilePath, FileMode.OpenOrCreate);
-            jSonString = m_JSerializer.Serialize(data);
-            using (StreamWriter sw = new StreamWriter(m_FileStream))
+            var jSonString = m_JSerializer.Serialize(data);
+            using (var sw = new StreamWriter(m_FileStream))
             {
                 sw.WriteLine(jSonString);
                 sw.Close();
             }
-            
-        }
-        public static List<ProjectJson> LoadRecentProjects()
-        {
-            if(File.Exists(RecentProjectsFilePath))
-                return (new JavaScriptSerializer().Deserialize<List<ProjectJson>>(File.ReadAllText(RecentProjectsFilePath)));
-            else
-            {
-                return new List<ProjectJson>(0);
-            }
-        }
-        public static void UpdateRecentProjects(List<ProjectJson> _data)
-        {
-
         }
         public static Project ReadProject(string path)
         {
