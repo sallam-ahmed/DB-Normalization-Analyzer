@@ -11,7 +11,10 @@ namespace DBNormalizationAnalyzer.Formations
     [Serializable]
     public class Column : ISerializable
     {
-        
+        [DisplayName("Col Name")]
+        public string Name { get; set; }
+        public Column Self => this;
+
         public Column(string name)
         {
             Name = name;
@@ -24,8 +27,6 @@ namespace DBNormalizationAnalyzer.Formations
         {
             Name = info.GetValue("name", typeof(string)) as string;
         }
-        [DisplayName("Col Name")]
-        public string Name { get ; set; }
 
         public bool Equals(Column obj)
         {
