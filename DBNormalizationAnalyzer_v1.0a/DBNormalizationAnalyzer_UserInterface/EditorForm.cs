@@ -468,8 +468,15 @@ You can use the following commands:
                         e.Message = "Error parsing command! No such columns!";
                         break;
                     }
-                    CurrentTable.TableDependency.RemoveDependency(CurrentTable.ColumnSet(independSet), CurrentTable.ColumnSet(dependSet));
-                    e.Message = "Command executed successfully! Mbrouk!";
+                    try
+                    {
+                        CurrentTable.TableDependency.RemoveDependency(CurrentTable.ColumnSet(independSet), CurrentTable.ColumnSet(dependSet));
+                        e.Message = "Command executed successfully! Mbrouk!";
+                    }
+                    catch (ArgumentOutOfRangeException ex)
+                    {
+                        e.Message = "No such dependency exist!";
+                    }
                     break;
                 case "exit":
                     ShowExitMessage();
