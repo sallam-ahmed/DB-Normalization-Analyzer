@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
@@ -52,19 +51,6 @@ namespace DBNormalizationAnalyzer.AnalyzerLibrary
             return true;
         }
 
-        public static void Resize<T>(this List<T> list, int sz, T c = default(T))
-        {
-            var cur = list.Count;
-            if (sz < cur)
-                list.RemoveRange(sz, cur - sz);
-            else if (sz > cur)
-            {
-                if (sz > list.Capacity)
-                    list.Capacity = sz;
-                list.AddRange(Enumerable.Repeat(c, sz - cur));
-            }
-        }
-
         public static BitArray Not(BitArray array)
         {
             var res = new BitArray(array.Count);
@@ -95,14 +81,6 @@ namespace DBNormalizationAnalyzer.AnalyzerLibrary
                 res[i] = array1[i] && array2[i];
             }
             return res;
-        }
-
-        public static void Resize(this BitArray array, int sz)
-        {
-            var res = new BitArray(sz);
-            for (var i = 0; i < Math.Min(array.Count, sz); i++)
-                res[i] = array[i];
-            array = res;
         }
     }
 }

@@ -5,6 +5,8 @@ using DBNormalizationAnalyzer.Formations;
 using DBNormalizationAnalyzer.AnalyzerLibrary;
 using DBNormalizationAnalyzer.PresistentDataManager;
 using System.Drawing;
+using System.Linq;
+using System.Text;
 
 namespace DBNormalizationAnalyzer_UserInterface
 {
@@ -13,8 +15,20 @@ namespace DBNormalizationAnalyzer_UserInterface
     {
         #region Variables
         public static bool BHasChanges; // for saving
-        private Table _currentTable;
-        private Project CurrentProject { get; set; }
+        private int _selectedIndex;
+        public Table CurrentTable
+        {
+            get
+            {
+                return _selectedIndex >= Program.LoadedProject.Tables.Count ? null : Program.LoadedProject.Tables[_selectedIndex];
+            }
+            set
+            {
+                if (_selectedIndex >= Program.LoadedProject.Tables.Count)
+                    throw new ArgumentOutOfRangeException();
+                Program.LoadedProject.Tables[_selectedIndex] = value;
+            }
+        }
         private Dictionary<Table, FunctionalDependency> _tableMap;
         #endregion
 
@@ -23,8 +37,8 @@ namespace DBNormalizationAnalyzer_UserInterface
         public EditorForm(Project project)
         {
             InitializeComponent();
+            _selectedIndex = 0;
             LoadProject(project);
-            _currentTable = project.Tables.Count != 0 ? project.Tables[0] : null;
             ClearCli();
             ResetLog();
         }
@@ -35,7 +49,7 @@ namespace DBNormalizationAnalyzer_UserInterface
         //todo FINALIZE LOADING AS MULTITHREADED TECHNIQUE
         private void LoadProject(Project project)
         {
-            CurrentProject = project;
+            Program.LoadedProject = project;
             tablesListBox.DataSource = null;
             tablesListBox.ValueMember = "Self";
             tablesListBox.DisplayMember = "Name";
@@ -54,7 +68,7 @@ namespace DBNormalizationAnalyzer_UserInterface
                 // ignored
             }
             LogText("Loaded project tables with count of " + project.Tables.Count.ToString() + " projects.");
-            Text = "DB Normalization Analyzer - " + CurrentProject.ProjectName+ " -";
+            Text = "DB Normalization Analyzer - " + Program.LoadedProject.ProjectName+ " -";
             ClearCli();
         }
         private void PerformSaveActions(bool prompt)
@@ -65,12 +79,12 @@ namespace DBNormalizationAnalyzer_UserInterface
                 var res = MessageBox.Show("Save current project changes?", "Save project", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (res == DialogResult.Yes)
                 {
-                    DataManager.SaveProject(CurrentProject);
+                    DataManager.SaveProject(Program.LoadedProject);
                 }
             }
             else
             {
-                DataManager.SaveProject(CurrentProject);
+                DataManager.SaveProject(Program.LoadedProject);
             }
         }
         private void PerformSaveActions(bool prompt,bool exit)
@@ -81,12 +95,12 @@ namespace DBNormalizationAnalyzer_UserInterface
                 var res = MessageBox.Show("Save current project changes?", "Save project", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (res == DialogResult.Yes)
                 {
-                    DataManager.SaveProject(CurrentProject);
+                    DataManager.SaveProject(Program.LoadedProject);
                 }
             }
             else
             {
-                DataManager.SaveProject(CurrentProject);
+                DataManager.SaveProject(Program.LoadedProject);
             }
             if(exit)
                 Application.ExitThread();
@@ -103,13 +117,13 @@ namespace DBNormalizationAnalyzer_UserInterface
         {
             logTextBox.Clear();
             LogText("Log Started " + DateTime.Now.ToShortTimeString() + ".");
-            LogText("Project: " + CurrentProject.ProjectName);
-            LogText("Path: " + CurrentProject.ProjectPath);
+            LogText("Project: " + Program.LoadedProject.ProjectName);
+            LogText("Path: " + Program.LoadedProject.ProjectPath);
             LogText("Welcome to DBNormalization Aanalyzer.");
         }
         void LogText(string value)
         {
-            logTextBox.AppendText(CurrentProject.ProjectName + "~ "+DateTime.Now.ToShortTimeString() + " " + value+"\n");
+            logTextBox.AppendText(Program.LoadedProject.ProjectName + "~ "+DateTime.Now.ToShortTimeString() + " " + value+"\n");
         }
         #endregion
 
@@ -118,33 +132,24 @@ namespace DBNormalizationAnalyzer_UserInterface
             var result = MessageBox.Show("Would you like to perform test on all the project tables?\nIf no, only the current table will be analyzed.");
             if (result == DialogResult.No)
             {
-                 // Checking current table.
-                if (_currentTable == null)
+                if (CurrentTable == null)
                 {
                     //TODO should we check table dependency null ?? 
+                    //What?!
                     LogText("Error selected table is null.");
                     return;
                 }
-                var checker = new NfChecker(_currentTable.TableDependency);
+                var checker = new NfChecker(CurrentTable.TableDependency);
                 var error = checker.Check();
 
                 //TODO Insert tables into the result grid view
+                //It's only one table
 
                 MessageBox.Show("The table is in the " + (error.Level - 1) + " Normal Form\n" + error.Message);
             }
             else
             {
-                // Check all of em;
-                foreach (Table table in CurrentProject.Tables)
-                {
-                    var tbCheceker = new NfChecker(table.TableDependency);
-                    LogText("==========================================");
-                    LogText("Checking table : " + table.Name + " with the column number of : " + table.Columns.Count);
-                    var error = tbCheceker.Check();
-                    //TODO Consider multithreaded table checking
-                    LogText("Analysis result of table " + table.Name + ":\nThe table is in the "+(error.Level -1) + "Normal form\nResult Message:"+error.Message);
-                    //TODO Insert tables in the result grid view
-                }
+                AnalyzeDatabase(null,null);
             }
             
         }
@@ -159,9 +164,9 @@ namespace DBNormalizationAnalyzer_UserInterface
                 /*FILE*/
                 case "New":
                     PerformSaveActions(true);
-                    NewProject _new = new NewProject();
+                    var _new = new NewProject();
                     _new.Show( );
-                    this.Close();
+                    Close();
                     break;
                 case "Save":
                     PerformSaveActions(false);
@@ -175,7 +180,7 @@ namespace DBNormalizationAnalyzer_UserInterface
                     ShowExitMessage();
                     break;
                 case "PropEdit":
-                    ShowForm(new EditProject(CurrentProject), this, (s, ce) => { Enabled = true; });
+                    ShowForm(new EditProject(Program.LoadedProject), this, (s, ce) => { Enabled = true; });
                     break;
                 /*VIEW*/
                 case "Toolbar":
@@ -222,7 +227,7 @@ namespace DBNormalizationAnalyzer_UserInterface
         {
             if (tablesListBox.SelectedValue == null)
                 return;
-            _currentTable = tablesListBox.SelectedValue as Table;
+            _selectedIndex = tablesListBox.SelectedIndex;
             ApplyTable(tablesListBox.SelectedIndex);
         }
 
@@ -261,10 +266,10 @@ namespace DBNormalizationAnalyzer_UserInterface
 
                     break;
                 case "RefTable":
-                    LoadProject(CurrentProject);
+                    LoadProject(Program.LoadedProject);
                     break;
                 case "RefFunD":
-                    LoadFunctionalDependencies(CurrentProject);
+                    LoadFunctionalDependencies(Program.LoadedProject);
                     break;
             }
         }
@@ -284,9 +289,7 @@ namespace DBNormalizationAnalyzer_UserInterface
             if (res != DialogResult.Cancel)
             {
                 PerformSaveActions(true);
-                Program.LoadedProject = DataManager.ReadProject(loadfileDialog.FileName);
-                CurrentProject = Program.LoadedProject;
-                LoadProject(CurrentProject);
+                LoadProject(DataManager.ReadProject(loadfileDialog.FileName));
             }
             else
             {
@@ -361,7 +364,7 @@ namespace DBNormalizationAnalyzer_UserInterface
             terminalControl1.AutoCompleteAdd("exit"); // Exit Application
             terminalControl1.AutoCompleteAdd("tbchng"); // Change active table
             terminalControl1.AutoCompleteAdd("cls");// Clear messages window.
-            terminalControl1.PromptString = CurrentProject.ProjectName + ((_currentTable != null)? _currentTable.Name : "") + "~\\";
+            terminalControl1.PromptString = Program.LoadedProject.ProjectName + ((CurrentTable != null)? CurrentTable.Name : "") + "~\\";
             terminalControl1.AutoComplete = AutoCompleteMode.Append;
             terminalControl1.PromptColor = Color.Blue;
             terminalControl1.ForeColor = Color.Green;
@@ -370,6 +373,8 @@ namespace DBNormalizationAnalyzer_UserInterface
         }
         private void terminalControl1_Command(object sender, TerminalControl.CommandEventArgs e)
         {
+            List<Column> independSet,dependSet;
+            List<string> independStr,dependStr;
             switch (e.Command)
             {
                 case "help":
@@ -395,21 +400,83 @@ You can use the following commands:
                     AnalyzeDatabase(null,null);
                     break;
                 case "show_depen":
-                    List<string> dependecyStrings = new List<string>();
-                    foreach (var table in CurrentProject.Tables)
+                    var msgBuilder = new StringBuilder();
+                    foreach (var table in Program.LoadedProject.Tables)
                     {
-                        //TODO show dependecy
+                        msgBuilder.AppendLine("Table " + table.Name + " functional dependency:");
+                        foreach (var dependency in table.TableDependency.DependencyList)
+                        {
+                            independSet = table.ColumnSet(dependency.Item1);
+                            dependSet = table.ColumnSet(dependency.Item2);
+                            msgBuilder.Append("{");
+                            for (var i = 0; i < independSet.Count; i++)
+                            {
+                                msgBuilder.Append(independSet[i].Name);
+                                msgBuilder.Append(i + 1 == independSet.Count ? "}" : ",");
+                            }
+                            msgBuilder.Append("->{");
+                            for (var i = 0; i < dependSet.Count; i++)
+                            {
+                                msgBuilder.Append(dependSet[i].Name);
+                                msgBuilder.Append(i + 1 == dependSet.Count ? "}" : ",");
+                            }
+                            msgBuilder.AppendLine();
+                        }
                     }
-                    e.Message = "FUNCTION DPENDECIES\n1-\n2-";
+                    e.Message = msgBuilder.ToString();
                     break;
                 case "add":
-                    foreach (var item in e.Parameters)
+                    if (CurrentTable == null)
                     {
-                        LogText("PARAM " + item);
+                        e.Message = "Select table first!";
+                        break;
                     }
+                    if (e.Parameters.Length != 3)
+                    {
+                        e.Message = "Error parsing command!";
+                        break;
+                    }
+                    independStr = e.Parameters[1].Split(',', '{', '}').Where(t => !string.IsNullOrWhiteSpace(t)).ToList();
+                    dependStr = e.Parameters[2].Split(',', '{', '}').Where(t => !string.IsNullOrWhiteSpace(t)).ToList();
+                    independSet = CurrentTable.ColumnSet(independStr);
+                    dependSet = CurrentTable.ColumnSet(dependStr);
+                    if (independSet.Count != independStr.Count || dependSet.Count != dependStr.Count)
+                    {
+                        e.Message = "Error parsing command! No such columns!";
+                        break;
+                    }
+                    CurrentTable.TableDependency.AddDependency(CurrentTable.ColumnSet(independSet),CurrentTable.ColumnSet(dependSet));
+                    e.Message = "Command executed successfully! Mbrouk!";
                     break;
                 case "rem":
-
+                    if (CurrentTable == null)
+                    {
+                        e.Message = "Select table first!";
+                        break;
+                    }
+                    if (e.Parameters.Length != 3)
+                    {
+                        e.Message = "Error parsing command!";
+                        break;
+                    }
+                    independStr = e.Parameters[1].Split(',', '{', '}').Where(t => !string.IsNullOrWhiteSpace(t)).ToList();
+                    dependStr = e.Parameters[2].Split(',', '{', '}').Where(t => !string.IsNullOrWhiteSpace(t)).ToList();
+                    independSet = CurrentTable.ColumnSet(independStr);
+                    dependSet = CurrentTable.ColumnSet(dependStr);
+                    if (independSet.Count != independStr.Count || dependSet.Count != dependStr.Count)
+                    {
+                        e.Message = "Error parsing command! No such columns!";
+                        break;
+                    }
+                    try
+                    {
+                        CurrentTable.TableDependency.RemoveDependency(CurrentTable.ColumnSet(independSet), CurrentTable.ColumnSet(dependSet));
+                        e.Message = "Command executed successfully! Mbrouk!";
+                    }
+                    catch (ArgumentOutOfRangeException ex)
+                    {
+                        e.Message = "No such dependency exist!";
+                    }
                     break;
                 case "exit":
                     ShowExitMessage();
@@ -428,7 +495,7 @@ You can use the following commands:
 
         private void toolStripButton5_Click(object sender, EventArgs e)
         {
-            DataManager.SaveProject(CurrentProject);
+            DataManager.SaveProject(Program.LoadedProject);
         }
 
         private void toolStripButton7_Click(object sender, EventArgs e)
@@ -436,7 +503,7 @@ You can use the following commands:
             DialogResult r = saveFileDialog1.ShowDialog();
             if (r == DialogResult.OK)
             {
-                Project _new = CurrentProject;
+                Project _new = Program.LoadedProject;
                 _new.ProjectPath = saveFileDialog1.FileName;
                 DataManager.CreateProject(_new);
 			}

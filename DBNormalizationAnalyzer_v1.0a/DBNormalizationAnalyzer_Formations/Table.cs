@@ -57,12 +57,17 @@ namespace DBNormalizationAnalyzer.Formations
             return res;
         }
 
-        public List<Column> BitList(BitArray columns)
+        public List<Column> ColumnSet(BitArray columns)
         {
-            if(columns.Count != Columns.Count)
+            if (columns.Count != Columns.Count)
                 throw new ArgumentException();
             return Columns.Where((t, i) => columns[i]).ToList();
-        } 
+        }
+
+        public List<Column> ColumnSet(List<string> columns)
+        {
+            return Columns.Where(t => columns.Contains(t.Name)).ToList();
+        }
 
         public void RemoveColumn(int index)
         {

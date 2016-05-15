@@ -149,7 +149,7 @@ namespace DBNormalizationAnalyzer.AnalyzerLibrary
             {
                 CurrentPrimaryKey[key] = true;
             }
-            CurrentPrimaryKey.Resize(Keys.Count);
+            CurrentPrimaryKey.Length = Keys.Count;
             for (var i = 0; i < DependencyList.Count; i++)
             {
                 if (DependencyList[i].Item1[index])
@@ -183,16 +183,11 @@ namespace DBNormalizationAnalyzer.AnalyzerLibrary
         {
             _prepared = false;
             Keys.Add(Keys.Count);
-            CurrentPrimaryKey.Resize(Keys.Count);
-            for (var i = 0; i < DependencyList.Count; i++)
+            CurrentPrimaryKey.Length = Keys.Count;
+            foreach (var t in DependencyList)
             {
-                var newDependent = new BitArray(Keys.Count);
-                var newIndependent = new BitArray(Keys.Count);
-                for(var key = 0;key + 1 < Keys.Count; key++) { 
-                    newDependent[key] = DependencyList[i].Item2[key];
-                    newIndependent[key] = DependencyList[i].Item1[key];
-                }
-                DependencyList[i] = new Tuple<BitArray, BitArray>(newIndependent,newDependent);
+                t.Item1.Length = Keys.Count;
+                t.Item2.Length = Keys.Count;
             }
         }
 
