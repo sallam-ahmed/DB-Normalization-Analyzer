@@ -40,12 +40,6 @@ Please consider removing this project from the recent projects list.");
                     _new.Show();
                     Hide();
                     break;
-                case "Tutorial":
-                    var tut = new TutorialDialog();
-                    tut.Closed += (s, args) => Show();
-                    tut.Show();
-                    Hide();
-                    break;
                 case "About":
                     var credits = new AboutUs();
                     credits.Closed += (s, args) => Show();
