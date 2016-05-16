@@ -30,13 +30,13 @@
         {
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.errMessage = new System.Windows.Forms.TextBox();
+            this.errLevel = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.listBox1 = new System.Windows.Forms.ListBox();
+            this.errColumns = new System.Windows.Forms.ListBox();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
@@ -61,14 +61,32 @@
             // 
             // panel1
             // 
-            this.panel1.Controls.Add(this.textBox1);
-            this.panel1.Controls.Add(this.label2);
+            this.panel1.Controls.Add(this.errMessage);
+            this.panel1.Controls.Add(this.errLevel);
             this.panel1.Controls.Add(this.label1);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(3, 3);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(959, 112);
             this.panel1.TabIndex = 1;
+            // 
+            // errMessage
+            // 
+            this.errMessage.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.errMessage.Location = new System.Drawing.Point(0, 26);
+            this.errMessage.Multiline = true;
+            this.errMessage.Name = "errMessage";
+            this.errMessage.Size = new System.Drawing.Size(959, 86);
+            this.errMessage.TabIndex = 3;
+            // 
+            // errLevel
+            // 
+            this.errLevel.AutoSize = true;
+            this.errLevel.Location = new System.Drawing.Point(101, 6);
+            this.errLevel.Name = "errLevel";
+            this.errLevel.Size = new System.Drawing.Size(40, 17);
+            this.errLevel.TabIndex = 1;
+            this.errLevel.Text = "0000";
             // 
             // label1
             // 
@@ -78,24 +96,6 @@
             this.label1.Size = new System.Drawing.Size(86, 17);
             this.label1.TabIndex = 0;
             this.label1.Text = "Error Level :";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(101, 6);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(40, 17);
-            this.label2.TabIndex = 1;
-            this.label2.Text = "0000";
-            // 
-            // textBox1
-            // 
-            this.textBox1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.textBox1.Location = new System.Drawing.Point(0, 26);
-            this.textBox1.Multiline = true;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(959, 86);
-            this.textBox1.TabIndex = 3;
             // 
             // tableLayoutPanel2
             // 
@@ -124,22 +124,22 @@
             // 
             // panel2
             // 
-            this.panel2.Controls.Add(this.listBox1);
+            this.panel2.Controls.Add(this.errColumns);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel2.Location = new System.Drawing.Point(3, 3);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(149, 360);
             this.panel2.TabIndex = 1;
             // 
-            // listBox1
+            // errColumns
             // 
-            this.listBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.listBox1.FormattingEnabled = true;
-            this.listBox1.ItemHeight = 16;
-            this.listBox1.Location = new System.Drawing.Point(0, 0);
-            this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(149, 360);
-            this.listBox1.TabIndex = 2;
+            this.errColumns.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.errColumns.FormattingEnabled = true;
+            this.errColumns.ItemHeight = 16;
+            this.errColumns.Location = new System.Drawing.Point(0, 0);
+            this.errColumns.Name = "errColumns";
+            this.errColumns.Size = new System.Drawing.Size(149, 360);
+            this.errColumns.TabIndex = 2;
             // 
             // Suggestion
             // 
@@ -149,6 +149,7 @@
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "Suggestion";
             this.Text = "Suggestion";
+            this.Load += new System.EventHandler(this.Suggestion_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
@@ -163,12 +164,12 @@
 
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TextBox errMessage;
+        private System.Windows.Forms.Label errLevel;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.ListBox listBox1;
+        private System.Windows.Forms.ListBox errColumns;
     }
 }

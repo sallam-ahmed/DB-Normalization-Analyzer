@@ -28,18 +28,35 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
+            this.FadeInTimer = new System.Windows.Forms.Timer(this.components);
+            this.FadeOutTimer = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
+            // 
+            // FadeInTimer
+            // 
+            this.FadeInTimer.Enabled = true;
+            this.FadeInTimer.Interval = 25;
+            this.FadeInTimer.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
+            // FadeOutTimer
+            // 
+            this.FadeOutTimer.Interval = 25;
+            this.FadeOutTimer.Tick += new System.EventHandler(this.FadeOutTimer_Tick);
             // 
             // SplashScreen
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(453, 342);
+            this.BackgroundImage = global::DBNormalizationAnalyzer_UserInterface.Properties.Resources.ApplicationLogo;
+            this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.ClientSize = new System.Drawing.Size(1161, 768);
+            this.Cursor = System.Windows.Forms.Cursors.Default;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "SplashScreen";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "SplashScreen";
             this.TopMost = true;
             this.ResumeLayout(false);
@@ -47,5 +64,8 @@
         }
 
         #endregion
+
+        private System.Windows.Forms.Timer FadeInTimer;
+        private System.Windows.Forms.Timer FadeOutTimer;
     }
 }

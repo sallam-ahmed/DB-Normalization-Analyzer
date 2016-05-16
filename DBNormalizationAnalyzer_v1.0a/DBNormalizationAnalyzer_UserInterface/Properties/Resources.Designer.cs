@@ -73,6 +73,16 @@ namespace DBNormalizationAnalyzer_UserInterface.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap ApplicationLogo {
+            get {
+                object obj = ResourceManager.GetObject("ApplicationLogo", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Graphicloads_Filetype_Pdf__1_ {
             get {
                 object obj = ResourceManager.GetObject("Graphicloads-Filetype-Pdf (1)", resourceCulture);

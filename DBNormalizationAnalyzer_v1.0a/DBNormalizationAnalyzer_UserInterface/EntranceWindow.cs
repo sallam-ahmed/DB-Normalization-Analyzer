@@ -11,24 +11,29 @@ namespace DBNormalizationAnalyzer_UserInterface
         {
             InitializeComponent();
         }
+
+        private void OpenProject()
+        {
+            try
+            {
+                Program.LoadedProject = DataManager.ReadProject(listBox1.SelectedValue as string);
+                var editForm = new EditorForm(Program.LoadedProject);
+                editForm.Show();
+                this.Hide();
+            }
+            catch
+            {
+
+                MessageBox.Show(@"An error occured, couldn't load project
+Please consider removing this project from the recent projects list.");
+            }
+        }
         public void PerformButtonAction(object sender, EventArgs e)
         {
             switch ((sender as Glass.GlassButton)?.Tag as string)
             {
                 case "Open":
-                    try
-                    {
-                        Program.LoadedProject = DataManager.ReadProject(listBox1.SelectedValue as string);
-                        var editForm = new EditorForm(Program.LoadedProject);
-                        editForm.Show();
-                        this.Hide();
-                    }
-                    catch
-                    {
-
-                        MessageBox.Show(@"An error occured, couldn't load project
-Please consider removing this project from the recent projects list.");
-                    }
+                    OpenProject();
                     break;
                 case "Create New":
                     var _new = new NewProject();
@@ -89,6 +94,19 @@ Please consider removing this project from the recent projects list.");
             }
             DataManager.UpdateRecentProjects(recentProjectsList);
             LoadRecentProjects();
+        }
+
+        private void EntranceWindow_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Application.ExitThread();
+        }
+
+        private void listBox1_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char)Keys.Enter)
+            {
+                OpenProject();
+            }
         }
     }
 }

@@ -25,7 +25,7 @@ namespace DBNormalizationAnalyzer_UserInterface
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new EntranceWindow());
+            Application.Run(new SplashScreen());
         }
     }
 }

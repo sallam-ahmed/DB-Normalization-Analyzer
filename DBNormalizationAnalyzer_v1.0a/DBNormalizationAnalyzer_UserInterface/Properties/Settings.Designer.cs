@@ -34,5 +34,41 @@ namespace DBNormalizationAnalyzer_UserInterface.Properties {
                 this["AppFont"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool AskOnExit {
+            get {
+                return ((bool)(this["AskOnExit"]));
+            }
+            set {
+                this["AskOnExit"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Microsoft Sans Serif, 8.25pt")]
+        public global::System.Drawing.Font GridFont {
+            get {
+                return ((global::System.Drawing.Font)(this["GridFont"]));
+            }
+            set {
+                this["GridFont"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Microsoft Sans Serif, 8.25pt")]
+        public global::System.Drawing.Font TerminalFont {
+            get {
+                return ((global::System.Drawing.Font)(this["TerminalFont"]));
+            }
+            set {
+                this["TerminalFont"] = value;
+            }
+        }
     }
 }
