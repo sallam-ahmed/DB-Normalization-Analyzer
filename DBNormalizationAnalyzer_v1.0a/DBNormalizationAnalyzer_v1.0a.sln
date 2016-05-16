@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{F088123C-0E9E-452A-89E6-6BA2F21D5CAC}") = "SystemModel", "SystemModel\SystemModel.modelproj", "{1E28F350-25EB-4A59-A3F2-5AD6A0D0117C}"
 EndProject
@@ -11,7 +11,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DBNormalizationAnalyzer_Use
 		{D6024DD8-B485-43DB-8FE6-A0D21C2BA819} = {D6024DD8-B485-43DB-8FE6-A0D21C2BA819}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DBNormalizationAnalyzer_AnalyzerLibrary", "DBNormalizationAnalyzer_AnalyzerLibrary\DBNormalizationAnalyzer_AnalyzerLibrary.csproj", "{87302A5E-9D9F-4C68-8387-E45161AABB81}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DBNormalizationAnalyzer.AnalyzerLibrary", "DBNormalizationAnalyzer.AnalyzerLibrary\DBNormalizationAnalyzer.AnalyzerLibrary.csproj", "{87302A5E-9D9F-4C68-8387-E45161AABB81}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DBNormalizationAnalyzer_Formations", "DBNormalizationAnalyzer_Formations\DBNormalizationAnalyzer_Formations.csproj", "{D6024DD8-B485-43DB-8FE6-A0D21C2BA819}"
 EndProject

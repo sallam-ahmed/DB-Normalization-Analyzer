@@ -473,7 +473,7 @@ You can use the following commands:
                         CurrentTable.TableDependency.RemoveDependency(CurrentTable.ColumnSet(independSet), CurrentTable.ColumnSet(dependSet));
                         e.Message = "Command executed successfully! Mbrouk!";
                     }
-                    catch (ArgumentOutOfRangeException ex)
+                    catch (ArgumentOutOfRangeException)
                     {
                         e.Message = "No such dependency exist!";
                     }

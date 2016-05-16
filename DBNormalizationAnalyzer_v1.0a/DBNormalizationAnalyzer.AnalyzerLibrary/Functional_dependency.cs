@@ -167,7 +167,6 @@ namespace DBNormalizationAnalyzer.AnalyzerLibrary
                         newIndependent[key] = true;
                     if (DependencyList[i].Item2[key + (key >= index ? 1 : 0)])
                         newDependent[key] = foundDependent = true;
-
                 }
                 if(!foundDependent)
                 {
@@ -221,7 +220,7 @@ namespace DBNormalizationAnalyzer.AnalyzerLibrary
                 {
                     for (var j = i+1; j < DependencyList.Count; j++)
                     {
-                        if (!DependencyList[i].Item1.EqualsTo(Utils.Not(DependencyList[j].Item1)))
+                        if (!DependencyList[i].Item1.EqualsTo(DependencyList[j].Item1))
                             continue;
                         DependencyList[i].Item2.Or(DependencyList[j].Item2);
                         DependencyList.RemoveAt(j);
@@ -240,7 +239,7 @@ namespace DBNormalizationAnalyzer.AnalyzerLibrary
             {
                 for (var i = 0; i < Keys.Count; i++)
                 {
-                    if (dependency.Item1.Get(i))
+                    if (dependency.Item1[i])
                     {
                         if (Right.Contains(i))
                         {
@@ -250,7 +249,7 @@ namespace DBNormalizationAnalyzer.AnalyzerLibrary
                         else if (!Middle.Contains(i))
                             Left.Add(i);
                     }
-                    if (dependency.Item2.Get(i))
+                    if (dependency.Item2[i])
                     {
                         if(Left.Contains(i))
                         {
@@ -372,7 +371,7 @@ namespace DBNormalizationAnalyzer.AnalyzerLibrary
                 SufficientCandidateKeys.Add(leftBits);
                 return;
             }
-            // I claim by this line, the number of candidates can't be more than 16; given that the number of attributes isn't more than 4069, but who  knows!
+            // I claim by this line, the number of candidates can't be more than 16; given that the number of attributes isn't more than 4069, but who knows!
             if (candidates.Count > 20)
             {
                 throw new ConstraintException("Too many attributes!");
@@ -415,7 +414,8 @@ namespace DBNormalizationAnalyzer.AnalyzerLibrary
 
         private void Prepare()
         {
-            if (_prepared) return;
+            if (_prepared)
+                return;
             Minimalize();
             Divide();
             GetPrimes();
