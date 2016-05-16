@@ -642,7 +642,9 @@ You can use the following commands:
         {
             if (e.RowIndex < 0 || e.RowIndex >= _analsysisErrors.Count)
                 return;
-            suggestion = _analsysisErrors[e.RowIndex].SuggestedSplit.Select((t, i) => new Table("Table" + i.ToString(), Program.LoadedProject.Tables[e.RowIndex].ColumnSet(t.Item1))).ToList();
+            if (_analsysisErrors[e.RowIndex].SuggestedSplit.Count == 0)
+                return;
+            suggestion = _analsysisErrors[e.RowIndex].SuggestedSplit.Select((t, i) => new Table("Table" + i.ToString(), Program.LoadedProject.Tables[e.RowIndex].ColumnSet(t.Item1), Program.LoadedProject.Tables[e.RowIndex].ColumnSet(t.Item2))).ToList();
             newTablesList.DataSource = null;
             newTablesList.ValueMember = "Self";
             newTablesList.DisplayMember = "Name";
@@ -670,10 +672,11 @@ You can use the following commands:
             if (newTablesList.SelectedItems.Count == 0 || newTablesList.SelectedIndex < 0 ||
                 newTablesList.SelectedIndex >= suggestion.Count)
                 return;
-            newColList.DataSource = null;
-            newColList.ValueMember = "Self";
-            newColList.DisplayMember = "Name";
+            newColList.DataSource = newPrimeList.DataSource = null;
+            newColList.ValueMember = newPrimeList.ValueMember = "Self";
+            newColList.DisplayMember = newPrimeList.DisplayMember = "Name";
             newColList.DataSource = suggestion[newTablesList.SelectedIndex].Columns;
+            newPrimeList.DataSource = suggestion[newTablesList.SelectedIndex].PrimaryKey;
             suggestionPanel.Focus();
         }
     }

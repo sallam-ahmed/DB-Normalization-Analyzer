@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
@@ -103,11 +103,13 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.newTables = new System.Windows.Forms.GroupBox();
             this.newTablesList = new System.Windows.Forms.ListBox();
-            this.newColumns = new System.Windows.Forms.GroupBox();
-            this.newColList = new System.Windows.Forms.ListBox();
+            this.newPrimary = new System.Windows.Forms.GroupBox();
+            this.newPrimeList = new System.Windows.Forms.ListBox();
             this.tableLayoutPanel9 = new System.Windows.Forms.TableLayoutPanel();
             this.label1 = new System.Windows.Forms.Label();
             this.pinPic = new System.Windows.Forms.PictureBox();
+            this.newColumns = new System.Windows.Forms.GroupBox();
+            this.newColList = new System.Windows.Forms.ListBox();
             this.menuStrip1.SuspendLayout();
             this.Statusbar.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -131,9 +133,10 @@
             this.tableLayoutPanel8.SuspendLayout();
             this.panel1.SuspendLayout();
             this.newTables.SuspendLayout();
-            this.newColumns.SuspendLayout();
+            this.newPrimary.SuspendLayout();
             this.tableLayoutPanel9.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pinPic)).BeginInit();
+            this.newColumns.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -273,7 +276,7 @@
             // 
             this.showhelpToolStripMenuItem.Name = "showhelpToolStripMenuItem";
             this.showhelpToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F1;
-            this.showhelpToolStripMenuItem.Size = new System.Drawing.Size(143, 22);
+            this.showhelpToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.showhelpToolStripMenuItem.Tag = "HowTO";
             this.showhelpToolStripMenuItem.Text = "How To ?";
             this.showhelpToolStripMenuItem.Click += new System.EventHandler(this.PerformMenuItemsActions);
@@ -281,7 +284,7 @@
             // aboutUsToolStripMenuItem
             // 
             this.aboutUsToolStripMenuItem.Name = "aboutUsToolStripMenuItem";
-            this.aboutUsToolStripMenuItem.Size = new System.Drawing.Size(143, 22);
+            this.aboutUsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.aboutUsToolStripMenuItem.Tag = "About";
             this.aboutUsToolStripMenuItem.Text = "About us";
             this.aboutUsToolStripMenuItem.Click += new System.EventHandler(this.PerformMenuItemsActions);
@@ -289,7 +292,7 @@
             // licenseToolStripMenuItem
             // 
             this.licenseToolStripMenuItem.Name = "licenseToolStripMenuItem";
-            this.licenseToolStripMenuItem.Size = new System.Drawing.Size(143, 22);
+            this.licenseToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.licenseToolStripMenuItem.Tag = "License";
             this.licenseToolStripMenuItem.Text = "License";
             this.licenseToolStripMenuItem.Click += new System.EventHandler(this.PerformMenuItemsActions);
@@ -639,14 +642,14 @@
             this.NF3Col,
             this.NFBoyceCol,
             this.FinalResultCol});
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.analysisDatagridView.DefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.analysisDatagridView.DefaultCellStyle = dataGridViewCellStyle1;
             this.analysisDatagridView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.analysisDatagridView.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
             this.analysisDatagridView.Location = new System.Drawing.Point(2, 220);
@@ -867,11 +870,13 @@
             // 
             // tableLayoutPanel8
             // 
-            this.tableLayoutPanel8.ColumnCount = 2;
-            this.tableLayoutPanel8.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 22.04725F));
-            this.tableLayoutPanel8.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 77.95276F));
+            this.tableLayoutPanel8.ColumnCount = 3;
+            this.tableLayoutPanel8.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.38583F));
+            this.tableLayoutPanel8.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 66.61417F));
+            this.tableLayoutPanel8.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 384F));
+            this.tableLayoutPanel8.Controls.Add(this.newColumns, 0, 0);
             this.tableLayoutPanel8.Controls.Add(this.panel1, 0, 0);
-            this.tableLayoutPanel8.Controls.Add(this.newColumns, 1, 0);
+            this.tableLayoutPanel8.Controls.Add(this.newPrimary, 1, 0);
             this.tableLayoutPanel8.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel8.Location = new System.Drawing.Point(4, 42);
             this.tableLayoutPanel8.Margin = new System.Windows.Forms.Padding(2);
@@ -891,7 +896,7 @@
             this.panel1.Location = new System.Drawing.Point(2, 2);
             this.panel1.Margin = new System.Windows.Forms.Padding(2);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(220, 136);
+            this.panel1.Size = new System.Drawing.Size(208, 136);
             this.panel1.TabIndex = 10;
             // 
             // newTables
@@ -902,7 +907,7 @@
             this.newTables.Margin = new System.Windows.Forms.Padding(2);
             this.newTables.Name = "newTables";
             this.newTables.Padding = new System.Windows.Forms.Padding(2);
-            this.newTables.Size = new System.Drawing.Size(220, 136);
+            this.newTables.Size = new System.Drawing.Size(208, 136);
             this.newTables.TabIndex = 0;
             this.newTables.TabStop = false;
             this.newTables.Text = "Tables split";
@@ -914,32 +919,32 @@
             this.newTablesList.Location = new System.Drawing.Point(2, 15);
             this.newTablesList.Margin = new System.Windows.Forms.Padding(2);
             this.newTablesList.Name = "newTablesList";
-            this.newTablesList.Size = new System.Drawing.Size(216, 119);
+            this.newTablesList.Size = new System.Drawing.Size(204, 119);
             this.newTablesList.TabIndex = 10;
             this.newTablesList.SelectedIndexChanged += new System.EventHandler(this.ChangeSuggestedColumns);
             // 
-            // newColumns
+            // newPrimary
             // 
-            this.newColumns.Controls.Add(this.newColList);
-            this.newColumns.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.newColumns.Location = new System.Drawing.Point(226, 2);
-            this.newColumns.Margin = new System.Windows.Forms.Padding(2);
-            this.newColumns.Name = "newColumns";
-            this.newColumns.Padding = new System.Windows.Forms.Padding(2);
-            this.newColumns.Size = new System.Drawing.Size(792, 136);
-            this.newColumns.TabIndex = 11;
-            this.newColumns.TabStop = false;
-            this.newColumns.Text = "Columns split";
+            this.newPrimary.Controls.Add(this.newPrimeList);
+            this.newPrimary.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.newPrimary.Location = new System.Drawing.Point(637, 2);
+            this.newPrimary.Margin = new System.Windows.Forms.Padding(2);
+            this.newPrimary.Name = "newPrimary";
+            this.newPrimary.Padding = new System.Windows.Forms.Padding(2);
+            this.newPrimary.Size = new System.Drawing.Size(381, 136);
+            this.newPrimary.TabIndex = 11;
+            this.newPrimary.TabStop = false;
+            this.newPrimary.Text = "Primary Key";
             // 
-            // newColList
+            // newPrimeList
             // 
-            this.newColList.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.newColList.FormattingEnabled = true;
-            this.newColList.Location = new System.Drawing.Point(2, 15);
-            this.newColList.Margin = new System.Windows.Forms.Padding(2);
-            this.newColList.Name = "newColList";
-            this.newColList.Size = new System.Drawing.Size(788, 119);
-            this.newColList.TabIndex = 11;
+            this.newPrimeList.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.newPrimeList.FormattingEnabled = true;
+            this.newPrimeList.Location = new System.Drawing.Point(2, 15);
+            this.newPrimeList.Margin = new System.Windows.Forms.Padding(2);
+            this.newPrimeList.Name = "newPrimeList";
+            this.newPrimeList.Size = new System.Drawing.Size(377, 119);
+            this.newPrimeList.TabIndex = 11;
             // 
             // tableLayoutPanel9
             // 
@@ -978,6 +983,29 @@
             this.pinPic.TabIndex = 1;
             this.pinPic.TabStop = false;
             this.pinPic.Click += new System.EventHandler(this.ToggleSuggestion);
+            // 
+            // newColumns
+            // 
+            this.newColumns.Controls.Add(this.newColList);
+            this.newColumns.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.newColumns.Location = new System.Drawing.Point(214, 2);
+            this.newColumns.Margin = new System.Windows.Forms.Padding(2);
+            this.newColumns.Name = "newColumns";
+            this.newColumns.Padding = new System.Windows.Forms.Padding(2);
+            this.newColumns.Size = new System.Drawing.Size(419, 136);
+            this.newColumns.TabIndex = 12;
+            this.newColumns.TabStop = false;
+            this.newColumns.Text = "Columns split";
+            // 
+            // newColList
+            // 
+            this.newColList.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.newColList.FormattingEnabled = true;
+            this.newColList.Location = new System.Drawing.Point(2, 15);
+            this.newColList.Margin = new System.Windows.Forms.Padding(2);
+            this.newColList.Name = "newColList";
+            this.newColList.Size = new System.Drawing.Size(415, 119);
+            this.newColList.TabIndex = 11;
             // 
             // EditorForm
             // 
@@ -1025,10 +1053,11 @@
             this.tableLayoutPanel8.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.newTables.ResumeLayout(false);
-            this.newColumns.ResumeLayout(false);
+            this.newPrimary.ResumeLayout(false);
             this.tableLayoutPanel9.ResumeLayout(false);
             this.tableLayoutPanel9.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pinPic)).EndInit();
+            this.newColumns.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1104,8 +1133,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn NFBoyceCol;
         private System.Windows.Forms.DataGridViewTextBoxColumn FinalResultCol;
         private System.Windows.Forms.Panel suggestionPanel;
-        private System.Windows.Forms.ListBox newColList;
-        private System.Windows.Forms.GroupBox newColumns;
+        private System.Windows.Forms.ListBox newPrimeList;
+        private System.Windows.Forms.GroupBox newPrimary;
         private System.Windows.Forms.ListBox newTablesList;
         private System.Windows.Forms.GroupBox newTables;
         private System.Windows.Forms.Panel panel1;
@@ -1114,6 +1143,8 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel9;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.PictureBox pinPic;
+        private System.Windows.Forms.GroupBox newColumns;
+        private System.Windows.Forms.ListBox newColList;
     }
 }
 
