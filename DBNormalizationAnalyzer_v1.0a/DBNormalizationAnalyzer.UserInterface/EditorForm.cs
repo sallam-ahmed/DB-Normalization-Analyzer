@@ -16,7 +16,7 @@ namespace DBNormalizationAnalyzer_UserInterface
         #region Variables
         public static bool BHasChanges; // for saving
         private int _selectedIndex;
-        private List<Error> _analsysisErrors = new List<Error>(); 
+        private readonly List<Error> _analsysisErrors; 
         public Table CurrentTable
         {
             get
@@ -30,7 +30,18 @@ namespace DBNormalizationAnalyzer_UserInterface
                 Program.LoadedProject.Tables[_selectedIndex] = value;
             }
         }
-        private Dictionary<Table, FunctionalDependency> _tableMap;
+
+        private List<Table> suggestion;
+        private bool _visibleSuggestions;
+        public bool ViewSuggestions
+        {
+            get { return _visibleSuggestions; }
+            set
+            {
+                _visibleSuggestions = value;
+                pinPic.Image = value ? Properties.Resources.pinned : Properties.Resources.unpinned;
+            }
+        }
         #endregion
 
         #region # Constructors #
@@ -39,10 +50,13 @@ namespace DBNormalizationAnalyzer_UserInterface
         {
             InitializeComponent();
             _selectedIndex = 0;
+            BHasChanges = false;
+            _analsysisErrors = new List<Error>();
             LoadProject(project);
             ClearCli();
             ResetLog();
             ApplySettings();
+            _visibleSuggestions = false;
         }
         #endregion
 
@@ -61,7 +75,7 @@ namespace DBNormalizationAnalyzer_UserInterface
                 if (project.Tables.Count > 0)
                 {
                     tablesListBox.SetSelected(0,true);
-                    ApplyTable(0);
+                    ApplyTable();
                 }
             }
             catch
@@ -95,10 +109,8 @@ namespace DBNormalizationAnalyzer_UserInterface
         {
             if (!BHasChanges)
             {
-                MessageBox.Show("DOESN");
                 if (exit)
                 {
-                    MessageBox.Show("Test");
                     Application.ExitThread();
                 }
                 else
@@ -443,15 +455,15 @@ You can use the following commands:
             if (tablesListBox.SelectedValue == null)
                 return;
             _selectedIndex = tablesListBox.SelectedIndex;
-            ApplyTable(tablesListBox.SelectedIndex);
+            ApplyTable();
         }
 
-        private void ApplyTable(int index)
+        private void ApplyTable()
         {
             colListBox.DataSource = null;
             colListBox.ValueMember = "Self";
             colListBox.DisplayMember = "Name";
-            colListBox.DataSource = Program.LoadedProject.Tables[index].Columns;
+            colListBox.DataSource = CurrentTable.Columns;
         }
 
         private void EditorForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -612,20 +624,57 @@ You can use the following commands:
             {
                 for (var j = 0; j < analysisDatagridView.Columns.Count; j++)
                 {
-                    if(analysisDatagridView.Rows[i].Cells[j].Value.ToString() == "False")
-                        analysisDatagridView.Rows[i].Cells[j].Style.BackColor = Color.Red;
-                    else if(analysisDatagridView.Rows[i].Cells[j].Value.ToString() == "True")
+                    switch (analysisDatagridView.Rows[i].Cells[j].Value.ToString())
                     {
-                        analysisDatagridView.Rows[i].Cells[j].Style.BackColor = Color.Green;
+                        case "False":
+                            analysisDatagridView.Rows[i].Cells[j].Style.BackColor = Color.Red;
+                            break;
+                        case "True":
+                            analysisDatagridView.Rows[i].Cells[j].Style.BackColor = Color.Green;
+                            break;
                         //analysisDatagridView.Rows[i].Cells[j].Style.Font
                     }
                 }
             }
         }
 
-        private void showSuggestion(object sender, DataGridViewCellEventArgs e)
+        private void ShowSuggestion(object sender, DataGridViewCellEventArgs e)
         {
+            if (e.RowIndex < 0 || e.RowIndex >= _analsysisErrors.Count)
+                return;
+            suggestion = _analsysisErrors[e.RowIndex].SuggestedSplit.Select((t, i) => new Table("Table" + i.ToString(), Program.LoadedProject.Tables[e.RowIndex].ColumnSet(t.Item1))).ToList();
+            newTablesList.DataSource = null;
+            newTablesList.ValueMember = "Self";
+            newTablesList.DisplayMember = "Name";
+            newTablesList.DataSource = suggestion;
+            suggestionPanel.Visible = true;
+            suggestionPanel.Focus();
+        }
 
+        private void ToggleSuggestion(object sender, EventArgs e)
+        {
+            ViewSuggestions = !ViewSuggestions;
+            suggestionPanel.Focus();
+        }
+
+        private void HideSuggesion(object sender, EventArgs e)
+        {
+            if (!ViewSuggestions)
+            {
+                suggestionPanel.Visible = false;
+            }
+        }
+
+        private void ChangeSuggestedColumns(object sender, EventArgs e)
+        {
+            if (newTablesList.SelectedItems.Count == 0 || newTablesList.SelectedIndex < 0 ||
+                newTablesList.SelectedIndex >= suggestion.Count)
+                return;
+            newColList.DataSource = null;
+            newColList.ValueMember = "Self";
+            newColList.DisplayMember = "Name";
+            newColList.DataSource = suggestion[newTablesList.SelectedIndex].Columns;
+            suggestionPanel.Focus();
         }
     }
     
