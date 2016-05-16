@@ -87,9 +87,10 @@ namespace DBNormalizationAnalyzer.AnalyzerLibrary
             newTable.SetAll(true);
             foreach (var candidateKey in Fd.SufficientCandidateKeys)
             {
-                var clone = candidateKey;
+                var clone = new BitArray(candidateKey.Count);
                 foreach (var key in Fd.Keys.Where(key => candidateKey[key]))
                 {
+                    clone.Or(candidateKey);
                     clone[key] = false;
                     var currentCover = Fd.Reachability(clone);
                     if (!Fd.Keys.Any(npKey => newTable[npKey] && !Fd.IsPrimeKey(npKey) && currentCover[npKey]))

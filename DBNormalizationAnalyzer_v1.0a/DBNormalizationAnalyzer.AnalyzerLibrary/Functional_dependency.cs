@@ -26,7 +26,7 @@ namespace DBNormalizationAnalyzer.AnalyzerLibrary
 
         public void GetObjectData(SerializationInfo info, StreamingContext context)
         {
-            info.AddValue("CurKey",CurrentPrimaryKey,typeof(BitArray));
+            info.AddValue("CurKey",CurrentPrimaryKey.ToBitString(),typeof(string));
             info.AddValue("cnt",Keys.Count);
             var dependecyStrings = new List<string>();
             foreach (var dependency in DependencyList)
@@ -59,7 +59,7 @@ namespace DBNormalizationAnalyzer.AnalyzerLibrary
             Middle = new List<int>();
             Right = new List<int>();
             _prime = new BitArray(Keys.Count);
-            CurrentPrimaryKey = (BitArray)info.GetValue("CurKey",typeof(BitArray));
+            CurrentPrimaryKey = ((string)info.GetValue("CurKey",typeof(string))).ToBitArray();
             DependencyList = new List<Tuple<BitArray, BitArray>>();
             var dependecyStrings = (List<string>) info.GetValue("deps", typeof (List<string>));
             for (var i = 0; i < dependecyStrings.Count; i+=2)
@@ -85,10 +85,7 @@ namespace DBNormalizationAnalyzer.AnalyzerLibrary
         {
             if (!IsSuperKey(keys))
                 return false;
-
             var clone = keys;
-            if (Left.Any(key => !keys[key]))
-                return false;
             if (Keys.Any(key => keys[key] && !IsPrimeKey(key)))
                 return false;
             for(var i = 0;i < Keys.Count;i++)
@@ -167,7 +164,6 @@ namespace DBNormalizationAnalyzer.AnalyzerLibrary
                         newIndependent[key] = true;
                     if (DependencyList[i].Item2[key + (key >= index ? 1 : 0)])
                         newDependent[key] = foundDependent = true;
-
                 }
                 if(!foundDependent)
                 {
@@ -221,7 +217,7 @@ namespace DBNormalizationAnalyzer.AnalyzerLibrary
                 {
                     for (var j = i+1; j < DependencyList.Count; j++)
                     {
-                        if (!DependencyList[i].Item1.EqualsTo(Utils.Not(DependencyList[j].Item1)))
+                        if (!DependencyList[i].Item1.EqualsTo(DependencyList[j].Item1))
                             continue;
                         DependencyList[i].Item2.Or(DependencyList[j].Item2);
                         DependencyList.RemoveAt(j);
@@ -240,7 +236,7 @@ namespace DBNormalizationAnalyzer.AnalyzerLibrary
             {
                 for (var i = 0; i < Keys.Count; i++)
                 {
-                    if (dependency.Item1.Get(i))
+                    if (dependency.Item1[i])
                     {
                         if (Right.Contains(i))
                         {
@@ -250,7 +246,7 @@ namespace DBNormalizationAnalyzer.AnalyzerLibrary
                         else if (!Middle.Contains(i))
                             Left.Add(i);
                     }
-                    if (dependency.Item2.Get(i))
+                    if (dependency.Item2[i])
                     {
                         if(Left.Contains(i))
                         {
@@ -269,7 +265,6 @@ namespace DBNormalizationAnalyzer.AnalyzerLibrary
 
         public BitArray Reachability(BitArray keys)
         {
-            var res = new BitArray(Keys.Count);
             var change = true;
             while (change)
             {
@@ -283,11 +278,12 @@ namespace DBNormalizationAnalyzer.AnalyzerLibrary
                     keys = temp;
                 }
             }
-            return res;
+            return keys;
         }
 
         private void GetPrimes()
         {
+            SufficientCandidateKeys.Clear();
             _prime = new BitArray(Keys.Count);
             var leftBits = new BitArray(Keys.Count);
             foreach (var key in Left)
@@ -306,7 +302,10 @@ namespace DBNormalizationAnalyzer.AnalyzerLibrary
             var candidates = Middle;
             candidates.RemoveAll(key => currentCover[key]);
             if (candidates.Count == 0)
+            {
+                SufficientCandidateKeys.Add(leftBits);
                 return;
+            }
             var graph = new Graph(Keys.Count);
             foreach (var dependency in DependencyList)
             {
@@ -372,7 +371,7 @@ namespace DBNormalizationAnalyzer.AnalyzerLibrary
                 SufficientCandidateKeys.Add(leftBits);
                 return;
             }
-            // I claim by this line, the number of candidates can't be more than 16; given that the number of attributes isn't more than 4069, but who  knows!
+            // I claim by this line, the number of candidates can't be more than 16; given that the number of attributes isn't more than 4069, but who knows!
             if (candidates.Count > 20)
             {
                 throw new ConstraintException("Too many attributes!");
@@ -415,7 +414,8 @@ namespace DBNormalizationAnalyzer.AnalyzerLibrary
 
         private void Prepare()
         {
-            if (_prepared) return;
+            if (_prepared)
+                return;
             Minimalize();
             Divide();
             GetPrimes();

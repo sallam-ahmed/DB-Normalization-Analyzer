@@ -202,9 +202,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DBNormalizationAnalyzer_AnalyzerLibrary\DBNormalizationAnalyzer_AnalyzerLibrary.csproj">
+    <ProjectReference Include="..\DBNormalizationAnalyzer.AnalyzerLibrary\DBNormalizationAnalyzer.AnalyzerLibrary.csproj">
       <Project>{87302a5e-9d9f-4c68-8387-e45161aabb81}</Project>
-      <Name>DBNormalizationAnalyzer_AnalyzerLibrary</Name>
+      <Name>DBNormalizationAnalyzer.AnalyzerLibrary</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
