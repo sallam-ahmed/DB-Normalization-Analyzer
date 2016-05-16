@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
@@ -48,6 +48,7 @@
             this.aboutUsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.licenseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.Statusbar = new System.Windows.Forms.StatusStrip();
+            this.pinPic = new System.Windows.Forms.ToolStripStatusLabel();
             this.datetimeLBL = new System.Windows.Forms.ToolStripStatusLabel();
             this.tableContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.createTableToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -71,6 +72,8 @@
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButton4 = new System.Windows.Forms.ToolStripButton();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.tablesListBox = new System.Windows.Forms.ListBox();
+            this.colListBox = new System.Windows.Forms.ListBox();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.loadfileDialog = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
@@ -84,9 +87,7 @@
             this.tableLayoutPanel7 = new System.Windows.Forms.TableLayoutPanel();
             this.panel2 = new System.Windows.Forms.Panel();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.tablesListBox = new System.Windows.Forms.ListBox();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
-            this.colListBox = new System.Windows.Forms.ListBox();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel6 = new System.Windows.Forms.TableLayoutPanel();
@@ -103,11 +104,10 @@
             this.newColumns = new System.Windows.Forms.GroupBox();
             this.newColList = new System.Windows.Forms.ListBox();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.newTables = new System.Windows.Forms.GroupBox();
+            this.newTablesList = new System.Windows.Forms.ListBox();
             this.newPrimary = new System.Windows.Forms.GroupBox();
             this.newPrimeList = new System.Windows.Forms.ListBox();
-            this.newTablesList = new System.Windows.Forms.ListBox();
-            this.newTables = new System.Windows.Forms.GroupBox();
-            this.pinPic = new System.Windows.Forms.ToolStripStatusLabel();
             this.menuStrip1.SuspendLayout();
             this.Statusbar.SuspendLayout();
             this.tableContextMenu.SuspendLayout();
@@ -134,8 +134,8 @@
             this.tableLayoutPanel8.SuspendLayout();
             this.newColumns.SuspendLayout();
             this.panel1.SuspendLayout();
-            this.newPrimary.SuspendLayout();
             this.newTables.SuspendLayout();
+            this.newPrimary.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -179,6 +179,7 @@
             // saveToolStripMenuItem
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
+            this.saveToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
             this.saveToolStripMenuItem.Size = new System.Drawing.Size(217, 26);
             this.saveToolStripMenuItem.Tag = "Save";
             this.saveToolStripMenuItem.Text = "&Save";
@@ -245,7 +246,7 @@
             this.toolbarToolStripMenuItem.CheckOnClick = true;
             this.toolbarToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.toolbarToolStripMenuItem.Name = "toolbarToolStripMenuItem";
-            this.toolbarToolStripMenuItem.Size = new System.Drawing.Size(150, 26);
+            this.toolbarToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
             this.toolbarToolStripMenuItem.Tag = "Toolbar";
             this.toolbarToolStripMenuItem.Text = "Toolbar";
             this.toolbarToolStripMenuItem.Click += new System.EventHandler(this.PerformMenuItemsActions);
@@ -256,7 +257,7 @@
             this.statusBarToolStripMenuItem.CheckOnClick = true;
             this.statusBarToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.statusBarToolStripMenuItem.Name = "statusBarToolStripMenuItem";
-            this.statusBarToolStripMenuItem.Size = new System.Drawing.Size(150, 26);
+            this.statusBarToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
             this.statusBarToolStripMenuItem.Tag = "StatBar";
             this.statusBarToolStripMenuItem.Text = "Status bar";
             this.statusBarToolStripMenuItem.Click += new System.EventHandler(this.PerformMenuItemsActions);
@@ -275,7 +276,7 @@
             // 
             this.showhelpToolStripMenuItem.Name = "showhelpToolStripMenuItem";
             this.showhelpToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F1;
-            this.showhelpToolStripMenuItem.Size = new System.Drawing.Size(171, 26);
+            this.showhelpToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
             this.showhelpToolStripMenuItem.Tag = "HowTO";
             this.showhelpToolStripMenuItem.Text = "How To ?";
             this.showhelpToolStripMenuItem.Click += new System.EventHandler(this.PerformMenuItemsActions);
@@ -283,7 +284,7 @@
             // aboutUsToolStripMenuItem
             // 
             this.aboutUsToolStripMenuItem.Name = "aboutUsToolStripMenuItem";
-            this.aboutUsToolStripMenuItem.Size = new System.Drawing.Size(171, 26);
+            this.aboutUsToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
             this.aboutUsToolStripMenuItem.Tag = "About";
             this.aboutUsToolStripMenuItem.Text = "About us";
             this.aboutUsToolStripMenuItem.Click += new System.EventHandler(this.PerformMenuItemsActions);
@@ -291,7 +292,7 @@
             // licenseToolStripMenuItem
             // 
             this.licenseToolStripMenuItem.Name = "licenseToolStripMenuItem";
-            this.licenseToolStripMenuItem.Size = new System.Drawing.Size(171, 26);
+            this.licenseToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
             this.licenseToolStripMenuItem.Tag = "License";
             this.licenseToolStripMenuItem.Text = "License";
             this.licenseToolStripMenuItem.Click += new System.EventHandler(this.PerformMenuItemsActions);
@@ -310,6 +311,19 @@
             this.Statusbar.TabIndex = 1;
             this.Statusbar.Text = "statusStrip1";
             // 
+            // pinPic
+            // 
+            this.pinPic.BorderStyle = System.Windows.Forms.Border3DStyle.Bump;
+            this.pinPic.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.pinPic.Image = global::DBNormalizationAnalyzer_UserInterface.Properties.Resources.unpinned;
+            this.pinPic.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.pinPic.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.pinPic.Name = "pinPic";
+            this.pinPic.Size = new System.Drawing.Size(20, 20);
+            this.pinPic.Text = "toolStripSplitButton1";
+            this.pinPic.Visible = false;
+            this.pinPic.Click += new System.EventHandler(this.ToggleSuggestion);
+            // 
             // datetimeLBL
             // 
             this.datetimeLBL.Name = "datetimeLBL";
@@ -325,13 +339,14 @@
             this.refreshToolStripMenuItem1,
             this.renameToolStripMenuItem});
             this.tableContextMenu.Name = "contextMenuStrip1";
-            this.tableContextMenu.Size = new System.Drawing.Size(169, 108);
+            this.tableContextMenu.Size = new System.Drawing.Size(220, 108);
             this.tableContextMenu.Text = "Tasks";
             // 
             // createTableToolStripMenuItem
             // 
             this.createTableToolStripMenuItem.Name = "createTableToolStripMenuItem";
-            this.createTableToolStripMenuItem.Size = new System.Drawing.Size(168, 26);
+            this.createTableToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
+            this.createTableToolStripMenuItem.Size = new System.Drawing.Size(219, 26);
             this.createTableToolStripMenuItem.Text = "&Create Table";
             this.createTableToolStripMenuItem.Click += new System.EventHandler(this.CreateTable);
             // 
@@ -368,13 +383,14 @@
             this.toolStripMenuItem4,
             this.toolStripMenuItem5});
             this.colContextMenu.Name = "contextMenuStrip1";
-            this.colContextMenu.Size = new System.Drawing.Size(183, 136);
+            this.colContextMenu.Size = new System.Drawing.Size(234, 108);
             this.colContextMenu.Text = "Tasks";
             // 
             // toolStripMenuItem2
             // 
             this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(182, 26);
+            this.toolStripMenuItem2.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(233, 26);
             this.toolStripMenuItem2.Text = "&Create Column";
             this.toolStripMenuItem2.Click += new System.EventHandler(this.CreateColumn);
             // 
@@ -504,6 +520,37 @@
             this.toolTip1.IsBalloon = true;
             this.toolTip1.ToolTipTitle = "Tip!";
             // 
+            // tablesListBox
+            // 
+            this.tablesListBox.ContextMenuStrip = this.tableContextMenu;
+            this.tablesListBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tablesListBox.FormattingEnabled = true;
+            this.tablesListBox.ItemHeight = 16;
+            this.tablesListBox.Items.AddRange(new object[] {
+            "Table 1",
+            "Table 2",
+            "Table 3"});
+            this.tablesListBox.Location = new System.Drawing.Point(3, 17);
+            this.tablesListBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.tablesListBox.Name = "tablesListBox";
+            this.tablesListBox.Size = new System.Drawing.Size(126, 283);
+            this.tablesListBox.TabIndex = 10;
+            this.toolTip1.SetToolTip(this.tablesListBox, "Right Click to show menu, left click to show columns in editor");
+            this.tablesListBox.SelectedIndexChanged += new System.EventHandler(this.ChangeTable);
+            // 
+            // colListBox
+            // 
+            this.colListBox.ContextMenuStrip = this.colContextMenu;
+            this.colListBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.colListBox.FormattingEnabled = true;
+            this.colListBox.ItemHeight = 16;
+            this.colListBox.Location = new System.Drawing.Point(3, 17);
+            this.colListBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.colListBox.Name = "colListBox";
+            this.colListBox.Size = new System.Drawing.Size(554, 283);
+            this.colListBox.TabIndex = 11;
+            this.toolTip1.SetToolTip(this.colListBox, "Right Click to show menu");
+            // 
             // timer1
             // 
             this.timer1.Enabled = true;
@@ -557,7 +604,7 @@
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 668F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(1371, 670);
             this.tableLayoutPanel1.TabIndex = 3;
             // 
@@ -681,24 +728,6 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Tables";
             // 
-            // tablesListBox
-            // 
-            this.tablesListBox.ContextMenuStrip = this.tableContextMenu;
-            this.tablesListBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tablesListBox.FormattingEnabled = true;
-            this.tablesListBox.ItemHeight = 16;
-            this.tablesListBox.Items.AddRange(new object[] {
-            "Table 1",
-            "Table 2",
-            "Table 3"});
-            this.tablesListBox.Location = new System.Drawing.Point(3, 17);
-            this.tablesListBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.tablesListBox.Name = "tablesListBox";
-            this.tablesListBox.Size = new System.Drawing.Size(126, 283);
-            this.tablesListBox.TabIndex = 10;
-            this.toolTip1.SetToolTip(this.tablesListBox, "Right Click to show menu, left click to show columns in editor");
-            this.tablesListBox.SelectedIndexChanged += new System.EventHandler(this.ChangeTable);
-            // 
             // groupBox5
             // 
             this.groupBox5.Controls.Add(this.colListBox);
@@ -711,19 +740,6 @@
             this.groupBox5.TabIndex = 11;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Columns";
-            // 
-            // colListBox
-            // 
-            this.colListBox.ContextMenuStrip = this.colContextMenu;
-            this.colListBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.colListBox.FormattingEnabled = true;
-            this.colListBox.ItemHeight = 16;
-            this.colListBox.Location = new System.Drawing.Point(3, 17);
-            this.colListBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.colListBox.Name = "colListBox";
-            this.colListBox.Size = new System.Drawing.Size(554, 283);
-            this.colListBox.TabIndex = 11;
-            this.toolTip1.SetToolTip(this.colListBox, "Right Click to show menu");
             // 
             // tableLayoutPanel3
             // 
@@ -739,7 +755,6 @@
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 56.16279F));
             this.tableLayoutPanel3.Size = new System.Drawing.Size(623, 662);
             this.tableLayoutPanel3.TabIndex = 4;
-            this.tableLayoutPanel3.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanel3_Paint);
             // 
             // groupBox1
             // 
@@ -786,14 +801,14 @@
             this.NF3Col,
             this.NFBoyceCol,
             this.FinalResultCol});
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.analysisDatagridView.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.analysisDatagridView.DefaultCellStyle = dataGridViewCellStyle3;
             this.analysisDatagridView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.analysisDatagridView.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
             this.analysisDatagridView.Location = new System.Drawing.Point(3, 277);
@@ -805,6 +820,7 @@
             this.analysisDatagridView.Size = new System.Drawing.Size(601, 356);
             this.analysisDatagridView.TabIndex = 5;
             this.analysisDatagridView.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.ShowSuggestion);
+            this.analysisDatagridView.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.ShowSuggestion);
             // 
             // TableNameColumn
             // 
@@ -870,7 +886,7 @@
             this.groupBox6.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox6.Location = new System.Drawing.Point(0, 0);
             this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(1371, 209);
+            this.groupBox6.Size = new System.Drawing.Size(150, 46);
             this.groupBox6.TabIndex = 0;
             this.groupBox6.TabStop = false;
             this.groupBox6.Text = "Suggested Split";
@@ -893,18 +909,18 @@
             this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 172F));
             this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 172F));
-            this.tableLayoutPanel8.Size = new System.Drawing.Size(1365, 188);
+            this.tableLayoutPanel8.Size = new System.Drawing.Size(144, 25);
             this.tableLayoutPanel8.TabIndex = 5;
             // 
             // newColumns
             // 
             this.newColumns.Controls.Add(this.newColList);
             this.newColumns.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.newColumns.Location = new System.Drawing.Point(287, 2);
+            this.newColumns.Location = new System.Drawing.Point(-120, 2);
             this.newColumns.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.newColumns.Name = "newColumns";
             this.newColumns.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.newColumns.Size = new System.Drawing.Size(561, 184);
+            this.newColumns.Size = new System.Drawing.Size(1, 21);
             this.newColumns.TabIndex = 12;
             this.newColumns.TabStop = false;
             this.newColumns.Text = "Columns split";
@@ -917,7 +933,7 @@
             this.newColList.Location = new System.Drawing.Point(3, 17);
             this.newColList.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.newColList.Name = "newColList";
-            this.newColList.Size = new System.Drawing.Size(555, 165);
+            this.newColList.Size = new System.Drawing.Size(0, 2);
             this.newColList.TabIndex = 11;
             // 
             // panel1
@@ -927,18 +943,43 @@
             this.panel1.Location = new System.Drawing.Point(3, 2);
             this.panel1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(278, 184);
+            this.panel1.Size = new System.Drawing.Size(1, 21);
             this.panel1.TabIndex = 10;
+            // 
+            // newTables
+            // 
+            this.newTables.Controls.Add(this.newTablesList);
+            this.newTables.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.newTables.Location = new System.Drawing.Point(0, 0);
+            this.newTables.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.newTables.Name = "newTables";
+            this.newTables.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.newTables.Size = new System.Drawing.Size(1, 21);
+            this.newTables.TabIndex = 0;
+            this.newTables.TabStop = false;
+            this.newTables.Text = "Tables split";
+            // 
+            // newTablesList
+            // 
+            this.newTablesList.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.newTablesList.FormattingEnabled = true;
+            this.newTablesList.ItemHeight = 16;
+            this.newTablesList.Location = new System.Drawing.Point(3, 17);
+            this.newTablesList.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.newTablesList.Name = "newTablesList";
+            this.newTablesList.Size = new System.Drawing.Size(0, 2);
+            this.newTablesList.TabIndex = 10;
+            this.newTablesList.SelectedIndexChanged += new System.EventHandler(this.ChangeSuggestedColumns);
             // 
             // newPrimary
             // 
             this.newPrimary.Controls.Add(this.newPrimeList);
             this.newPrimary.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.newPrimary.Location = new System.Drawing.Point(854, 2);
+            this.newPrimary.Location = new System.Drawing.Point(-365, 2);
             this.newPrimary.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.newPrimary.Name = "newPrimary";
             this.newPrimary.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.newPrimary.Size = new System.Drawing.Size(508, 184);
+            this.newPrimary.Size = new System.Drawing.Size(507, 21);
             this.newPrimary.TabIndex = 11;
             this.newPrimary.TabStop = false;
             this.newPrimary.Text = "Primary Key";
@@ -951,46 +992,8 @@
             this.newPrimeList.Location = new System.Drawing.Point(3, 17);
             this.newPrimeList.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.newPrimeList.Name = "newPrimeList";
-            this.newPrimeList.Size = new System.Drawing.Size(502, 165);
+            this.newPrimeList.Size = new System.Drawing.Size(501, 2);
             this.newPrimeList.TabIndex = 11;
-            // 
-            // newTablesList
-            // 
-            this.newTablesList.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.newTablesList.FormattingEnabled = true;
-            this.newTablesList.ItemHeight = 16;
-            this.newTablesList.Location = new System.Drawing.Point(3, 17);
-            this.newTablesList.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.newTablesList.Name = "newTablesList";
-            this.newTablesList.Size = new System.Drawing.Size(272, 165);
-            this.newTablesList.TabIndex = 10;
-            this.newTablesList.SelectedIndexChanged += new System.EventHandler(this.ChangeSuggestedColumns);
-            // 
-            // newTables
-            // 
-            this.newTables.Controls.Add(this.newTablesList);
-            this.newTables.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.newTables.Location = new System.Drawing.Point(0, 0);
-            this.newTables.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.newTables.Name = "newTables";
-            this.newTables.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.newTables.Size = new System.Drawing.Size(278, 184);
-            this.newTables.TabIndex = 0;
-            this.newTables.TabStop = false;
-            this.newTables.Text = "Tables split";
-            // 
-            // pinPic
-            // 
-            this.pinPic.BorderStyle = System.Windows.Forms.Border3DStyle.RaisedOuter;
-            this.pinPic.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.pinPic.Image = global::DBNormalizationAnalyzer_UserInterface.Properties.Resources.pinned;
-            this.pinPic.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.pinPic.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.pinPic.Name = "pinPic";
-            this.pinPic.Size = new System.Drawing.Size(20, 20);
-            this.pinPic.Text = "toolStripSplitButton1";
-            this.pinPic.Visible = false;
-            this.pinPic.Click += new System.EventHandler(this.ToggleSuggestion);
             // 
             // EditorForm
             // 
@@ -1010,7 +1013,6 @@
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.EditorForm_FormClosing);
             this.Load += new System.EventHandler(this.EditorForm_Load);
-            this.Enter += new System.EventHandler(this.HideSuggesion);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.Statusbar.ResumeLayout(false);
@@ -1040,8 +1042,8 @@
             this.tableLayoutPanel8.ResumeLayout(false);
             this.newColumns.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
-            this.newPrimary.ResumeLayout(false);
             this.newTables.ResumeLayout(false);
+            this.newPrimary.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 

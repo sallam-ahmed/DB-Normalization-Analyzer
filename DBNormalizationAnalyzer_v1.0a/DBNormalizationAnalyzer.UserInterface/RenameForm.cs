@@ -27,5 +27,10 @@ namespace DBNormalizationAnalyzer_UserInterface
         {
             return nameTXT.Text;
         }
+
+        private void okBTN_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
