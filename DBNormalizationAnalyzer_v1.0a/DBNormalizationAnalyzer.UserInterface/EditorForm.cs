@@ -16,7 +16,8 @@ namespace DBNormalizationAnalyzer_UserInterface
         #region Variables
         public static bool BHasChanges; // for saving
         private int _selectedIndex;
-        private readonly List<Error> _analsysisErrors; 
+        private readonly List<Error> _analsysisErrors;
+        private bool pinSuggestion = false;
         public Table CurrentTable
         {
             get
@@ -40,6 +41,7 @@ namespace DBNormalizationAnalyzer_UserInterface
             {
                 _visibleSuggestions = value;
                 pinPic.Image = value ? Properties.Resources.pinned : Properties.Resources.unpinned;
+                
             }
         }
         #endregion
@@ -317,7 +319,7 @@ You can use the following commands:
                     independStr = e.Parameters[1].Split(',', '{', '}').Where(t => !string.IsNullOrWhiteSpace(t)).ToList();
                     try
                     {
-                        CurrentTable.setPrimaryKey(independStr, true);
+                        CurrentTable.SetPrimaryKey(independStr, true);
                         e.Message = "Mbrouk!";
                     }
                     catch (ArgumentException)
@@ -649,21 +651,21 @@ You can use the following commands:
             newTablesList.ValueMember = "Self";
             newTablesList.DisplayMember = "Name";
             newTablesList.DataSource = suggestion;
-            suggestionPanel.Visible = true;
-            suggestionPanel.Focus();
+            splitContainer1.Panel2Collapsed = false;
+            splitContainer1.Panel2.Focus();
+            pinPic.Visible = true;
         }
 
         private void ToggleSuggestion(object sender, EventArgs e)
         {
-            ViewSuggestions = !ViewSuggestions;
-            suggestionPanel.Focus();
+            pinSuggestion = !pinSuggestion;
         }
 
         private void HideSuggesion(object sender, EventArgs e)
         {
             if (!ViewSuggestions)
             {
-                suggestionPanel.Visible = false;
+                splitContainer1.Panel2Collapsed = true;
             }
         }
 
@@ -677,7 +679,18 @@ You can use the following commands:
             newColList.DisplayMember = newPrimeList.DisplayMember = "Name";
             newColList.DataSource = suggestion[newTablesList.SelectedIndex].Columns;
             newPrimeList.DataSource = suggestion[newTablesList.SelectedIndex].PrimaryKey;
-            suggestionPanel.Focus();
+            splitContainer1.Panel2.Focus();
+        }
+
+        private void tableLayoutPanel3_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void splitContainer1_Panel2_Leave(object sender, EventArgs e)
+        {
+            if (!pinSuggestion)
+                splitContainer1.Panel2Collapsed = true;
         }
     }
     

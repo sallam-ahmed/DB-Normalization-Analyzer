@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
+using System.Text;
 
 namespace DBNormalizationAnalyzer.AnalyzerLibrary
 {
@@ -18,5 +20,6 @@ namespace DBNormalizationAnalyzer.AnalyzerLibrary
             Level = lvl;
             SuggestedSplit = new List<Tuple<BitArray, BitArray>>();
         }
-    }
+
+     }
 }

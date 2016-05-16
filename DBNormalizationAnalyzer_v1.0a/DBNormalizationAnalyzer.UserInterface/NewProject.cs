@@ -63,7 +63,7 @@ namespace DBNormalizationAnalyzer_UserInterface
             {
                 new DBNormalizationAnalyzer.Formations.Table("NEW_TABLE", 1)
             };
-            Program.LoadedProject.Tables[0].AddColumn(new DBNormalizationAnalyzer.Formations.Column("NEW_COL"));
+            
             var formInstance = new EditorForm(Program.LoadedProject);
             formInstance.Show();
             this.Hide();
