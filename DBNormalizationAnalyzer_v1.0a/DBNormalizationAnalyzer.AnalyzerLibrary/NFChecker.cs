@@ -45,7 +45,7 @@ namespace DBNormalizationAnalyzer.AnalyzerLibrary
             res.Level = 1;
             var newTable = new BitArray(Fd.Keys.Count);
             newTable.SetAll(true);
-            var newKey = Fd.CurrentPrimaryKey;
+            var newKey = new BitArray(Fd.CurrentPrimaryKey);
             foreach (var key in Fd.Left)
             {
                 newKey[key] = true;
