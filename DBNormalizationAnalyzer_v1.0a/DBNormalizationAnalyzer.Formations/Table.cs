@@ -13,7 +13,7 @@ namespace DBNormalizationAnalyzer.Formations
         public List<Column> Columns { get; set; }
         public FunctionalDependency TableDependency { get; set; }
         public Table Self => this;
-        public List<Column> PrimaryKey { get; set; } 
+        public List<Column> PrimaryKey { get;} 
         
         public Table(string name ,int columnsCount)
         {
@@ -29,6 +29,45 @@ namespace DBNormalizationAnalyzer.Formations
             Columns = columns;
             PrimaryKey = new List<Column>();
             TableDependency = new FunctionalDependency(columns.Count, new BitArray(columns.Count));
+        }
+
+        public void setPrimaryKey(string name, bool primary)
+        {
+            for (int i = 0; i < Columns.Count; i++)
+            {
+                if (Columns[i].Name == name)
+                {
+                    if (primary)
+                    {
+                        PrimaryKey.Add(Columns[i]);
+                        TableDependency.CurrentPrimaryKey[i] = true;
+                    }
+                    else
+                    {
+                        PrimaryKey.Remove(Columns[i]);
+                        TableDependency.CurrentPrimaryKey[i] = false;
+                    }
+                    return;
+                }
+            }
+            throw new ArgumentException();
+        }
+
+        public void setPrimaryKey(List<string> names, bool primary)
+        {
+            PrimaryKey.Clear();
+            TableDependency.CurrentPrimaryKey.SetAll(false);
+            for (int i = 0; i < names.Count; i++)
+            {
+                int index = Columns.FindIndex(col => col.Name.Equals(names[i]));
+                if(index == -1)
+                    throw new ArgumentException();
+                if (!TableDependency.CurrentPrimaryKey[index])
+                {
+                    TableDependency.CurrentPrimaryKey[index] = true;
+                    PrimaryKey.Add(Columns[index]);
+                }
+            }
         }
 
         public Table(string name,List<Column> columns,List<Column> primaryKey)

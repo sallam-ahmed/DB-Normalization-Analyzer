@@ -16,7 +16,7 @@ namespace DBNormalizationAnalyzer_UserInterface
         #region Variables
         public static bool BHasChanges; // for saving
         private int _selectedIndex;
-        private List<KeyValuePair<int, Error>> _analsysisErrors = new List<KeyValuePair<int, Error>>(); 
+        private readonly List<Error> _analsysisErrors; 
         public Table CurrentTable
         {
             get
@@ -30,7 +30,18 @@ namespace DBNormalizationAnalyzer_UserInterface
                 Program.LoadedProject.Tables[_selectedIndex] = value;
             }
         }
-        private Dictionary<Table, FunctionalDependency> _tableMap;
+
+        private List<Table> suggestion;
+        private bool _visibleSuggestions;
+        public bool ViewSuggestions
+        {
+            get { return _visibleSuggestions; }
+            set
+            {
+                _visibleSuggestions = value;
+                pinPic.Image = value ? Properties.Resources.pinned : Properties.Resources.unpinned;
+            }
+        }
         #endregion
 
         #region # Constructors #
@@ -39,10 +50,13 @@ namespace DBNormalizationAnalyzer_UserInterface
         {
             InitializeComponent();
             _selectedIndex = 0;
+            BHasChanges = false;
+            _analsysisErrors = new List<Error>();
             LoadProject(project);
             ClearCli();
             ResetLog();
             ApplySettings();
+            _visibleSuggestions = false;
         }
         #endregion
 
@@ -61,7 +75,7 @@ namespace DBNormalizationAnalyzer_UserInterface
                 if (project.Tables.Count > 0)
                 {
                     tablesListBox.SetSelected(0,true);
-                    ApplyTable(0);
+                    ApplyTable();
                 }
             }
             catch
@@ -95,10 +109,8 @@ namespace DBNormalizationAnalyzer_UserInterface
         {
             if (!BHasChanges)
             {
-                MessageBox.Show("DOESN");
                 if (exit)
                 {
-                    MessageBox.Show("Test");
                     Application.ExitThread();
                 }
                 else
@@ -155,6 +167,7 @@ namespace DBNormalizationAnalyzer_UserInterface
             terminalControl1.AutoCompleteAdd("tbchng"); // Change active table
             terminalControl1.AutoCompleteAdd("cls");// Clear messages window.
             terminalControl1.AutoCompleteAdd("set_primary_key");//Set primary key
+            terminalControl1.AutoCompleteAdd("show_primary_key");//Set primary key
             UpdatePromptString();
             terminalControl1.AutoComplete = AutoCompleteMode.Append;
             terminalControl1.PromptColor = Color.Blue;
@@ -166,6 +179,7 @@ namespace DBNormalizationAnalyzer_UserInterface
         {
             List<Column> independSet, dependSet;
             List<string> independStr, dependStr;
+            var msgBuilder = new StringBuilder();
             switch (e.Command)
             {
                 case "help":
@@ -192,7 +206,6 @@ You can use the following commands:
                     BHasChanges = true;
                     break;
                 case "show_depen":
-                    var msgBuilder = new StringBuilder();
                     foreach (var table in Program.LoadedProject.Tables)
                     {
                         msgBuilder.AppendLine("Table " + table.Name + " functional dependency:");
@@ -267,7 +280,7 @@ You can use the following commands:
                         e.Message = "Command executed successfully! Mbrouk!";
                         BHasChanges = true;
                     }
-                    catch (ArgumentOutOfRangeException ex)
+                    catch (ArgumentOutOfRangeException)
                     {
                         e.Message = "No such dependency exist!";
                     }
@@ -296,45 +309,46 @@ You can use the following commands:
                     terminalControl1.ClearMessages();
                     break;
                 case "set_primary_key":
-                    independStr = e.Parameters[1].Split(',', '{', '}').Where(t => !string.IsNullOrWhiteSpace(t)).ToList();
-                    foreach (var variable in independStr)
+                    if (CurrentTable == null)
                     {
-                        CurrentTable.PrimaryKey.Add(CurrentTable.Columns.Find(t => (t.Name == variable)));
+                        e.Message = "Select table first!";
+                        break;
+                    }
+                    independStr = e.Parameters[1].Split(',', '{', '}').Where(t => !string.IsNullOrWhiteSpace(t)).ToList();
+                    try
+                    {
+                        CurrentTable.setPrimaryKey(independStr, true);
+                        e.Message = "Mbrouk!";
+                    }
+                    catch (ArgumentException)
+                    {
+                        e.Message = "Can't found some keys!";
                     }
                     BHasChanges = true;
+                    break;
+                case "show_primary_key":
+                    if (CurrentTable == null)
+                    {
+                        e.Message = "Select table first!";
+                        break;
+                    }
+                    if (CurrentTable.PrimaryKey.Count == 0)
+                    {
+                        e.Message = "{}";
+                        break;
+                    }
+                    msgBuilder.Append("{");
+                    for (var i = 0; i < CurrentTable.PrimaryKey.Count; i++)
+                    {
+                        msgBuilder.Append(CurrentTable.PrimaryKey[i].Name);
+                        msgBuilder.Append(i + 1 == CurrentTable.PrimaryKey.Count ? "}" : ",");
+                    }
+                    e.Message = msgBuilder.ToString();
                     break;
             }
         }
 
         #endregion
-
-        //private void AnalyzeTable()
-        //{
-        //    var result = MessageBox.Show("Would you like to perform test on all the project tables?\nIf no, only the current table will be analyzed.");
-        //    if (result == DialogResult.No)
-        //    {
-        //        if (CurrentTable == null)
-        //        {
-        //            //TODO should we check table dependency null ?? 
-        //            //What?!
-        //            LogText("Error selected table is null.");
-        //            return;
-        //        }
-        //        var checker = new NfChecker(CurrentTable.TableDependency);
-        //        var error = checker.Check();
-
-        //        //TODO Insert tables into the result grid view
-        //        //It's only one table
-        //        //2asfin ya sla7.
-
-        //        MessageBox.Show("The table is in the " + (error.Level - 1) + " Normal Form\n" + error.Message);
-        //    }
-        //    else
-        //    {
-        //        AnalyzeDatabase(null,null);
-        //    }
-
-        //}
         #region # UI ACTIONS #
         /// <summary>
         /// Controls all menu item actions
@@ -441,15 +455,15 @@ You can use the following commands:
             if (tablesListBox.SelectedValue == null)
                 return;
             _selectedIndex = tablesListBox.SelectedIndex;
-            ApplyTable(tablesListBox.SelectedIndex);
+            ApplyTable();
         }
 
-        private void ApplyTable(int index)
+        private void ApplyTable()
         {
             colListBox.DataSource = null;
             colListBox.ValueMember = "Self";
             colListBox.DisplayMember = "Name";
-            colListBox.DataSource = Program.LoadedProject.Tables[index].Columns;
+            colListBox.DataSource = CurrentTable.Columns;
         }
 
         private void EditorForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -514,6 +528,7 @@ You can use the following commands:
             BHasChanges = true;
             Refresh(null, null);
         }
+		
         private void DelColumn(object sender, EventArgs e)
         {
             if (tablesListBox.SelectedItems.Count == 0)
@@ -593,36 +608,73 @@ You can use the following commands:
         {
             LogText($"Started analysis process of total {Program.LoadedProject.Tables.Count.ToString()} tables");
             analysisDatagridView.Rows.Clear();
+            _analsysisErrors.Clear();
             var checker = new NfChecker();
-            for (int i = 0; i < Program.LoadedProject.Tables.Count; i++)
+            foreach (var table in Program.LoadedProject.Tables)
             {
-                var table = Program.LoadedProject.Tables[i];
                 checker.Fd = table.TableDependency;
                 var err = checker.Check();
                 analysisDatagridView.Rows.Add(table.Name, err.Level > 1, err.Level > 2, err.Level > 3, err.Level > 4,
                     err.Message);
                 if (err.SuggestedSplit.Count != 0)
-                    _analsysisErrors.Add(new KeyValuePair<int, Error>(i,err));
+                    _analsysisErrors.Add(err);
             }
             //Apply style
-            for (int i = 0; i < analysisDatagridView.Rows.Count; i++)
+            for (var i = 0; i < analysisDatagridView.Rows.Count; i++)
             {
-                for (int j = 0; j < analysisDatagridView.Columns.Count; j++)
+                for (var j = 0; j < analysisDatagridView.Columns.Count; j++)
                 {
-                    if(analysisDatagridView.Rows[i].Cells[j].Value.ToString() == "False")
-                        analysisDatagridView.Rows[i].Cells[j].Style.BackColor = Color.Red;
-                    else if(analysisDatagridView.Rows[i].Cells[j].Value.ToString() == "True")
+                    switch (analysisDatagridView.Rows[i].Cells[j].Value.ToString())
                     {
-                        analysisDatagridView.Rows[i].Cells[j].Style.BackColor = Color.Green;
+                        case "False":
+                            analysisDatagridView.Rows[i].Cells[j].Style.BackColor = Color.Red;
+                            break;
+                        case "True":
+                            analysisDatagridView.Rows[i].Cells[j].Style.BackColor = Color.Green;
+                            break;
                         //analysisDatagridView.Rows[i].Cells[j].Style.Font
                     }
                 }
             }
         }
 
-        private void analysisDatagridView_RowHeaderMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
+        private void ShowSuggestion(object sender, DataGridViewCellEventArgs e)
         {
-           
+            if (e.RowIndex < 0 || e.RowIndex >= _analsysisErrors.Count)
+                return;
+            suggestion = _analsysisErrors[e.RowIndex].SuggestedSplit.Select((t, i) => new Table("Table" + i.ToString(), Program.LoadedProject.Tables[e.RowIndex].ColumnSet(t.Item1))).ToList();
+            newTablesList.DataSource = null;
+            newTablesList.ValueMember = "Self";
+            newTablesList.DisplayMember = "Name";
+            newTablesList.DataSource = suggestion;
+            suggestionPanel.Visible = true;
+            suggestionPanel.Focus();
+        }
+
+        private void ToggleSuggestion(object sender, EventArgs e)
+        {
+            ViewSuggestions = !ViewSuggestions;
+            suggestionPanel.Focus();
+        }
+
+        private void HideSuggesion(object sender, EventArgs e)
+        {
+            if (!ViewSuggestions)
+            {
+                suggestionPanel.Visible = false;
+            }
+        }
+
+        private void ChangeSuggestedColumns(object sender, EventArgs e)
+        {
+            if (newTablesList.SelectedItems.Count == 0 || newTablesList.SelectedIndex < 0 ||
+                newTablesList.SelectedIndex >= suggestion.Count)
+                return;
+            newColList.DataSource = null;
+            newColList.ValueMember = "Self";
+            newColList.DisplayMember = "Name";
+            newColList.DataSource = suggestion[newTablesList.SelectedIndex].Columns;
+            suggestionPanel.Focus();
         }
     }
     

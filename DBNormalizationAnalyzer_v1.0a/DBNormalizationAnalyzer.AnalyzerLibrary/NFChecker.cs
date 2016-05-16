@@ -87,9 +87,10 @@ namespace DBNormalizationAnalyzer.AnalyzerLibrary
             newTable.SetAll(true);
             foreach (var candidateKey in Fd.SufficientCandidateKeys)
             {
-                var clone = candidateKey;
+                var clone = new BitArray(candidateKey.Count);
                 foreach (var key in Fd.Keys.Where(key => candidateKey[key]))
                 {
+                    clone.Or(candidateKey);
                     clone[key] = false;
                     var currentCover = Fd.Reachability(clone);
                     if (!Fd.Keys.Any(npKey => newTable[npKey] && !Fd.IsPrimeKey(npKey) && currentCover[npKey]))
@@ -105,15 +106,14 @@ namespace DBNormalizationAnalyzer.AnalyzerLibrary
                             if (!Fd.Reachability(temp)[npKey])
                                 temp[rdKey] = true;
                         }
-                        var index = res.SuggestedSplit.FindIndex(split => split.Item1.Equals(temp));
+                        var index = res.SuggestedSplit.FindIndex(split => split.Item2.Equals(temp));
                         var nextTable = new BitArray(Fd.Keys.Count) {[npKey] = true};
+                        nextTable.Or(temp);
                         if (index != -1)
                         {
-                            nextTable.Or(res.SuggestedSplit[index].Item2);
-                            res.SuggestedSplit[index] = new Tuple<BitArray, BitArray>(temp,
-                                nextTable);
+                            res.SuggestedSplit[index].Item1.Or(nextTable);
                         }
-                        res.SuggestedSplit.Add(new Tuple<BitArray, BitArray>(temp, nextTable));
+                        res.SuggestedSplit.Add(new Tuple<BitArray, BitArray>(nextTable,temp));
                     }
                 }
             }
@@ -140,28 +140,25 @@ namespace DBNormalizationAnalyzer.AnalyzerLibrary
             }
             var table = new BitArray(Fd.Keys.Count);
             table.SetAll(true);
-            res.SuggestedSplit.Add(new Tuple<BitArray, BitArray>(table,Fd.CurrentPrimaryKey));
             foreach (var dependency in Fd.DependencyList.Where(dependency => !Fd.IsSuperKey(dependency.Item1) && !Fd.Keys.All(key => !dependency.Item2[key] || Fd.IsPrimeKey(key))))
             {
                 var current = new BitArray(Fd.Keys.Count);
                 foreach (var key in Fd.Keys)
                 {
                     current[key] = table[key] && dependency.Item2[key] && !Fd.IsPrimeKey(key);
+                    table[key] = !current[key];
                 }
-                if (!current.ToString().Contains('1'))
+                if (!current.ToBitString().Contains('1'))
                     continue;
-                var index = res.SuggestedSplit.FindIndex(newTable => newTable.Item1.Equals(dependency.Item1));
+                var index = res.SuggestedSplit.FindIndex(newTable => newTable.Item2.Equals(dependency.Item1));
+                current.Or(dependency.Item1);
                 if(index != -1) { 
                     res.SuggestedSplit[index].Item2.Or(current);
                 }else{ 
-                    res.SuggestedSplit.Add(new Tuple<BitArray, BitArray>(dependency.Item1,current));
+                    res.SuggestedSplit.Add(new Tuple<BitArray, BitArray>(current,dependency.Item1));
                 }
-                foreach (var key in Fd.Keys)
-                {
-                    current[key] = table[key] && (!dependency.Item2[key] || Fd.IsPrimeKey(key));
-                }
-                table = current;
             }
+            res.SuggestedSplit.Add(new Tuple<BitArray, BitArray>(table,Fd.CurrentPrimaryKey));
             res.Message = "Table contains transitive dependency!";
             res.Level = 3;
             return res;
