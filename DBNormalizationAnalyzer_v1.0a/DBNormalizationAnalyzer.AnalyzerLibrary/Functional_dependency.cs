@@ -85,7 +85,7 @@ namespace DBNormalizationAnalyzer.AnalyzerLibrary
         {
             if (!IsSuperKey(keys))
                 return false;
-            var clone = keys;
+            var clone = new BitArray(keys);
             if (Keys.Any(key => keys[key] && !IsPrimeKey(key)))
                 return false;
             for(var i = 0;i < Keys.Count;i++)
@@ -243,7 +243,7 @@ namespace DBNormalizationAnalyzer.AnalyzerLibrary
                             Right.Remove(i);
                             Middle.Add(i);
                         }
-                        else if (!Middle.Contains(i))
+                        else if (!Middle.Contains(i) && !Left.Contains(i))
                             Left.Add(i);
                     }
                     if (dependency.Item2[i])
@@ -253,7 +253,7 @@ namespace DBNormalizationAnalyzer.AnalyzerLibrary
                             Left.Remove(i);
                             Middle.Add(i);
                         }
-                        else if (!Middle.Contains(i))
+                        else if (!Middle.Contains(i) && !Right.Contains(i))
                             Right.Add(i);
                     }
                 }
@@ -265,20 +265,21 @@ namespace DBNormalizationAnalyzer.AnalyzerLibrary
 
         public BitArray Reachability(BitArray keys)
         {
+            var res = new BitArray(keys);
             var change = true;
             while (change)
             {
                 change = false;
                 foreach (var dependency in DependencyList)
                 {
-                    if (!keys.IsSuperSet(dependency.Item1))
+                    if (!res.IsSuperSet(dependency.Item1))
                         continue;
-                    var temp = Utils.Or(keys,dependency.Item2);
-                    change |= !temp.EqualsTo(keys);
-                    keys = temp;
+                    var temp = Utils.Or(res,dependency.Item2);
+                    change |= !temp.EqualsTo(res);
+                    res = temp;
                 }
             }
-            return keys;
+            return res;
         }
 
         private void GetPrimes()
@@ -288,7 +289,8 @@ namespace DBNormalizationAnalyzer.AnalyzerLibrary
             var leftBits = new BitArray(Keys.Count);
             foreach (var key in Left)
             {
-                _prime[key] = leftBits[key] = true;
+                _prime[key] = true;
+                leftBits[key] = true;
             }
             foreach (var key in Right)
             {
@@ -299,7 +301,7 @@ namespace DBNormalizationAnalyzer.AnalyzerLibrary
                 _prime[key] = false;
             }
             var currentCover = Reachability(leftBits);
-            var candidates = Middle;
+            var candidates = new List<int>(Middle);
             candidates.RemoveAll(key => currentCover[key]);
             if (candidates.Count == 0)
             {
@@ -338,14 +340,12 @@ namespace DBNormalizationAnalyzer.AnalyzerLibrary
             }
             for (var i = 0; i < candidates.Count; i++)
             {
-                var currentKey = new BitArray(Keys.Count) {[candidates[i]] = true};
-                var coveredByKey = Reachability(currentKey);
-                if (sccs[i].Any(candidate => DependencyList.Any(dependency => dependency.Item2[candidate] && Keys.Any(key => dependency.Item1[key] && !coveredByKey[key]))))
+                if (sccs[i].Any(candidate => DependencyList.Any(dependency => dependency.Item2[candidate] && Keys.Any(key => dependency.Item1[key] && graph.Scc[key] != graph.Scc[candidate]))))
                     continue;
+                leftBits[sccs[i][0]] = true;
                 foreach (var key in sccs[i])
                 {
                     _prime[key] = true;
-                    leftBits[key] = true;
                     Left.Add(key);
                     Middle.Remove(key);
                 }
@@ -379,7 +379,7 @@ namespace DBNormalizationAnalyzer.AnalyzerLibrary
             var foundSets = new List<int>();
             for (var i = 1; i < (1 << candidates.Count); i++)
             {
-                var currentSet = leftBits;
+                var currentSet = new BitArray(leftBits);
                 var newSet = false;
                 for (var j = 0; j < candidates.Count; j++)
                     if ((i & (1 << j)) != 0)
@@ -387,8 +387,6 @@ namespace DBNormalizationAnalyzer.AnalyzerLibrary
                         currentSet[candidates[j]] = true;
                         newSet |= !_prime[candidates[j]];
                     }
-                if (!newSet)
-                    continue;
                 if (foundSets.Any(set => (i & set) == set))
                 {
                     i += i & -i;

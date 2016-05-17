@@ -31,7 +31,7 @@ namespace DBNormalizationAnalyzer.Formations
             TableDependency = new FunctionalDependency(columns.Count, new BitArray(columns.Count));
         }
 
-        public void setPrimaryKey(string name, bool primary)
+        public void SetPrimaryKey(string name, bool primary)
         {
             for (int i = 0; i < Columns.Count; i++)
             {
@@ -53,7 +53,7 @@ namespace DBNormalizationAnalyzer.Formations
             throw new ArgumentException();
         }
 
-        public void setPrimaryKey(List<string> names, bool primary)
+        public void SetPrimaryKey(List<string> names, bool primary)
         {
             PrimaryKey.Clear();
             TableDependency.CurrentPrimaryKey.SetAll(false);

@@ -51,12 +51,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="DBNormalizationAnalyzer_Formations">
-      <HintPath>..\DBNormalizationAnalyzer_Formations\bin\Debug\DBNormalizationAnalyzer_Formations.dll</HintPath>
-    </Reference>
-    <Reference Include="DBNormalizationAnalyzer_PresistentDataManager">
-      <HintPath>..\DBNormalizationAnalyzer_PresistentDataManager\bin\Debug\DBNormalizationAnalyzer_PresistentDataManager.dll</HintPath>
-    </Reference>
     <Reference Include="GlassButton">
       <HintPath>..\..\..\Polynomial Calculator\Polynomial-Calculator\CalculatorUI\bin\Debug\GlassButton.dll</HintPath>
     </Reference>
@@ -202,12 +196,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DBNormalizationAnalyzer.AnalyzerLibrary\DBNormalizationAnalyzer.AnalyzerLibrary.csproj">
-      <Project>{87302a5e-9d9f-4c68-8387-e45161aabb81}</Project>
-      <Name>DBNormalizationAnalyzer.AnalyzerLibrary</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\Normalization-in-Database-With-Example-300x300.jpg" />
   </ItemGroup>
   <ItemGroup>
@@ -248,6 +236,20 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\unpinned.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DBNormalizationAnalyzer.AnalyzerLibrary\DBNormalizationAnalyzer.AnalyzerLibrary.csproj">
+      <Project>{87302a5e-9d9f-4c68-8387-e45161aabb81}</Project>
+      <Name>DBNormalizationAnalyzer.AnalyzerLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DBNormalizationAnalyzer.Formations\DBNormalizationAnalyzer.Formations.csproj">
+      <Project>{d6024dd8-b485-43db-8fe6-a0d21c2ba819}</Project>
+      <Name>DBNormalizationAnalyzer.Formations</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DBNormalizationAnalyzer.PresistentDataManager\DBNormalizationAnalyzer.PresistentDataManager.csproj">
+      <Project>{cc44f997-083c-44b6-8bd8-80976a44ccbe}</Project>
+      <Name>DBNormalizationAnalyzer.PresistentDataManager</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

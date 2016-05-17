@@ -169,7 +169,7 @@ namespace DBNormalizationAnalyzer_UserInterface
             terminalControl1.AutoCompleteAdd("tbchng"); // Change active table
             terminalControl1.AutoCompleteAdd("cls");// Clear messages window.
             terminalControl1.AutoCompleteAdd("set_primary_key");//Set primary key
-            terminalControl1.AutoCompleteAdd("show_primary_key");//Set primary key
+            terminalControl1.AutoCompleteAdd("show_primary_key");//show primary key
             UpdatePromptString();
             terminalControl1.AutoComplete = AutoCompleteMode.Append;
             terminalControl1.PromptColor = Color.Blue;
@@ -316,6 +316,8 @@ You can use the following commands:
                         e.Message = "Select table first!";
                         break;
                     }
+                    if (e.Parameters.Length < 1)
+                        break;
                     independStr = e.Parameters[1].Split(',', '{', '}').Where(t => !string.IsNullOrWhiteSpace(t)).ToList();
                     try
                     {
