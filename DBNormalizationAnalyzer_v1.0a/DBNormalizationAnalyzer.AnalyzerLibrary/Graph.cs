@@ -14,14 +14,18 @@ namespace DBNormalizationAnalyzer.AnalyzerLibrary
         public Graph(int n)
         {
             _adjacencyList = new List<List<int>>(n);
-            _adjacencyList.AddRange(Enumerable.Repeat(new List<int>(), n));
+            //_adjacencyList.AddRange(Enumerable.Repeat(new List<int>(), n));
+            for (var i = 0; i < n; i++)
+            {
+                _adjacencyList.Add(new List<int>());
+            }
         }
 
         public void AddEdge(int from, int to)
         {
-            if(from > _adjacencyList.Count)
+            if(from >= _adjacencyList.Count)
                 return;
-            if (to > _adjacencyList.Count)
+            if (to >= _adjacencyList.Count)
                 return;
             if (!_adjacencyList[from].Contains(to))
                 _adjacencyList[from].Add(to);
