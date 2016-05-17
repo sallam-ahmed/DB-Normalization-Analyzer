@@ -17,7 +17,7 @@ namespace DBNormalizationAnalyzer_UserInterface
         public static bool BHasChanges; // for saving
         private int _selectedIndex;
         private readonly List<Error> _analsysisErrors;
-        private bool pinSuggestion = false;
+        private bool _pinSuggestion = false;
         public Table CurrentTable
         {
             get
@@ -40,7 +40,6 @@ namespace DBNormalizationAnalyzer_UserInterface
             set
             {
                 _visibleSuggestions = value;
-                pinPic.Image = value ? Properties.Resources.pinned : Properties.Resources.unpinned;
                 
             }
         }
@@ -54,7 +53,7 @@ namespace DBNormalizationAnalyzer_UserInterface
             _selectedIndex = 0;
             BHasChanges = false;
             _analsysisErrors = new List<Error>();
-            LoadProject(project);
+            LoadProject(project,true);
             ClearCli();
             ResetLog();
             ApplySettings();
@@ -64,7 +63,7 @@ namespace DBNormalizationAnalyzer_UserInterface
 
 
         #region # Project Manager #
-        private void LoadProject(Project project)
+        private void LoadProject(Project project,bool loadPrevLog)
         {
             Program.LoadedProject = project;
             tablesListBox.DataSource = null;
@@ -84,10 +83,13 @@ namespace DBNormalizationAnalyzer_UserInterface
             {
                 // ignored
             }
-            LogText("Loaded project tables with count of " + project.Tables.Count.ToString() + " projects.");
+            if(loadPrevLog)
+                LogText(Program.LoadedProject.Log);
+            LogText($"Loaded tables with count of { project.Tables.Count.ToString() } tables.");
             Text = $"DB Normalization Analyzer -{Program.LoadedProject.ProjectName}-";
             ClearCli();
         }
+
         private void PerformSaveActions(bool prompt)
         {
             if (!BHasChanges)
@@ -146,15 +148,18 @@ namespace DBNormalizationAnalyzer_UserInterface
         }
         internal void ResetLog()
         {
-            logTextBox.Clear();
-            LogText("Log Started " + DateTime.Now.ToShortTimeString() + ".");
+            LogText("New Log Started " + DateTime.Now.ToShortTimeString() + ".");
             LogText("Project: " + Program.LoadedProject.ProjectName);
             LogText("Path: " + Program.LoadedProject.ProjectPath);
             LogText("Welcome to DBNormalization Aanalyzer.");
+            LogText(@"Tip:
+        Write help in the terminal window to show available commands.
+        Modifying data members such as tables/columns is undoable.");
         }
-        void LogText(string value)
+        private void LogText(string value)
         {
             logTextBox.AppendText(Program.LoadedProject.ProjectName + "~ "+DateTime.Now.ToShortTimeString() + " " + value+"\n");
+            Program.LoadedProject.Log = logTextBox.Text;
         }
         private void InitializeTerminalControl()
         {
@@ -167,9 +172,10 @@ namespace DBNormalizationAnalyzer_UserInterface
             terminalControl1.AutoCompleteAdd("rem"); // Remove dependency
             terminalControl1.AutoCompleteAdd("exit"); // Exit Application
             terminalControl1.AutoCompleteAdd("tbchng"); // Change active table
-            terminalControl1.AutoCompleteAdd("cls");// Clear messages window.
+            terminalControl1.AutoCompleteAdd("cls");// Clear messages window and log
             terminalControl1.AutoCompleteAdd("set_primary_key");//Set primary key
             terminalControl1.AutoCompleteAdd("show_primary_key");//show primary key
+            terminalControl1.AutoCompleteAdd("save"); // Save
             UpdatePromptString();
             terminalControl1.AutoComplete = AutoCompleteMode.Append;
             terminalControl1.PromptColor = Color.Blue;
@@ -194,13 +200,14 @@ You can use the following commands:
             add {a,b}->{c,d} | or | add a->{c,d} | or | add a->b.
 4- rem : remove a current stored function depen.
     Command Syntax:
-            rem [N] where N is the index of the stored dependecy.
+            rem {a,b}->{c,d} | or | rem a->{c,d} | or | rem a->b.
 5- tbchng : changes the current active table of function dependency editing.
         Command Syntaax:
                 tbchng [NAME OF TABLE].
-6- exit : terminates the application with saving option eneabled.
+6- exit : terminates the application with saving option enabled.
 7- help : show this help menu.
-8- cls : Clear the messages window.
+8- cls : Clear the messages window and log.
+9- save : saves the current project state, log and function dependency.
 ";
                     break;
                 case "analyze":
@@ -254,6 +261,7 @@ You can use the following commands:
                     }
                     CurrentTable.TableDependency.AddDependency(CurrentTable.ColumnSet(independSet), CurrentTable.ColumnSet(dependSet));
                     e.Message = "Command executed successfully! Mbrouk!";
+                    LogText($"Added functional dependency in table : {CurrentTable.Name}");
                     BHasChanges = true;
                     break;
                 case "rem":
@@ -281,6 +289,7 @@ You can use the following commands:
                         CurrentTable.TableDependency.RemoveDependency(CurrentTable.ColumnSet(independSet), CurrentTable.ColumnSet(dependSet));
                         e.Message = "Command executed successfully! Mbrouk!";
                         BHasChanges = true;
+                        LogText($"Removed functional dependency in table : {CurrentTable.Name}");
                     }
                     catch (ArgumentOutOfRangeException)
                     {
@@ -305,10 +314,14 @@ You can use the following commands:
                         }
                     }
                     UpdatePromptString();
+                    
                     BHasChanges = true;
                     break;
                 case "cls":
                     terminalControl1.ClearMessages();
+                    logTextBox.Clear();
+                    ResetLog();
+                    Program.LoadedProject.Log = logTextBox.Text;
                     break;
                 case "set_primary_key":
                     if (CurrentTable == null)
@@ -323,10 +336,12 @@ You can use the following commands:
                     {
                         CurrentTable.SetPrimaryKey(independStr, true);
                         e.Message = "Mbrouk!";
+                        LogText($"Set primary key in table : {CurrentTable.Name}");
+
                     }
                     catch (ArgumentException)
                     {
-                        e.Message = "Can't found some keys!";
+                        e.Message = "Can't find some keys!";
                     }
                     BHasChanges = true;
                     break;
@@ -349,6 +364,11 @@ You can use the following commands:
                     }
                     e.Message = msgBuilder.ToString();
                     break;
+                case "save":
+                    PerformSaveActions(false, false); /// Silent Save
+                    e.Message = "Saved";
+                    LogText("Saved.");
+                    break;
             }
         }
 
@@ -363,9 +383,9 @@ You can use the following commands:
             {
                 /*FILE*/
                 case "New":
-                    PerformSaveActions(true);
+                    PerformSaveActions(true,false);
                     var _new = new NewProject();
-                    _new.Show( );
+                    _new.Show();
                     Close();
                     break;
                 case "Save":
@@ -390,9 +410,6 @@ You can use the following commands:
                     Statusbar.Visible = statusBarToolStripMenuItem.Checked;
                     break;
                 /*HELP*/
-                case "HowTO":
-                    ShowForm(new TutorialDialog(), this, (s, ce) => { Enabled = true; });
-                    break;
                 case "About":
                     ShowForm(new AboutUs(), this, (s, ce) => { Enabled = true; });
                     break;
@@ -412,14 +429,14 @@ You can use the following commands:
                     //TODO Export Report
                     break;
                 case "RefTable":
-                    LoadProject(Program.LoadedProject);
+                    LoadProject(Program.LoadedProject,false);
                     break;
                 case "Load":
                     var res = loadfileDialog.ShowDialog(this);
                     if (res != DialogResult.Cancel)
                     {
                         PerformSaveActions(true);
-                        LoadProject(DataManager.ReadProject(loadfileDialog.FileName));
+                        LoadProject(DataManager.ReadProject(loadfileDialog.FileName),true);
                     }
                     break;
 
@@ -471,8 +488,10 @@ You can use the following commands:
         }
 
         private void EditorForm_FormClosing(object sender, FormClosingEventArgs e)
+
         {
-            ShowExitMessage();
+            if(e.CloseReason == CloseReason.ApplicationExitCall)
+                ShowExitMessage();
         }
 
         private void timer1_Tick(object sender, EventArgs e)
@@ -487,6 +506,7 @@ You can use the following commands:
             Program.LoadedProject.Tables.Add(new Table("NEW_TABLE", 1));
             BHasChanges = true;
             Refresh(null,null);
+            tablesListBox.SelectedIndex = tablesListBox.Items.Count - 1;
         }
 
         private void DeleteTable(object sender, EventArgs e)
@@ -499,10 +519,11 @@ You can use the following commands:
             Program.LoadedProject.Tables.RemoveAt(tablesListBox.SelectedIndex);
             BHasChanges = true;
             Refresh(null, null);
+            Refresh(null,null);
         }
         private void Refresh(object sender, EventArgs e)
         {
-            LoadProject(Program.LoadedProject);
+            LoadProject(Program.LoadedProject,false);
         }
 
         private void RenameTable(object sender, EventArgs e)
@@ -512,6 +533,7 @@ You can use the following commands:
                 MessageBox.Show("Please select a table first!");
                 return;
             }
+            var selected = tablesListBox.SelectedIndex;
             var renameDialog = new RenameForm();
             renameDialog.SetTitle("Table " + Program.LoadedProject.Tables[tablesListBox.SelectedIndex].Name);
             if (renameDialog.ShowDialog(this) != DialogResult.OK)
@@ -519,6 +541,8 @@ You can use the following commands:
             Program.LoadedProject.Tables[tablesListBox.SelectedIndex].Name = renameDialog.GetName();
             BHasChanges = true;
             Refresh(null,null);
+            UpdatePromptString();
+            tablesListBox.SelectedIndex = selected;
         }
 
         private void CreateColumn(object sender, EventArgs e)
@@ -531,6 +555,7 @@ You can use the following commands:
             Program.LoadedProject.Tables[tablesListBox.SelectedIndex].AddColumn(new Column("NEW_COLUMN"));
             BHasChanges = true;
             Refresh(null, null);
+            colListBox.SelectedIndex = colListBox.Items.Count - 1;
         }
 		
         private void DelColumn(object sender, EventArgs e)
@@ -546,9 +571,11 @@ You can use the following commands:
                 return;
             }
             Program.LoadedProject.Tables[tablesListBox.SelectedIndex].RemoveColumn(colListBox.SelectedIndex);
+            var selected = tablesListBox.SelectedIndex;
             BHasChanges = true;
             Refresh(null, null);
-
+            Refresh(null,null);
+            tablesListBox.SelectedIndex = selected;
         }
 
         private void RenameColumn(object sender, EventArgs e)
@@ -563,6 +590,8 @@ You can use the following commands:
                 MessageBox.Show("Please select a column first!");
                 return;
             }
+            var selected = colListBox.SelectedIndex;
+            var selectedTable = tablesListBox.SelectedIndex;
             var renameDialog = new RenameForm();
             renameDialog.SetTitle("Column " + Program.LoadedProject.Tables[tablesListBox.SelectedIndex].Columns[colListBox.SelectedIndex].Name);
             if (renameDialog.ShowDialog(this) != DialogResult.OK)
@@ -570,6 +599,8 @@ You can use the following commands:
             Program.LoadedProject.Tables[tablesListBox.SelectedIndex].Columns[colListBox.SelectedIndex].Name = renameDialog.GetName();
             BHasChanges = true;
             Refresh(null, null);
+            colListBox.SelectedIndex = selected;
+            tablesListBox.SelectedIndex = selectedTable;
         }
 
         #endregion
@@ -648,7 +679,7 @@ You can use the following commands:
                 return;
             if (_analsysisErrors[e.RowIndex].SuggestedSplit.Count == 0)
                 return;
-            suggestion = _analsysisErrors[e.RowIndex].SuggestedSplit.Select((t, i) => new Table("Table" + i.ToString(), Program.LoadedProject.Tables[e.RowIndex].ColumnSet(t.Item1), Program.LoadedProject.Tables[e.RowIndex].ColumnSet(t.Item2))).ToList();
+            suggestion = _analsysisErrors[e.RowIndex].SuggestedSplit.Select((t, i) => new Table("Table" + (i+1).ToString(), Program.LoadedProject.Tables[e.RowIndex].ColumnSet(t.Item1), Program.LoadedProject.Tables[e.RowIndex].ColumnSet(t.Item2))).ToList();
             newTablesList.DataSource = null;
             newTablesList.ValueMember = "Self";
             newTablesList.DisplayMember = "Name";
@@ -660,17 +691,18 @@ You can use the following commands:
 
         private void ToggleSuggestion(object sender, EventArgs e)
         {
-            pinSuggestion = !pinSuggestion;
-        }
-
-        private void HideSuggesion(object sender, EventArgs e)
-        {
-            if (!ViewSuggestions)
+            _pinSuggestion = !_pinSuggestion;
+            pinPic.Image = _pinSuggestion ? Properties.Resources.pinned : Properties.Resources.unpinned;
+            if (!_pinSuggestion)
             {
-                splitContainer1.Panel2Collapsed = true;
+                if (!splitContainer1.Panel2.Focused)
+                {
+                    splitContainer1.Panel2Collapsed = true;
+                }
             }
-        }
 
+        }
+        
         private void ChangeSuggestedColumns(object sender, EventArgs e)
         {
             if (newTablesList.SelectedItems.Count == 0 || newTablesList.SelectedIndex < 0 ||
@@ -684,15 +716,11 @@ You can use the following commands:
             splitContainer1.Panel2.Focus();
         }
 
-        private void tableLayoutPanel3_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
         private void splitContainer1_Panel2_Leave(object sender, EventArgs e)
         {
-            if (!pinSuggestion)
-                splitContainer1.Panel2Collapsed = true;
+            if (_pinSuggestion) return;
+            splitContainer1.Panel2Collapsed = true;
+            pinPic.Visible = false;
         }
     }
     

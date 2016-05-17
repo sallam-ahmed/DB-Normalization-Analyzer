@@ -38,9 +38,8 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
-            this.glassButton1 = new Glass.GlassButton();
+            this.openButton = new Glass.GlassButton();
             this.glassButton5 = new Glass.GlassButton();
-            this.glassButton2 = new Glass.GlassButton();
             this.glassButton4 = new Glass.GlassButton();
             this.glassButton3 = new Glass.GlassButton();
             this.tableLayoutPanel1.SuspendLayout();
@@ -92,7 +91,7 @@
             this.tableLayoutPanel2.RowCount = 3;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 6.067416F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 93.93259F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 228F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 184F));
             this.tableLayoutPanel2.Size = new System.Drawing.Size(436, 721);
             this.tableLayoutPanel2.TabIndex = 0;
             // 
@@ -107,10 +106,10 @@
             "Library",
             "Hosbital",
             "Banih Or Kofta ?"});
-            this.listBox1.Location = new System.Drawing.Point(4, 33);
+            this.listBox1.Location = new System.Drawing.Point(4, 36);
             this.listBox1.Margin = new System.Windows.Forms.Padding(4);
             this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(428, 455);
+            this.listBox1.Size = new System.Drawing.Size(428, 496);
             this.listBox1.TabIndex = 0;
             this.listBox1.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.listBox1_KeyPress);
             // 
@@ -136,7 +135,7 @@
             this.panel1.Location = new System.Drawing.Point(4, 4);
             this.panel1.Margin = new System.Windows.Forms.Padding(4);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(428, 21);
+            this.panel1.Size = new System.Drawing.Size(428, 24);
             this.panel1.TabIndex = 1;
             // 
             // label1
@@ -152,60 +151,49 @@
             // 
             // flowLayoutPanel1
             // 
-            this.flowLayoutPanel1.Controls.Add(this.glassButton1);
+            this.flowLayoutPanel1.Controls.Add(this.openButton);
             this.flowLayoutPanel1.Controls.Add(this.glassButton5);
-            this.flowLayoutPanel1.Controls.Add(this.glassButton2);
             this.flowLayoutPanel1.Controls.Add(this.glassButton4);
             this.flowLayoutPanel1.Controls.Add(this.glassButton3);
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(3, 495);
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(3, 539);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(430, 223);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(430, 179);
             this.flowLayoutPanel1.TabIndex = 2;
             // 
-            // glassButton1
+            // openButton
             // 
-            this.glassButton1.Location = new System.Drawing.Point(3, 3);
-            this.glassButton1.Name = "glassButton1";
-            this.glassButton1.Size = new System.Drawing.Size(427, 39);
-            this.glassButton1.TabIndex = 3;
-            this.glassButton1.Tag = "Open";
-            this.glassButton1.Text = "Open";
-            this.glassButton1.Click += new System.EventHandler(this.PerformButtonAction);
+            this.openButton.Location = new System.Drawing.Point(3, 3);
+            this.openButton.Name = "openButton";
+            this.openButton.Size = new System.Drawing.Size(427, 39);
+            this.openButton.TabIndex = 3;
+            this.openButton.Tag = "Open";
+            this.openButton.Text = "Open";
+            this.openButton.Click += new System.EventHandler(this.PerformButtonAction);
             // 
             // glassButton5
             // 
             this.glassButton5.Location = new System.Drawing.Point(3, 48);
             this.glassButton5.Name = "glassButton5";
             this.glassButton5.Size = new System.Drawing.Size(427, 39);
-            this.glassButton5.TabIndex = 7;
+            this.glassButton5.TabIndex = 2;
             this.glassButton5.Tag = "Create New";
             this.glassButton5.Text = "Create New Project";
             this.glassButton5.Click += new System.EventHandler(this.PerformButtonAction);
             // 
-            // glassButton2
-            // 
-            this.glassButton2.Location = new System.Drawing.Point(3, 93);
-            this.glassButton2.Name = "glassButton2";
-            this.glassButton2.Size = new System.Drawing.Size(427, 39);
-            this.glassButton2.TabIndex = 4;
-            this.glassButton2.Tag = "Tutorial";
-            this.glassButton2.Text = "Tutorial";
-            this.glassButton2.Click += new System.EventHandler(this.PerformButtonAction);
-            // 
             // glassButton4
             // 
-            this.glassButton4.Location = new System.Drawing.Point(3, 138);
+            this.glassButton4.Location = new System.Drawing.Point(3, 93);
             this.glassButton4.Name = "glassButton4";
             this.glassButton4.Size = new System.Drawing.Size(427, 39);
-            this.glassButton4.TabIndex = 6;
+            this.glassButton4.TabIndex = 4;
             this.glassButton4.Tag = "About";
             this.glassButton4.Text = "About Us";
             this.glassButton4.Click += new System.EventHandler(this.PerformButtonAction);
             // 
             // glassButton3
             // 
-            this.glassButton3.Location = new System.Drawing.Point(3, 183);
+            this.glassButton3.Location = new System.Drawing.Point(3, 138);
             this.glassButton3.Name = "glassButton3";
             this.glassButton3.Size = new System.Drawing.Size(427, 39);
             this.glassButton3.TabIndex = 5;
@@ -247,8 +235,7 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
-        private Glass.GlassButton glassButton1;
-        private Glass.GlassButton glassButton2;
+        private Glass.GlassButton openButton;
         private Glass.GlassButton glassButton4;
         private Glass.GlassButton glassButton3;
         private Glass.GlassButton glassButton5;

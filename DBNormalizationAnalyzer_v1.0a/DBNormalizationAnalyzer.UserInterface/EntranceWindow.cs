@@ -40,12 +40,6 @@ Please consider removing this project from the recent projects list.");
                     _new.Show();
                     Hide();
                     break;
-                case "Tutorial":
-                    var tut = new TutorialDialog();
-                    tut.Closed += (s, args) => Show();
-                    tut.Show();
-                    Hide();
-                    break;
                 case "About":
                     var credits = new AboutUs();
                     credits.Closed += (s, args) => Show();
@@ -61,13 +55,18 @@ Please consider removing this project from the recent projects list.");
                     break;
             }
         }
+
         internal void LoadRecentProjects()
         {
             listBox1.DisplayMember = "Name";
             listBox1.ValueMember = "Path";
 
             listBox1.DataSource = DataManager.LoadRecentProjects();
+            if (listBox1.Items.Count == 0)
+                openButton.Enabled = false;
+            
         }
+
 
         private void EntranceWindow_Load(object sender, EventArgs e)
         {
